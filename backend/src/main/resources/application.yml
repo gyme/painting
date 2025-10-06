@@ -2,15 +2,9 @@ spring:
   application:
     name: kids-painting-api
   
-  datasource:
-    url: ${DATABASE_URL:jdbc:h2:mem:painting_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
-    username: ${DB_USERNAME:sa}
-    password: ${DB_PASSWORD:}
-    driver-class-name: ${DB_DRIVER:org.h2.Driver}
-  
   h2:
     console:
-      enabled: ${H2_CONSOLE_ENABLED:true}
+      enabled: true
       path: /h2-console
   
   jpa:
@@ -24,8 +18,7 @@ spring:
   
   sql:
     init:
-      mode: ${SQL_INIT_MODE:always}
-      data-locations: classpath:data.sql
+      mode: never
 
   servlet:
     multipart:
