@@ -1,4 +1,48 @@
+databases:
+  - name: colorbook
+    databaseName: colorbook
+    user: colorbook_user
+    plan: free
+
 services:
+  # Backend API (Spring Boot)
+  - type: web
+    name: coloring-app-backend
+    runtime: java
+    repo: https://github.com/gyme/painting
+    rootDir: backend
+    buildCommand: mvn clean install -DskipTests
+    startCommand: java -jar target/kids-painting-backend-1.0.0.jar
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: colorbook
+          property: jdbcUrl
+      - key: DB_USERNAME
+        fromDatabase:
+          name: colorbook
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: colorbook
+          property: password
+      - key: DB_DRIVER
+        value: org.postgresql.Driver
+      - key: HIBERNATE_DIALECT
+        value: org.hibernate.dialect.PostgreSQLDialect
+      - key: JPA_DDL_AUTO
+        value: update
+      - key: JPA_SHOW_SQL
+        value: false
+      - key: H2_CONSOLE_ENABLED
+        value: false
+      - key: DEFER_DATASOURCE_INIT
+        value: false
+      - key: SQL_INIT_MODE
+        value: never
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://coloring-app-frontend.onrender.com,https://painting-1.onrender.com
+
   # Static Site (Frontend)
   - type: web
     name: coloring-app-frontend
