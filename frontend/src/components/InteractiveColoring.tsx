@@ -257,11 +257,8 @@ function InteractiveColoring({ urlKey, title }: InteractiveColoringProps) {
       // Draw the loaded image
       ctx.fillStyle = 'white'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
-      // On mobile, use cover (fill canvas), on desktop use contain (fit within)
-      const isMobile = window.innerWidth <= 768
-      const scale = isMobile 
-        ? Math.max(canvas.width / img.width, canvas.height / img.height) // Fill on mobile
-        : Math.min(canvas.width / img.width, canvas.height / img.height) // Fit on desktop
+      // Always use contain mode (fit entire image) - never crop
+      const scale = Math.min(canvas.width / img.width, canvas.height / img.height)
       const x = (canvas.width - img.width * scale) / 2
       const y = (canvas.height - img.height * scale) / 2
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
@@ -284,11 +281,8 @@ function InteractiveColoring({ urlKey, title }: InteractiveColoringProps) {
           
           ctx.fillStyle = 'white'
           ctx.fillRect(0, 0, canvas.width, canvas.height)
-          // On mobile, use cover (fill canvas), on desktop use contain (fit within)
-          const isMobile = window.innerWidth <= 768
-          const scale = isMobile
-            ? Math.max(canvas.width / svgImg.width, canvas.height / svgImg.height) // Fill on mobile
-            : Math.min(canvas.width / svgImg.width, canvas.height / svgImg.height) // Fit on desktop
+          // Always use contain mode (fit entire image) - never crop
+          const scale = Math.min(canvas.width / svgImg.width, canvas.height / svgImg.height)
           const x = (canvas.width - svgImg.width * scale) / 2
           const y = (canvas.height - svgImg.height * scale) / 2
           ctx.drawImage(svgImg, x, y, svgImg.width * scale, svgImg.height * scale)
@@ -527,11 +521,8 @@ function InteractiveColoring({ urlKey, title }: InteractiveColoringProps) {
     // Reload the original image if we have it stored
     if (originalImageRef.current) {
       const img = originalImageRef.current
-      // On mobile, use cover (fill canvas), on desktop use contain (fit within)
-      const isMobile = window.innerWidth <= 768
-      const scale = isMobile
-        ? Math.max(canvas.width / img.width, canvas.height / img.height) // Fill on mobile
-        : Math.min(canvas.width / img.width, canvas.height / img.height) // Fit on desktop
+      // Always use contain mode (fit entire image) - never crop
+      const scale = Math.min(canvas.width / img.width, canvas.height / img.height)
       const x = (canvas.width - img.width * scale) / 2
       const y = (canvas.height - img.height * scale) / 2
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
@@ -579,11 +570,8 @@ function InteractiveColoring({ urlKey, title }: InteractiveColoringProps) {
     // Redraw the original image without watermark
     if (originalImageRef.current) {
       const img = originalImageRef.current
-      // On mobile, use cover (fill canvas), on desktop use contain (fit within)
-      const isMobile = window.innerWidth <= 768
-      const scale = isMobile
-        ? Math.max(printCanvas.width / img.width, printCanvas.height / img.height) // Fill on mobile
-        : Math.min(printCanvas.width / img.width, printCanvas.height / img.height) // Fit on desktop
+      // Always use contain mode (fit entire image) - never crop
+      const scale = Math.min(printCanvas.width / img.width, printCanvas.height / img.height)
       const x = (printCanvas.width - img.width * scale) / 2
       const y = (printCanvas.height - img.height * scale) / 2
       printCtx.drawImage(img, x, y, img.width * scale, img.height * scale)
