@@ -4,6 +4,7 @@ import Header from './components/Header'
 import HomePage from './pages/HomePage'
 import PaintingPage from './pages/PaintingPage'
 import CategoryPage from './pages/CategoryPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/painting/:urlKey" element={<PaintingPage />} />
           <Route path="/category/:category" element={<CategoryPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AppContainer>
     </Router>
