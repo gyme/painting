@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { paintingsApi } from '../api/paintings'
 import InteractiveColoring from '../components/InteractiveColoring'
 import Breadcrumbs from '../components/Breadcrumbs'
+import PaintingCard from '../components/PaintingCard'
 
 const Container = styled.div`
   max-width: 1200px;
@@ -152,15 +153,92 @@ const Loading = styled.div`
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 `
 
-const Error = styled.div`
-  text-align: center;
+const NotFoundContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 2rem;
-  background: rgba(231, 76, 60, 0.9);
-  color: white;
-  border-radius: 20px;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 2rem;
+`
+
+const NotFoundCard = styled.div`
+  background: white;
+  border-radius: 30px;
+  padding: 3rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  margin-bottom: 3rem;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    padding: 2rem;
+    border-radius: 20px;
+  }
+`
+
+const NotFoundTitle = styled.h1`
+  font-size: 3rem;
+  color: #e74c3c;
+  margin-bottom: 1rem;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+`
+
+const NotFoundMessage = styled.p`
+  font-size: 1.3rem;
+  color: #636e72;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+`
+
+const NotFoundEmoji = styled.div`
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  animation: shake 2s ease-in-out infinite;
+  
+  @keyframes shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 3rem;
+  }
+`
+
+const SuggestionsSection = styled.div`
+  background: white;
+  border-radius: 30px;
+  padding: 3rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  
+  @media (max-width: 768px) {
+    padding: 2rem;
+    border-radius: 20px;
+  }
+`
+
+const SuggestionsTitle = styled.h2`
+  font-size: 2rem;
+  color: #2d3436;
+  margin-bottom: 2rem;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`
+
+const PaintingsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
 `
 
 function PaintingPage() {
@@ -171,12 +249,47 @@ function PaintingPage() {
     () => paintingsApi.getPaintingByUrlKey(urlKey!)
   )
 
+  // Fetch suggestions for 404 page
+  const { data: suggestions } = useQuery(
+    'paintings-suggestions',
+    () => paintingsApi.getAllPaintings(),
+    { enabled: !isLoading && (!!error || !painting) }
+  )
+
   if (isLoading) {
     return <Loading>🎨 Loading your painting... ✨</Loading>
   }
 
   if (error || !painting) {
-    return <Error>😢 Oops! We couldn't find that painting.</Error>
+    const randomPaintings = suggestions?.content?.slice(0, 6) || []
+    
+    return (
+      <NotFoundContainer>
+        <NotFoundCard>
+          <NotFoundEmoji>🎨❌</NotFoundEmoji>
+          <NotFoundTitle>Painting Not Found</NotFoundTitle>
+          <NotFoundMessage>
+            Oops! We couldn't find a coloring page called "{urlKey}".<br />
+            Don't worry, we have plenty of other amazing pictures to color!
+          </NotFoundMessage>
+          <BackButton to="/">🏠 Back to Gallery</BackButton>
+        </NotFoundCard>
+        
+        {randomPaintings.length > 0 && (
+          <SuggestionsSection>
+            <SuggestionsTitle>✨ Try These Instead!</SuggestionsTitle>
+            <PaintingsGrid>
+              {randomPaintings.map((suggestion: any) => (
+                <PaintingCard key={suggestion.id} painting={suggestion} />
+              ))}
+            </PaintingsGrid>
+            <div style={{ textAlign: 'center' }}>
+              <BackButton to="/">View All Coloring Pages →</BackButton>
+            </div>
+          </SuggestionsSection>
+        )}
+      </NotFoundContainer>
+    )
   }
 
   const handlePrint = () => {
