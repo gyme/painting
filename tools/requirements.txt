@@ -1,0 +1,21 @@
+# Python dependencies for automated coloring page generation
+
+# OpenAI API (DALL-E 3)
+openai>=1.0.0
+
+# Stability AI (Stable Diffusion)
+stability-sdk>=0.8.0
+
+# Image processing
+Pillow>=10.0.0
+
+# HTTP requests
+requests>=2.31.0
+
+# Optional: For advanced image processing
+# opencv-python>=4.8.0
+# numpy>=1.24.0
+
+# Optional: For CLI progress bars
+# tqdm>=4.66.0
+

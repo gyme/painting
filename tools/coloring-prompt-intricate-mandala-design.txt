@@ -1,0 +1,17 @@
+Generate a highly detailed, professional-grade coloring page featuring: intricate mandala design
+
+STYLE: Intricate, hand-drawn vector line art suitable for kids coloring books. The aesthetic should be realistic or highly stylized but elegant.
+
+LINE QUALITY: Use clean, consistent vector lines. Employ varied line weights (thick outlines, thinner interior details) to create depth and definition. All lines must form closed, clean paths suitable for vector tracing and filling.
+
+RESTRICTIONS: The image must be composed exclusively of pure black outlines on a transparent or white background. Strictly exclude all shading, cross-hatching, stipple effects, gray tones, color fills, or subtle gradients. The final output must be a pure, ready-to-color blueprint.
+
+COMPOSITION: The subject should be centered, filling 80-90% of the canvas with balanced negative space. Include intricate details that are age-appropriate and encourage creative coloring.
+
+TECHNICAL SPECS:
+- Pure black (#000000) lines only
+- White or transparent background
+- Vector-ready with closed paths
+- Line weight variation: 2-6pt
+- Resolution: 300 DPI minimum
+- Format: PNG with transparency or SVG

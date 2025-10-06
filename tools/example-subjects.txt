@@ -1,0 +1,66 @@
+# Example Subjects for Batch Generation
+# 
+# Format: One subject per line
+# Lines starting with # are ignored
+# 
+# This file contains 50 example subjects across different categories.
+# Use as a template or generate your own list.
+
+# ========== Animals (20) ==========
+majestic lion with flowing mane
+cute elephant with big ears
+playful dolphin jumping from water
+wise owl sitting on tree branch
+beautiful butterfly with detailed wings
+friendly bear in forest
+colorful parrot on branch
+graceful deer in meadow
+adorable puppy with floppy ears
+curious kitten playing with yarn
+fierce tiger prowling through jungle
+gentle giraffe eating leaves
+happy monkey swinging from vines
+peaceful turtle swimming in ocean
+elegant swan on lake
+busy bee collecting pollen
+spotted ladybug on flower
+noble eagle soaring high
+fluffy bunny in garden
+cheerful duck in pond
+
+# ========== Fantasy (10) ==========
+ancient dragon with scales and wings
+magical unicorn with stars and rainbow
+fairy princess with flower crown
+enchanted castle with tall towers
+wizard casting magical spell
+mermaid swimming with fish
+flying pegasus among clouds
+mystical phoenix rising from flames
+brave knight with sword and shield
+elf archer in enchanted forest
+
+# ========== Vehicles (10) ==========
+super fast race car with flames
+rocket ship flying to stars
+fire truck with ladders and hose
+pirate ship with sails and flag
+helicopter with spinning blades
+construction excavator digging
+vintage steam train with smoke
+fighter jet in sky
+submarine exploring ocean depths
+hot air balloon over landscape
+
+# ========== Nature (10) ==========
+sunflower field under bright sky
+peaceful forest with tall trees
+ocean scene with coral and fish
+mountain landscape with clouds
+beautiful rose garden
+waterfall in tropical jungle
+starry night sky with moon
+rainbow after spring rain
+autumn leaves falling from trees
+desert with cacti and sunset
+

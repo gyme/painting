@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: painting-db
+    environment:
+      POSTGRES_DB: painting_db
+      POSTGRES_USER: painting_user
+      POSTGRES_PASSWORD: painting_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - painting-network
+
+  backend:
+    build: .
+    container_name: painting-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/painting_db
+      SPRING_DATASOURCE_USERNAME: painting_user
+      SPRING_DATASOURCE_PASSWORD: painting_pass
+    depends_on:
+      - postgres
+    networks:
+      - painting-network
+    volumes:
+      - ./paintings:/app/paintings
+
+volumes:
+  postgres_data:
+
+networks:
+  painting-network:
+    driver: bridge

@@ -1,0 +1,33 @@
+# 20 Popular Coloring Page Subjects (FREE Generation)
+#
+# Use with: ./generate-free-batch.sh free-20-subjects.txt
+# Then copy prompts to Bing Image Creator (https://www.bing.com/create)
+
+# === Animals (8) ===
+majestic lion with flowing mane
+cute elephant with big ears
+beautiful butterfly with detailed wings
+wise owl sitting on tree branch
+playful dolphin jumping from water
+friendly bear in forest
+graceful deer in meadow
+colorful parrot on branch
+
+# === Fantasy (4) ===
+magical unicorn with stars and rainbow
+ancient dragon with scales and wings
+fairy princess with flower crown
+enchanted castle with tall towers
+
+# === Vehicles (4) ===
+super fast race car with flames
+rocket ship flying to stars
+fire truck with ladders and hose
+pirate ship with sails and flag
+
+# === Nature (4) ===
+sunflower field under bright sky
+beautiful rose garden with butterflies
+rainbow after spring rain
+peaceful forest with tall trees
+
