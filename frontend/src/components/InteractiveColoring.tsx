@@ -224,7 +224,8 @@ function InteractiveColoring({ urlKey, title }: InteractiveColoringProps) {
     if (isMobile) {
       // On mobile, use FULL width - edge to edge
       canvas.width = window.innerWidth
-      canvas.height = window.innerWidth * 1.3 // Proportional to width, not too tall
+      // Make canvas very tall - most of the screen minus space for colors/buttons
+      canvas.height = Math.max(window.innerHeight * 0.65, window.innerWidth * 1.6)
     } else {
       canvas.width = 800
       canvas.height = 1000
