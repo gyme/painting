@@ -17,29 +17,7 @@ services:
       - key: DATABASE_URL
         fromDatabase:
           name: colorbook
-          property: jdbcUrl
-      - key: DB_USERNAME
-        fromDatabase:
-          name: colorbook
-          property: user
-      - key: DB_PASSWORD
-        fromDatabase:
-          name: colorbook
-          property: password
-      - key: DB_DRIVER
-        value: org.postgresql.Driver
-      - key: HIBERNATE_DIALECT
-        value: org.hibernate.dialect.PostgreSQLDialect
-      - key: JPA_DDL_AUTO
-        value: update
-      - key: JPA_SHOW_SQL
-        value: false
-      - key: H2_CONSOLE_ENABLED
-        value: false
-      - key: DEFER_DATASOURCE_INIT
-        value: false
-      - key: SQL_INIT_MODE
-        value: never
+          property: connectionString
       - key: CORS_ALLOWED_ORIGINS
         value: https://coloring-app-frontend.onrender.com,https://painting-1.onrender.com
 
