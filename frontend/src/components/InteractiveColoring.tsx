@@ -599,6 +599,15 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
       printCtx.putImageData(currentImageData, 0, 0)
     }
     
+    // Add watermark in solid black for printing (no transparency, clear and sharp)
+    printCtx.save()
+    printCtx.globalAlpha = 1.0
+    printCtx.font = 'bold 24px Arial'
+    printCtx.fillStyle = '#000000' // Solid black
+    printCtx.textAlign = 'center'
+    printCtx.fillText(WATERMARK_TEXT, printCanvas.width / 2, printCanvas.height - 30)
+    printCtx.restore()
+    
     const dataUrl = printCanvas.toDataURL()
     const printWindow = window.open('', '_blank')
     if (!printWindow) return
