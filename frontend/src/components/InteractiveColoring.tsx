@@ -199,6 +199,13 @@ const colors = [
   { name: 'Indigo', value: '#4B0082' },
   { name: 'Rose', value: '#FF007F' },
   { name: 'Emerald', value: '#50C878' },
+  
+  // More Colors
+  { name: 'Dark Gray', value: '#4A4A4A' },
+  { name: 'Burgundy', value: '#800020' },
+  { name: 'Sky Blue', value: '#87CEEB' },
+  { name: 'Tan', value: '#D2B48C' },
+  { name: 'Plum', value: '#8E4585' },
 ]
 
 function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColoringProps) {
