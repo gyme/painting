@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { paintingsApi } from '../api/paintings'
 import PaintingCard from '../components/PaintingCard'
+import SEO from '../components/SEO'
 
 const Container = styled.div`
   max-width: 1400px;
@@ -156,11 +157,17 @@ function HomePage() {
   }
 
   return (
-    <Container>
-      <Hero>
-        <Title>🎨 Welcome to Kids Painting Fun! 🌈</Title>
-        <Subtitle>Color amazing animals, nature, and so much more!</Subtitle>
-      </Hero>
+    <>
+      <SEO
+        title="Free Coloring Pages for Kids"
+        description="Explore hundreds of free printable coloring pages for kids! Color amazing animals, vehicles, nature scenes, and popular characters. Perfect for children of all ages."
+        keywords="free coloring pages, kids coloring, printable coloring sheets, animal coloring pages, vehicle coloring pages, children activities, fun for kids"
+      />
+      <Container>
+        <Hero>
+          <Title>🎨 Welcome to Kids Painting Fun! 🌈</Title>
+          <Subtitle>Color amazing animals, nature, and so much more!</Subtitle>
+        </Hero>
 
       {featuredData && featuredData.content.length > 0 && (
         <Section>
@@ -194,7 +201,8 @@ function HomePage() {
           </Grid>
         </Section>
       )}
-    </Container>
+      </Container>
+    </>
   )
 }
 

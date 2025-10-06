@@ -5,6 +5,7 @@ import { paintingsApi } from '../api/paintings'
 import InteractiveColoring from '../components/InteractiveColoring'
 import Breadcrumbs from '../components/Breadcrumbs'
 import PaintingCard from '../components/PaintingCard'
+import SEO from '../components/SEO'
 
 const Container = styled.div`
   max-width: 1200px;
@@ -302,15 +303,51 @@ function PaintingPage() {
     return 'Hard'
   }
 
+  // Add structured data for the painting
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": painting.title,
+    "description": painting.description,
+    "image": painting.imageUrl,
+    "category": painting.category,
+    "keywords": painting.tags,
+    "interactionStatistic": {
+      "@type": "InteractionCounter",
+      "interactionType": "https://schema.org/ViewAction",
+      "userInteractionCount": painting.viewCount
+    },
+    "isAccessibleForFree": true,
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+
   return (
-    <Container>
-      <Breadcrumbs items={[
-        { label: 'Home', path: '/' },
-        { label: painting.category, path: '/' },
-        { label: painting.title }
-      ]} />
-      <BackButton to="/">← Back to Gallery</BackButton>
-      <Card>
+    <>
+      <SEO
+        title={`${painting.title} - Coloring Page`}
+        description={`${painting.description} Free printable ${painting.title.toLowerCase()} coloring page for kids. Difficulty: ${getDifficultyText(painting.difficulty)}. Category: ${painting.category}.`}
+        keywords={`${painting.title}, ${painting.tags}, ${painting.category}, coloring page, printable, kids activity`}
+        image={painting.imageUrl}
+        type="article"
+      />
+      
+      {/* Structured Data for SEO */}
+      <script type="application/ld+json">
+        {JSON.stringify(structuredData)}
+      </script>
+      
+      <Container>
+        <Breadcrumbs items={[
+          { label: 'Home', path: '/' },
+          { label: painting.category, path: '/' },
+          { label: painting.title }
+        ]} />
+        <BackButton to="/">← Back to Gallery</BackButton>
+        <Card>
         <Content style={{ paddingTop: '2rem' }}>
           <InteractiveColoring 
             title={painting.title}
@@ -356,7 +393,8 @@ function PaintingPage() {
           </div>
         </Content>
       </Card>
-    </Container>
+      </Container>
+    </>
   )
 }
 

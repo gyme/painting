@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import SEO from '../components/SEO'
 
 const Container = styled.div`
   min-height: calc(100vh - 80px);
@@ -186,7 +187,13 @@ const SadCrayonSVG = () => (
 
 function NotFoundPage() {
   return (
-    <Container>
+    <>
+      <SEO
+        title="Page Not Found - 404"
+        description="Oops! This page doesn't exist. Explore our collection of free coloring pages for kids instead!"
+        keywords="404, page not found, coloring pages, kids activities"
+      />
+      <Container>
       <Content>
         <ErrorCode>404</ErrorCode>
         
@@ -211,6 +218,7 @@ function NotFoundPage() {
         </ButtonContainer>
       </Content>
     </Container>
+    </>
   )
 }
 

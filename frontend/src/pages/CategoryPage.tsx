@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import styled from 'styled-components'
 import { paintingsApi } from '../api/paintings'
 import PaintingCard from '../components/PaintingCard'
+import SEO from '../components/SEO'
 
 const Container = styled.div`
   max-width: 1400px;
@@ -95,9 +96,23 @@ function CategoryPage() {
     }
   }
 
+  const categoryDescriptions: { [key: string]: string } = {
+    animals: 'Discover amazing animal coloring pages! Color cute puppies, wild lions, elephants, giraffes, and more. Perfect for animal-loving kids.',
+    nature: 'Explore beautiful nature coloring pages! Color trees, flowers, beaches, rivers, and stunning landscapes. Bring nature to life with colors!',
+    vehicles: 'Rev up with exciting vehicle coloring pages! Color cars, trucks, buses, trains, and more. Perfect for kids who love transportation!',
+    fantasy: 'Enter a magical world with fantasy coloring pages! Color unicorns, dragons, castles, and magical creatures. Let imagination soar!',
+    characters: 'Color your favorite characters! From Pikachu to Disney princesses, bring beloved characters to life with your creativity!'
+  }
+
   return (
-    <Container>
-      <Header>
+    <>
+      <SEO
+        title={`${category} Coloring Pages`}
+        description={categoryDescriptions[category?.toLowerCase() || ''] || `Browse our collection of ${category} coloring pages for kids. Free printable coloring sheets perfect for children of all ages!`}
+        keywords={`${category} coloring pages, ${category} coloring sheets, kids ${category}, printable ${category}`}
+      />
+      <Container>
+        <Header>
         <Title>{getCategoryEmoji(category!)} {category} Paintings</Title>
       </Header>
 
@@ -110,7 +125,8 @@ function CategoryPage() {
       ) : (
         <Empty>No paintings found in this category yet. Check back soon! 🎨</Empty>
       )}
-    </Container>
+      </Container>
+    </>
   )
 }
 
