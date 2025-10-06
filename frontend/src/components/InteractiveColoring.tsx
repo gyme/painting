@@ -142,6 +142,7 @@ interface InteractiveColoringProps {
   imageUrl: string
   urlKey: string
   title: string
+  onPrintReady?: (printFn: () => void) => void
 }
 
 const colors = [
@@ -200,7 +201,7 @@ const colors = [
   { name: 'Emerald', value: '#50C878' },
 ]
 
-function InteractiveColoring({ urlKey, title }: InteractiveColoringProps) {
+function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColoringProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [selectedColor, setSelectedColor] = useState(colors[0].value)
   const originalImageRef = useRef<HTMLImageElement | null>(null)
@@ -656,6 +657,13 @@ function InteractiveColoring({ urlKey, title }: InteractiveColoringProps) {
     `)
     printWindow.document.close()
   }
+  
+  // Expose print function to parent component
+  useEffect(() => {
+    if (onPrintReady) {
+      onPrintReady(printImage)
+    }
+  }, [onPrintReady, printImage])
 
   return (
     <Container>

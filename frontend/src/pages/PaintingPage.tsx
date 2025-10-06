@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import styled from 'styled-components'
+import { useRef } from 'react'
 import { paintingsApi } from '../api/paintings'
 import InteractiveColoring from '../components/InteractiveColoring'
 import Breadcrumbs from '../components/Breadcrumbs'
@@ -244,6 +245,7 @@ const PaintingsGrid = styled.div`
 
 function PaintingPage() {
   const { urlKey } = useParams<{ urlKey: string }>()
+  const printFunctionRef = useRef<(() => void) | null>(null)
 
   const { data: painting, isLoading, error } = useQuery(
     ['painting', urlKey],
@@ -256,6 +258,11 @@ function PaintingPage() {
     () => paintingsApi.getAllPaintings(),
     { enabled: !isLoading && (!!error || !painting) }
   )
+  
+  // Store the print function from InteractiveColoring
+  const handlePrintReady = (printFn: () => void) => {
+    printFunctionRef.current = printFn
+  }
 
   if (isLoading) {
     return <Loading>🎨 Loading your painting... ✨</Loading>
@@ -294,7 +301,13 @@ function PaintingPage() {
   }
 
   const handlePrint = () => {
-    window.print()
+    // Use the print function from InteractiveColoring component
+    if (printFunctionRef.current) {
+      printFunctionRef.current()
+    } else {
+      // Fallback to window.print if the function isn't ready yet
+      window.print()
+    }
   }
 
   const getDifficultyText = (difficulty: number) => {
@@ -353,6 +366,7 @@ function PaintingPage() {
             title={painting.title}
             imageUrl={painting.imageUrl}
             urlKey={painting.urlKey}
+            onPrintReady={handlePrintReady}
           />
           
           <div style={{ marginTop: '3rem' }}>
