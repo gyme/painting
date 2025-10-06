@@ -3,8 +3,10 @@ services:
   - type: web
     name: coloring-app-frontend
     runtime: static
-    buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: ./frontend/dist
+    repo: https://github.com/gyme/painting
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
         value: https://coloring-app-backend.onrender.com/api
