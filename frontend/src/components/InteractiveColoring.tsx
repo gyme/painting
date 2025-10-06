@@ -38,7 +38,6 @@ const CanvasWrapper = styled.div`
   @media (max-width: 768px) {
     border: none;
     border-radius: 0;
-    min-height: 80vh;
     margin: 0;
   }
 `
@@ -50,8 +49,9 @@ const ColorPaletteContainer = styled.div`
   gap: 1rem;
   
   @media (max-width: 768px) {
-    margin-top: 1rem;
-    padding: 0.5rem;
+    margin-top: 0;
+    padding: 1rem;
+    background: white;
   }
 `
 
@@ -111,7 +111,8 @@ const ToolsContainer = styled.div`
   flex-wrap: wrap;
   
   @media (max-width: 768px) {
-    padding: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0 1rem 1rem 1rem;
   }
 `
 
@@ -223,7 +224,7 @@ function InteractiveColoring({ urlKey, title }: InteractiveColoringProps) {
     if (isMobile) {
       // On mobile, use FULL width - edge to edge
       canvas.width = window.innerWidth
-      canvas.height = window.innerHeight * 0.8 // 80% of viewport height
+      canvas.height = window.innerWidth * 1.3 // Proportional to width, not too tall
     } else {
       canvas.width = 800
       canvas.height = 1000
