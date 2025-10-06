@@ -361,8 +361,8 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
     const visited = new Set<string>()
     const stack: [number, number][] = [[x, y]]
     
-    // Use very high tolerance for better coverage near edges
-    const fillTolerance = 60
+    // Moderate tolerance to prevent color bleeding while still catching edges
+    const fillTolerance = 35
     
     while (stack.length > 0) {
       const [currentX, currentY] = stack.pop()!
@@ -398,8 +398,8 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
     
     ctx.putImageData(imageData, 0, 0)
     
-    // Apply multiple passes to fill any remaining gaps near edges
-    for (let pass = 0; pass < 3; pass++) {
+    // Apply 2 passes to fill small gaps near edges (reduced to prevent bleeding)
+    for (let pass = 0; pass < 2; pass++) {
       fillEdgeGaps(ctx, imageData, fillColorRGB, targetColor)
     }
   }
@@ -417,8 +417,8 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
         if (colorsMatch(currentColor, fillColorRGB, 15)) continue
         if (isBlackLine(currentColor)) continue
         
-        // Check if this pixel is similar to the original target color (very high tolerance for anti-aliased pixels)
-        if (!colorsMatch(currentColor, originalTarget, 80)) continue
+        // Check if this pixel is similar to the original target color (moderate tolerance)
+        if (!colorsMatch(currentColor, originalTarget, 50)) continue
         
         // Check if surrounded by filled pixels (meaning it's a gap)
         let filledNeighbors = 0
@@ -435,8 +435,8 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
           }
         }
         
-        // If 3 or more neighbors are filled, fill this gap (more aggressive)
-        if (filledNeighbors >= 3) {
+        // Require 6 or more neighbors to be filled (more conservative to prevent bleeding)
+        if (filledNeighbors >= 6) {
           setPixelColor(imageData, x, y, fillColorRGB)
           foundGaps = true
         }
