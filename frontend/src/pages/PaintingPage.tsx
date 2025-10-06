@@ -343,7 +343,7 @@ function PaintingPage() {
       <Container>
         <Breadcrumbs items={[
           { label: 'Home', path: '/' },
-          { label: painting.category, path: '/' },
+          { label: painting.category, path: `/category/${painting.category}` },
           { label: painting.title }
         ]} />
         <BackButton to="/">← Back to Gallery</BackButton>
