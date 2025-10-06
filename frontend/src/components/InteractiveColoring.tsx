@@ -13,9 +13,10 @@ const Container = styled.div`
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 0.5rem;
     border-radius: 10px;
     max-width: 100%;
+    margin: 0;
   }
 `
 
@@ -36,7 +37,8 @@ const CanvasWrapper = styled.div`
   @media (max-width: 768px) {
     border: 3px solid #333;
     border-radius: 10px;
-    min-height: 400px;
+    min-height: 500px;
+    margin: 0;
   }
 `
 
@@ -213,10 +215,10 @@ function InteractiveColoring({ urlKey, title }: InteractiveColoringProps) {
     // Set canvas size - bigger on mobile for better visibility
     const isMobile = window.innerWidth <= 768
     if (isMobile) {
-      // On mobile, use full available width
-      const maxWidth = Math.min(window.innerWidth - 40, 800)
+      // On mobile, use almost full width (leave only 10px padding on each side)
+      const maxWidth = Math.min(window.innerWidth - 20, 800)
       canvas.width = maxWidth
-      canvas.height = maxWidth * 1.25 // Maintain 4:5 ratio
+      canvas.height = maxWidth * 1.4 // Taller for portrait images
     } else {
       canvas.width = 800
       canvas.height = 1000
