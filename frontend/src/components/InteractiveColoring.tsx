@@ -11,6 +11,12 @@ const Container = styled.div`
   border-radius: 20px;
   padding: 2rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  
+  @media (max-width: 768px) {
+    padding: 1rem;
+    border-radius: 10px;
+    max-width: 100%;
+  }
 `
 
 const CanvasWrapper = styled.div`
@@ -26,6 +32,12 @@ const CanvasWrapper = styled.div`
     width: 100%;
     height: auto;
   }
+  
+  @media (max-width: 768px) {
+    border: 3px solid #333;
+    border-radius: 10px;
+    min-height: 400px;
+  }
 `
 
 const ColorPaletteContainer = styled.div`
@@ -33,6 +45,10 @@ const ColorPaletteContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  
+  @media (max-width: 768px) {
+    margin-top: 1.5rem;
+  }
 `
 
 const PaletteTitle = styled.h3`
@@ -40,12 +56,21 @@ const PaletteTitle = styled.h3`
   font-weight: 700;
   color: #2d3436;
   margin: 0;
+  
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
 `
 
 const ColorGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
   gap: 1rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 0.75rem;
+  }
 `
 
 const ColorButton = styled.button<{ color: string; isSelected: boolean }>`
@@ -66,6 +91,12 @@ const ColorButton = styled.button<{ color: string; isSelected: boolean }>`
 
   &:active {
     transform: scale(0.95);
+  }
+  
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
   }
 `
 
@@ -91,6 +122,11 @@ const ToolButton = styled.button<{ isActive?: boolean }>`
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
+  
+  @media (max-width: 768px) {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
 `
 
 interface InteractiveColoringProps {
@@ -103,7 +139,7 @@ const colors = [
   // Primary Colors
   { name: 'Red', value: '#FF0000' },
   { name: 'Orange', value: '#FFA500' },
-  { name: 'Yellow', value: '#FFD700' },
+  { name: 'Yellow', value: '#FFFF00' },
   { name: 'Green', value: '#32CD32' },
   { name: 'Blue', value: '#1E90FF' },
   { name: 'Purple', value: '#9370DB' },
@@ -149,21 +185,15 @@ const colors = [
   { name: 'Violet', value: '#8B00FF' },
   { name: 'Amber', value: '#FFBF00' },
   { name: 'Salmon', value: '#FA8072' },
+  { name: 'Olive', value: '#808000' },
+  { name: 'Indigo', value: '#4B0082' },
+  { name: 'Rose', value: '#FF007F' },
+  { name: 'Emerald', value: '#50C878' },
 ]
 
-// High-quality external coloring images (fallback URLs)
-// These will be replaced when you add local PNG files
-const getExternalColoringImage = (urlKey: string): string | null => {
-  // For now, return null to use the drawn outlines
-  // Once you add real PNG files, those will load instead
-  return null
-}
-
-function InteractiveColoring({ imageUrl, urlKey, title }: InteractiveColoringProps) {
+function InteractiveColoring({ urlKey, title }: InteractiveColoringProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [selectedColor, setSelectedColor] = useState(colors[0].value)
-  const [isDrawing, setIsDrawing] = useState(false)
-  const [tool, setTool] = useState<'brush' | 'fill'>('fill')
   const originalImageRef = useRef<HTMLImageElement | null>(null)
   
   // Undo/Redo history
@@ -180,9 +210,17 @@ function InteractiveColoring({ imageUrl, urlKey, title }: InteractiveColoringPro
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // Set canvas size
-    canvas.width = 800
-    canvas.height = 1000
+    // Set canvas size - bigger on mobile for better visibility
+    const isMobile = window.innerWidth <= 768
+    if (isMobile) {
+      // On mobile, use full available width
+      const maxWidth = Math.min(window.innerWidth - 40, 800)
+      canvas.width = maxWidth
+      canvas.height = maxWidth * 1.25 // Maintain 4:5 ratio
+    } else {
+      canvas.width = 800
+      canvas.height = 1000
+    }
 
     // Fill with white background
     ctx.fillStyle = 'white'
@@ -207,11 +245,11 @@ function InteractiveColoring({ imageUrl, urlKey, title }: InteractiveColoringPro
       // Store the image for later use (clear, etc.)
       originalImageRef.current = img
       
-      // Draw the loaded image - FULL SIZE (cover behavior)
+      // Draw the loaded image - maintain aspect ratio (contain behavior)
       ctx.fillStyle = 'white'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
-      // Use Math.max for cover behavior (fills entire canvas)
-      const scale = Math.max(canvas.width / img.width, canvas.height / img.height)
+      // Use Math.min for contain behavior (fits within canvas)
+      const scale = Math.min(canvas.width / img.width, canvas.height / img.height)
       const x = (canvas.width - img.width * scale) / 2
       const y = (canvas.height - img.height * scale) / 2
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
@@ -234,8 +272,8 @@ function InteractiveColoring({ imageUrl, urlKey, title }: InteractiveColoringPro
           
           ctx.fillStyle = 'white'
           ctx.fillRect(0, 0, canvas.width, canvas.height)
-          // Use Math.max for cover behavior (fills entire canvas)
-          const scale = Math.max(canvas.width / svgImg.width, canvas.height / svgImg.height)
+          // Use Math.min for contain behavior (fits within canvas)
+          const scale = Math.min(canvas.width / svgImg.width, canvas.height / svgImg.height)
           const x = (canvas.width - svgImg.width * scale) / 2
           const y = (canvas.height - svgImg.height * scale) / 2
           ctx.drawImage(svgImg, x, y, svgImg.width * scale, svgImg.height * scale)
@@ -313,8 +351,8 @@ function InteractiveColoring({ imageUrl, urlKey, title }: InteractiveColoringPro
     const visited = new Set<string>()
     const stack: [number, number][] = [[x, y]]
     
-    // Use higher tolerance for better coverage near edges
-    const fillTolerance = 35
+    // Use very high tolerance for better coverage near edges
+    const fillTolerance = 60
     
     while (stack.length > 0) {
       const [currentX, currentY] = stack.pop()!
@@ -350,11 +388,13 @@ function InteractiveColoring({ imageUrl, urlKey, title }: InteractiveColoringPro
     
     ctx.putImageData(imageData, 0, 0)
     
-    // Apply a second pass to fill any remaining gaps near edges
-    fillEdgeGaps(ctx, imageData, fillColorRGB, targetColor)
+    // Apply multiple passes to fill any remaining gaps near edges
+    for (let pass = 0; pass < 3; pass++) {
+      fillEdgeGaps(ctx, imageData, fillColorRGB, targetColor)
+    }
   }
   
-  const fillEdgeGaps = (ctx: CanvasRenderingContext2D, originalData: ImageData, fillColorRGB: any, originalTarget: any) => {
+  const fillEdgeGaps = (ctx: CanvasRenderingContext2D, _originalData: ImageData, fillColorRGB: any, originalTarget: any) => {
     const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
     let foundGaps = false
     
@@ -364,11 +404,11 @@ function InteractiveColoring({ imageUrl, urlKey, title }: InteractiveColoringPro
         const currentColor = getPixelColor(imageData, x, y)
         
         // Skip if already filled or is a black line
-        if (colorsMatch(currentColor, fillColorRGB, 10)) continue
+        if (colorsMatch(currentColor, fillColorRGB, 15)) continue
         if (isBlackLine(currentColor)) continue
         
-        // Check if this pixel is similar to the original target color
-        if (!colorsMatch(currentColor, originalTarget, 50)) continue
+        // Check if this pixel is similar to the original target color (very high tolerance for anti-aliased pixels)
+        if (!colorsMatch(currentColor, originalTarget, 80)) continue
         
         // Check if surrounded by filled pixels (meaning it's a gap)
         let filledNeighbors = 0
@@ -380,13 +420,13 @@ function InteractiveColoring({ imageUrl, urlKey, title }: InteractiveColoringPro
         for (const [nx, ny] of neighbors) {
           if (nx < 0 || nx >= imageData.width || ny < 0 || ny >= imageData.height) continue
           const neighborColor = getPixelColor(imageData, nx, ny)
-          if (colorsMatch(neighborColor, fillColorRGB, 10)) {
+          if (colorsMatch(neighborColor, fillColorRGB, 15)) {
             filledNeighbors++
           }
         }
         
-        // If most neighbors are filled, fill this gap
-        if (filledNeighbors >= 4) {
+        // If 3 or more neighbors are filled, fill this gap (more aggressive)
+        if (filledNeighbors >= 3) {
           setPixelColor(imageData, x, y, fillColorRGB)
           foundGaps = true
         }
@@ -472,8 +512,8 @@ function InteractiveColoring({ imageUrl, urlKey, title }: InteractiveColoringPro
     // Reload the original image if we have it stored
     if (originalImageRef.current) {
       const img = originalImageRef.current
-      // Use Math.max for cover behavior (fills entire canvas)
-      const scale = Math.max(canvas.width / img.width, canvas.height / img.height)
+      // Use Math.min for contain behavior (fits within canvas)
+      const scale = Math.min(canvas.width / img.width, canvas.height / img.height)
       const x = (canvas.width - img.width * scale) / 2
       const y = (canvas.height - img.height * scale) / 2
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
@@ -521,7 +561,7 @@ function InteractiveColoring({ imageUrl, urlKey, title }: InteractiveColoringPro
     // Redraw the original image without watermark
     if (originalImageRef.current) {
       const img = originalImageRef.current
-      const scale = Math.max(printCanvas.width / img.width, printCanvas.height / img.height)
+      const scale = Math.min(printCanvas.width / img.width, printCanvas.height / img.height)
       const x = (printCanvas.width - img.width * scale) / 2
       const y = (printCanvas.height - img.height * scale) / 2
       printCtx.drawImage(img, x, y, img.width * scale, img.height * scale)
@@ -632,7 +672,7 @@ function InteractiveColoring({ imageUrl, urlKey, title }: InteractiveColoringPro
       </ColorPaletteContainer>
 
       <ToolsContainer>
-        <ToolButton isActive onClick={() => setTool('fill')}>
+        <ToolButton isActive>
           Fill
         </ToolButton>
         <ToolButton 

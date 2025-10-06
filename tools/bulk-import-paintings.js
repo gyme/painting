@@ -284,7 +284,8 @@ Categories: Animals, Nature, Vehicles, Fantasy, Characters
   for (const file of files) {
     const title = generateTitle(file);
     const category = options.category || detectCategory(file);
-    const urlKey = generateUrlKey(title);
+    // Use filename (without extension) as URL key to match actual file names
+    const urlKey = file.replace(/\.(png|jpg|jpeg|svg)$/i, '').toLowerCase();
     const description = generateDescription(title, category);
     const tags = generateTags(title, category);
     const difficulty = options.difficulty || estimateDifficulty(category, title);

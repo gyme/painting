@@ -21,10 +21,7 @@ export const coloringImages: { [key: string]: string } = {
 // Alternative: Use local high-quality images
 // Place images in public/coloring-images/ folder
 export const getColoringImagePath = (urlKey: string): string => {
-  // First try local images
-  const localPath = `/coloring-images/${urlKey}.png`
-  
-  // Fallback to external URLs
+  // Return local path or fallback
   return coloringImages[urlKey] || coloringImages['default']
 }
 

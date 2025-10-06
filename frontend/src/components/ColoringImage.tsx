@@ -17,20 +17,6 @@ const ImageWrapper = styled.div`
   }
 `
 
-const Image = styled.img`
-  max-width: 100%;
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-
-  @media print {
-    max-width: 100%;
-    box-shadow: none;
-    border-radius: 0;
-    page-break-inside: avoid;
-  }
-`
-
 const SVGColoring = styled.svg`
   max-width: 100%;
   height: auto;
@@ -1109,7 +1095,7 @@ const getColoringSVG = (urlKey: string, title: string) => {
   return templates[urlKey] || defaultTemplate
 }
 
-function ColoringImage({ title, imageUrl, urlKey }: ColoringImageProps) {
+function ColoringImage({ title, urlKey }: ColoringImageProps) {
   // Use SVG for coloring book style
   const svgContent = getColoringSVG(urlKey, title)
 

@@ -3,7 +3,6 @@ import { useQuery } from 'react-query'
 import styled from 'styled-components'
 import { paintingsApi } from '../api/paintings'
 import InteractiveColoring from '../components/InteractiveColoring'
-import ColorPalette from '../components/ColorPalette'
 import Breadcrumbs from '../components/Breadcrumbs'
 
 const Container = styled.div`
@@ -47,25 +46,6 @@ const Card = styled.div`
     box-shadow: none;
     border-radius: 0;
   }
-`
-
-const ImageContainer = styled.div`
-  position: relative;
-  width: 100%;
-  max-height: 600px;
-  background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-`
-
-const Image = styled.img`
-  max-width: 100%;
-  max-height: 500px;
-  object-fit: contain;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 `
 
 const Content = styled.div`
@@ -198,8 +178,6 @@ function PaintingPage() {
   if (error || !painting) {
     return <Error>😢 Oops! We couldn't find that painting.</Error>
   }
-
-  const colors = painting.colorPalette ? JSON.parse(painting.colorPalette) : []
 
   const handlePrint = () => {
     window.print()
