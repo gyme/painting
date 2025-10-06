@@ -13,10 +13,11 @@ const Container = styled.div`
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   
   @media (max-width: 768px) {
-    padding: 0.5rem;
-    border-radius: 10px;
+    padding: 0;
+    border-radius: 0;
     max-width: 100%;
     margin: 0;
+    box-shadow: none;
   }
 `
 
@@ -35,9 +36,9 @@ const CanvasWrapper = styled.div`
   }
   
   @media (max-width: 768px) {
-    border: 3px solid #333;
-    border-radius: 10px;
-    min-height: 500px;
+    border: none;
+    border-radius: 0;
+    min-height: 80vh;
     margin: 0;
   }
 `
@@ -49,7 +50,8 @@ const ColorPaletteContainer = styled.div`
   gap: 1rem;
   
   @media (max-width: 768px) {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
+    padding: 0.5rem;
   }
 `
 
@@ -107,6 +109,10 @@ const ToolsContainer = styled.div`
   gap: 1rem;
   margin-top: 1rem;
   flex-wrap: wrap;
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+  }
 `
 
 const ToolButton = styled.button<{ isActive?: boolean }>`
@@ -215,10 +221,9 @@ function InteractiveColoring({ urlKey, title }: InteractiveColoringProps) {
     // Set canvas size - bigger on mobile for better visibility
     const isMobile = window.innerWidth <= 768
     if (isMobile) {
-      // On mobile, use almost full width (leave only 10px padding on each side)
-      const maxWidth = Math.min(window.innerWidth - 20, 800)
-      canvas.width = maxWidth
-      canvas.height = maxWidth * 1.4 // Taller for portrait images
+      // On mobile, use FULL width - edge to edge
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight * 0.8 // 80% of viewport height
     } else {
       canvas.width = 800
       canvas.height = 1000
