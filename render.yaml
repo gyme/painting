@@ -1,32 +1,14 @@
 services:
-  # Backend Service
-  - type: web
-    name: coloring-app-backend
-    env: java
-    buildCommand: ./mvnw clean package -DskipTests
-    startCommand: java -jar target/kids-painting-backend-1.0.0.jar
-    envVars:
-      - key: SPRING_DATASOURCE_URL
-        sync: false
-      - key: SPRING_DATASOURCE_USERNAME
-        sync: false
-      - key: SPRING_DATASOURCE_PASSWORD
-        sync: false
-      - key: JAVA_OPTS
-        value: "-Xmx512m"
-    healthCheckPath: /api/paintings
-
-  # Frontend Service
+  # Static Site (Frontend)
   - type: web
     name: coloring-app-frontend
-    env: static
+    runtime: static
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: ./frontend/dist
     envVars:
       - key: VITE_API_URL
         value: https://coloring-app-backend.onrender.com/api
-
-databases:
-  - name: coloring-app-db
-    databaseName: coloring_app
-    user: coloring_user
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
