@@ -126,7 +126,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string }>`
     margin: 0;
     padding: 0;
     width: 100vw;
-    height: calc(100vh - 210px);
+    height: calc(100vh - 180px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -139,6 +139,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string }>`
       width: 100% !important;
       height: 100% !important;
       object-fit: contain;
+      margin: auto;
     }
   }
 `
@@ -556,8 +557,8 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const isMobile = window.innerWidth <= 768
     if (isMobile) {
       // On mobile, fill entire available space
-      // Account for header (~60px), breadcrumbs (~30px) and toolbar (~120px) = 210px total
-      const availableHeight = window.innerHeight - 210
+      // Account for header (~60px), breadcrumbs (~30px) and toolbar (~90px) = 180px total
+      const availableHeight = window.innerHeight - 180
       canvas.width = window.innerWidth
       canvas.height = availableHeight
     } else {
@@ -629,7 +630,14 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
   const isBlackLine = (color: { r: number, g: number, b: number }): boolean => {
     // Consider pixels as black lines if they're very dark (black or near-black)
+    // This threshold allows fill/erase to work on grey areas
     return color.r < 30 && color.g < 30 && color.b < 30
+  }
+
+  const isOriginalArtwork = (color: { r: number, g: number, b: number }): boolean => {
+    // For brush protection: protect darker pixels including shading
+    // This prevents the brush from painting over grey/shaded areas
+    return color.r < 80 && color.g < 80 && color.b < 80
   }
 
   const saveToHistory = (ctx: CanvasRenderingContext2D) => {
@@ -691,10 +699,10 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const ctx = canvas?.getContext('2d')
     if (!ctx || !canvas) return
 
-    // Get image data to check if we're painting over black lines
+    // Get image data to check if we're painting over original artwork
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
     
-    // Draw brush stroke pixel by pixel, skipping black lines
+    // Draw brush stroke pixel by pixel, skipping original artwork
     for (let i = -brushSize; i <= brushSize; i++) {
       for (let j = -brushSize; j <= brushSize; j++) {
         const distance = Math.sqrt(i * i + j * j)
@@ -705,8 +713,8 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
           if (pixelX >= 0 && pixelX < canvas.width && pixelY >= 0 && pixelY < canvas.height) {
             const pixelColor = getPixelColor(imageData, pixelX, pixelY)
             
-            // Don't paint over black lines
-            if (!isBlackLine(pixelColor)) {
+            // Don't paint over original artwork (uses stricter threshold)
+            if (!isOriginalArtwork(pixelColor)) {
               const index = (pixelY * imageData.width + pixelX) * 4
               const rgb = hexToRgb(color)
               imageData.data[index] = rgb.r

@@ -1,0 +1,9 @@
+docker-compose*.yml
+*.local.yml
+.git
+.gitignore
+README.md
+backend.log
+paintings/
+populate-database.sh
+start-backend.sh
