@@ -70,7 +70,7 @@ const CanvasSection = styled.div`
 `
 
 const ColorSection = styled.div<{ $isOpen?: boolean }>`
-  width: 360px;
+  width: 400px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -86,7 +86,7 @@ const ColorSection = styled.div<{ $isOpen?: boolean }>`
     left: 50%;
     transform: translate(-50%, -50%) ${props => props.$isOpen ? 'scale(1)' : 'scale(0.9)'};
     width: 88%;
-    max-width: 380px;
+    max-width: 400px;
     padding: 0;
     gap: 0;
     background: transparent;
@@ -101,13 +101,13 @@ const ColorSection = styled.div<{ $isOpen?: boolean }>`
   }
 `
 
-const CanvasWrapper = styled.div`
+const CanvasWrapper = styled.div<{ $cursorType: string }>`
   position: relative;
   border: 4px solid #333;
   border-radius: 15px;
   overflow: hidden;
   background: white;
-  cursor: crosshair;
+  cursor: ${props => props.$cursorType};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -126,7 +126,7 @@ const CanvasWrapper = styled.div`
     margin: 0;
     padding: 0;
     width: 100vw;
-    height: calc(100vh - 220px);
+    height: calc(100vh - 210px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -136,6 +136,9 @@ const CanvasWrapper = styled.div`
     canvas {
       display: block;
       background: white;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain;
     }
   }
 `
@@ -145,7 +148,7 @@ const ColorPaletteContainer = styled.div`
   flex-direction: column;
   gap: 1.1rem;
   background: white;
-  padding: 1.75rem 1.5rem;
+  padding: 1.75rem 2rem 1.75rem 2rem;
   border-radius: 20px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   border: 1px solid rgba(0, 0, 0, 0.06);
@@ -158,7 +161,7 @@ const ColorPaletteContainer = styled.div`
     margin-top: 0;
     border-radius: 20px;
     background: white;
-    padding: 1.4rem 1.2rem;
+    padding: 1.4rem 1.6rem;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     gap: 0.85rem;
   }
@@ -184,10 +187,12 @@ const PaletteTitle = styled.h3`
 
 const ColorGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0.85rem;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.7rem;
   justify-items: center;
   align-items: center;
+  width: 100%;
+  max-width: 100%;
   
   @media (max-width: 1024px) {
     grid-template-columns: repeat(6, 1fr);
@@ -203,29 +208,18 @@ const ColorGrid = styled.div`
 `
 
 const ColorButton = styled.button<{ color: string; $isSelected: boolean }>`
-  width: 50px;
-  height: 50px;
-  border-radius: 13px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   border: none;
   background: ${props => props.color};
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: ${props => props.$isSelected 
-    ? '0 8px 25px rgba(102, 126, 234, 0.5), 0 0 0 4px white, 0 0 0 6px #667eea' 
+    ? `0 8px 25px ${props.color}80, 0 0 0 3px white, 0 0 0 5px ${props.color}` 
     : '0 4px 15px rgba(0, 0, 0, 0.15)'};
-  transform: ${props => props.$isSelected ? 'scale(1.05) translateY(-2px)' : 'scale(1)'};
+  transform: ${props => props.$isSelected ? 'scale(1.08) translateY(-2px)' : 'scale(1)'};
   position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    border-radius: 15px;
-    background: ${props => props.$isSelected ? 'linear-gradient(135deg, #667eea, #764ba2)' : 'transparent'};
-    z-index: -1;
-    opacity: ${props => props.$isSelected ? '1' : '0'};
-    transition: opacity 0.3s ease;
-  }
 
   &:hover {
     transform: scale(1.12) translateY(-3px);
@@ -336,32 +330,40 @@ const MobileToolbar = styled.div`
 
 const MobileButtonRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.7rem;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
   width: 100%;
-  max-width: 550px;
+  max-width: 100%;
   margin: 0 auto;
   justify-items: center;
+  
+  @media (max-width: 350px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
 `
 
-const MobileToolButton = styled.button<{ color?: string }>`
-  padding: 0.9rem 0.8rem;
-  background: ${props => props.color || 'rgba(255, 255, 255, 0.25)'};
+const MobileToolButton = styled.button<{ color?: string; $isActive?: boolean }>`
+  padding: 0.7rem 0.5rem;
+  background: ${props => props.color || (props.$isActive ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 255, 255, 0.25)')};
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 18px;
-  font-size: 0.8rem;
+  border: 2px solid ${props => props.$isActive ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.3)'};
+  border-radius: 15px;
+  font-size: 0.7rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: ${props => props.$isActive 
+    ? '0 6px 20px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.3)'
+    : '0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2)'};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
-  min-height: 80px;
-  min-width: 85px;
+  gap: 0.25rem;
+  min-height: 70px;
+  min-width: 0;
+  flex: 1;
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(10px);
@@ -392,6 +394,13 @@ const MobileToolButton = styled.button<{ color?: string }>`
     cursor: not-allowed;
     transform: none;
     border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  @media (max-width: 350px) {
+    min-height: 65px;
+    padding: 0.5rem 0.3rem;
+    font-size: 0.65rem;
+    gap: 0.15rem;
   }
 `
 
@@ -464,7 +473,7 @@ const colors = [
   // Row 2: Medium dark
   { name: 'Indigo', value: '#4B0082' },
   { name: 'Crimson', value: '#DC143C' },
-  { name: 'Sienna', value: '#A0522D' },
+  { name: 'Rust', value: '#B7410E' },
   { name: 'Olive', value: '#808000' },
   { name: 'Sea Green', value: '#2E8B57' },
   { name: 'Royal Blue', value: '#4169E1' },
@@ -509,6 +518,11 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
   const isProcessingRef = useRef(false)
   
+  // Tool selection: 'fill', 'brush', 'eraser'
+  const [selectedTool, setSelectedTool] = useState<'fill' | 'brush' | 'eraser'>('fill')
+  const [brushSize] = useState(10)
+  const isDrawingRef = useRef(false)
+  
   // Undo/Redo history
   const [history, setHistory] = useState<ImageData[]>([])
   const [historyStep, setHistoryStep] = useState(-1)
@@ -542,8 +556,8 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const isMobile = window.innerWidth <= 768
     if (isMobile) {
       // On mobile, fill entire available space
-      // Account for header (~50px), breadcrumbs (~25px) and toolbar (~110px) = 185px total
-      const availableHeight = window.innerHeight - 185
+      // Account for header (~60px), breadcrumbs (~30px) and toolbar (~120px) = 210px total
+      const availableHeight = window.innerHeight - 210
       canvas.width = window.innerWidth
       canvas.height = availableHeight
     } else {
@@ -633,15 +647,9 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     setHistory(newHistory)
   }
 
-  const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    // Prevent multiple simultaneous operations
-    if (isProcessingRef.current) {
-      console.log('Already processing, please wait...')
-      return
-    }
-    
+  const getCanvasCoordinates = (e: React.MouseEvent<HTMLCanvasElement> | React.Touch) => {
     const canvas = canvasRef.current
-    if (!canvas) return
+    if (!canvas) return null
 
     const rect = canvas.getBoundingClientRect()
     
@@ -666,31 +674,159 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     }
     
     // Convert click position to canvas coordinates
-    const clickX = e.clientX - rect.left - offsetX
-    const clickY = e.clientY - rect.top - offsetY
+    // Both MouseEvent and Touch have clientX and clientY properties
+    const clientX = e.clientX
+    const clientY = e.clientY
+    const clickX = clientX - rect.left - offsetX
+    const clickY = clientY - rect.top - offsetY
     
     const x = (clickX / displayWidth) * canvas.width
     const y = (clickY / displayHeight) * canvas.height
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
+    return { x, y }
+  }
 
-    // Set processing flag
-    isProcessingRef.current = true
+  const drawBrush = (x: number, y: number, color: string) => {
+    const canvas = canvasRef.current
+    const ctx = canvas?.getContext('2d')
+    if (!ctx || !canvas) return
+
+    // Get image data to check if we're painting over black lines
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
     
-    try {
-      // Save state before filling
-      saveToHistory(ctx)
-      
-      // Only fill tool is available
-      floodFill(ctx, Math.floor(x), Math.floor(y), selectedColor)
-    } finally {
-      // Reset processing flag AFTER fill completes
-      // Use setTimeout to allow UI to update
-      setTimeout(() => {
-        isProcessingRef.current = false
-      }, 100)
+    // Draw brush stroke pixel by pixel, skipping black lines
+    for (let i = -brushSize; i <= brushSize; i++) {
+      for (let j = -brushSize; j <= brushSize; j++) {
+        const distance = Math.sqrt(i * i + j * j)
+        if (distance <= brushSize) {
+          const pixelX = Math.floor(x + i)
+          const pixelY = Math.floor(y + j)
+          
+          if (pixelX >= 0 && pixelX < canvas.width && pixelY >= 0 && pixelY < canvas.height) {
+            const pixelColor = getPixelColor(imageData, pixelX, pixelY)
+            
+            // Don't paint over black lines
+            if (!isBlackLine(pixelColor)) {
+              const index = (pixelY * imageData.width + pixelX) * 4
+              const rgb = hexToRgb(color)
+              imageData.data[index] = rgb.r
+              imageData.data[index + 1] = rgb.g
+              imageData.data[index + 2] = rgb.b
+              imageData.data[index + 3] = 255
+            }
+          }
+        }
+      }
     }
+    
+    ctx.putImageData(imageData, 0, 0)
+  }
+
+  const handleCanvasMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current
+    const ctx = canvas?.getContext('2d')
+    if (!ctx || !canvas) return
+
+    const coords = getCanvasCoordinates(e)
+    if (!coords) return
+
+    const { x, y } = coords
+
+    if (selectedTool === 'fill' || selectedTool === 'eraser') {
+      // Prevent multiple simultaneous operations
+      if (isProcessingRef.current) {
+        console.log('Already processing, please wait...')
+        return
+      }
+
+      // Set processing flag
+      isProcessingRef.current = true
+      
+      try {
+        // Save state before filling
+        saveToHistory(ctx)
+        
+        // Use white for eraser, selected color for fill
+        const fillColor = selectedTool === 'eraser' ? '#FFFFFF' : selectedColor
+        floodFill(ctx, Math.floor(x), Math.floor(y), fillColor)
+      } finally {
+        // Reset processing flag AFTER fill completes
+        setTimeout(() => {
+          isProcessingRef.current = false
+        }, 100)
+      }
+    } else {
+      // Brush tool
+      isDrawingRef.current = true
+      saveToHistory(ctx)
+      drawBrush(x, y, selectedColor)
+    }
+  }
+
+  const handleCanvasMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!isDrawingRef.current || selectedTool === 'fill' || selectedTool === 'eraser') return
+
+    const coords = getCanvasCoordinates(e)
+    if (!coords) return
+
+    const { x, y } = coords
+    drawBrush(x, y, selectedColor)
+  }
+
+  const handleCanvasMouseUp = () => {
+    isDrawingRef.current = false
+  }
+
+  const handleCanvasTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault()
+    const touch = e.touches[0]
+    const canvas = canvasRef.current
+    const ctx = canvas?.getContext('2d')
+    if (!ctx || !canvas) return
+
+    const coords = getCanvasCoordinates(touch)
+    if (!coords) return
+
+    const { x, y } = coords
+
+    if (selectedTool === 'fill' || selectedTool === 'eraser') {
+      if (isProcessingRef.current) {
+        console.log('Already processing, please wait...')
+        return
+      }
+
+      isProcessingRef.current = true
+      
+      try {
+        saveToHistory(ctx)
+        const fillColor = selectedTool === 'eraser' ? '#FFFFFF' : selectedColor
+        floodFill(ctx, Math.floor(x), Math.floor(y), fillColor)
+      } finally {
+        setTimeout(() => {
+          isProcessingRef.current = false
+        }, 100)
+      }
+    } else {
+      isDrawingRef.current = true
+      saveToHistory(ctx)
+      drawBrush(x, y, selectedColor)
+    }
+  }
+
+  const handleCanvasTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault()
+    if (!isDrawingRef.current || selectedTool === 'fill' || selectedTool === 'eraser') return
+
+    const touch = e.touches[0]
+    const coords = getCanvasCoordinates(touch)
+    if (!coords) return
+
+    const { x, y } = coords
+    drawBrush(x, y, selectedColor)
+  }
+
+  const handleCanvasTouchEnd = () => {
+    isDrawingRef.current = false
   }
 
   const floodFill = (ctx: CanvasRenderingContext2D, startX: number, startY: number, fillColor: string) => {
@@ -709,8 +845,8 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const width = imageData.width
     const height = imageData.height
     
-    // Lower tolerance to prevent similar colors from overlapping
-    const tolerance = 25
+    // Conservative tolerance that prevents freezing while still filling most gaps
+    const tolerance = 33
     
     // Scanline flood fill - much faster than pixel-by-pixel
     const stack: [number, number][] = [[startX, startY]]
@@ -1017,14 +1153,28 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     }
   }, [onPrintReady, printImage])
 
+  // Determine cursor type based on selected tool
+  const getCursorType = () => {
+    if (selectedTool === 'fill') return 'crosshair'
+    if (selectedTool === 'brush') return 'crosshair'
+    if (selectedTool === 'eraser') return 'cell'
+    return 'default'
+  }
+
   return (
     <Container>
       <MainContent>
         <CanvasSection>
-          <CanvasWrapper>
+          <CanvasWrapper $cursorType={getCursorType()}>
             <canvas
               ref={canvasRef}
-              onClick={handleCanvasClick}
+              onMouseDown={handleCanvasMouseDown}
+              onMouseMove={handleCanvasMouseMove}
+              onMouseUp={handleCanvasMouseUp}
+              onMouseLeave={handleCanvasMouseUp}
+              onTouchStart={handleCanvasTouchStart}
+              onTouchMove={handleCanvasTouchMove}
+              onTouchEnd={handleCanvasTouchEnd}
             />
           </CanvasWrapper>
         </CanvasSection>
@@ -1062,6 +1212,24 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
           </ColorPaletteContainer>
 
           <ToolsContainer>
+            <ToolButton 
+              $isActive={selectedTool === 'fill'}
+              onClick={() => setSelectedTool('fill')}
+            >
+              🪣 Fill
+            </ToolButton>
+            <ToolButton 
+              $isActive={selectedTool === 'brush'}
+              onClick={() => setSelectedTool('brush')}
+            >
+              ✏️ Brush
+            </ToolButton>
+            <ToolButton 
+              $isActive={selectedTool === 'eraser'}
+              onClick={() => setSelectedTool('eraser')}
+            >
+              🧹 Eraser
+            </ToolButton>
             <ToolButton 
               onClick={() => {
                 undo()
@@ -1116,23 +1284,40 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
         <MobileToolbar>
           <MobileButtonRow>
             <MobileToolButton
+              $isActive={selectedTool === 'fill'}
+              onClick={() => setSelectedTool('fill')}
+            >
+              <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🪣</span>
+              <span>Fill</span>
+            </MobileToolButton>
+            <MobileToolButton
+              $isActive={selectedTool === 'brush'}
+              onClick={() => setSelectedTool('brush')}
+            >
+              <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>✏️</span>
+              <span>Brush</span>
+            </MobileToolButton>
+            <MobileToolButton
+              $isActive={selectedTool === 'eraser'}
+              onClick={() => setSelectedTool('eraser')}
+            >
+              <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🧹</span>
+              <span>Erase</span>
+            </MobileToolButton>
+            <MobileToolButton
               color={selectedColor}
               onClick={() => setIsColorPickerOpen(true)}
             >
-              <span style={{ fontSize: '2.2rem', lineHeight: '1' }}>🎨</span>
-              <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>Color</span>
+              <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🎨</span>
+              <span>Color</span>
             </MobileToolButton>
             <MobileToolButton onClick={undo} disabled={historyStep <= 0}>
-              <span style={{ fontSize: '2rem', lineHeight: '1' }}>↶</span>
-              <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>Undo</span>
+              <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>↶</span>
+              <span>Undo</span>
             </MobileToolButton>
-            <MobileToolButton onClick={redo} disabled={historyStep >= history.length - 1}>
-              <span style={{ fontSize: '2rem', lineHeight: '1' }}>↷</span>
-              <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>Redo</span>
-            </MobileToolButton>
-            <MobileToolButton onClick={clearCanvas}>
-              <span style={{ fontSize: '2rem', lineHeight: '1' }}>🗑️</span>
-              <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>Clear</span>
+            <MobileToolButton onClick={printImage}>
+              <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🖨️</span>
+              <span>Print</span>
             </MobileToolButton>
           </MobileButtonRow>
         </MobileToolbar>
