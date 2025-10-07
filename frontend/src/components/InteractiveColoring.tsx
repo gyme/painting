@@ -126,7 +126,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string }>`
     margin: 0;
     padding: 0;
     width: 100vw;
-    height: calc(100vh - 180px);
+    height: calc(100vh - 220px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -557,8 +557,8 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const isMobile = window.innerWidth <= 768
     if (isMobile) {
       // On mobile, fill entire available space
-      // Account for header (~60px), breadcrumbs (~30px) and toolbar (~90px) = 180px total
-      const availableHeight = window.innerHeight - 180
+      // Account for header (~60px), breadcrumbs (~40px) and toolbar (~120px with safe area + margins) = 220px total
+      const availableHeight = window.innerHeight - 220
       canvas.width = window.innerWidth
       canvas.height = availableHeight
     } else {
@@ -853,8 +853,9 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const width = imageData.width
     const height = imageData.height
     
-    // Conservative tolerance that prevents freezing while still filling most gaps
-    const tolerance = 33
+    // Moderate tolerance - images now have pure black lines without grey anti-aliasing
+    // This prevents color bleeding while filling properly
+    const tolerance = 35
     
     // Scanline flood fill - much faster than pixel-by-pixel
     const stack: [number, number][] = [[startX, startY]]
