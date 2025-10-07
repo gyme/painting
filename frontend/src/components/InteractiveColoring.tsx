@@ -126,7 +126,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string }>`
     margin: 0;
     padding: 0;
     width: 100vw;
-    height: calc(100vh - 220px);
+    height: calc(100vh - 240px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -557,8 +557,8 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const isMobile = window.innerWidth <= 768
     if (isMobile) {
       // On mobile, fill entire available space
-      // Account for header (~60px), breadcrumbs (~40px) and toolbar (~120px with safe area + margins) = 220px total
-      const availableHeight = window.innerHeight - 220
+      // Account for header (~60px), breadcrumbs (~40px) and toolbar (~140px with safe area + margins + padding) = 240px total
+      const availableHeight = window.innerHeight - 240
       canvas.width = window.innerWidth
       canvas.height = availableHeight
     } else {
