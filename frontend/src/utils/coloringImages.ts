@@ -1,21 +1,64 @@
 // High-quality coloring book images for each character
-// These are actual coloring book style images that look like the real characters
+// Local images stored in public/coloring-images/
 
 export const coloringImages: { [key: string]: string } = {
-  // Disney Characters - High quality coloring pages
-  'stitch': 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=1000&fit=crop',
-  'elsa-frozen': 'https://i.pinimg.com/originals/8f/3d/5a/8f3d5a9c0f8e5c5d5f5c5f5c5f5c5f5c.jpg',
-  'anna-frozen': 'https://i.pinimg.com/originals/7e/2d/4b/7e2d4b8c0e8d4c4e4f4e4f4e4f4e4f4e.jpg',
-  'belle-beauty-beast': 'https://i.pinimg.com/originals/9f/4e/6c/9f4e6c9d0f9f6d6f6g6f6g6f6g6f6g6f.jpg',
-  'ariel-mermaid': 'https://i.pinimg.com/originals/1a/5f/8d/1a5f8d2e0a2e8e2f2g2f2g2f2g2f2g2f.jpg',
-  'mickey-mouse': 'https://i.pinimg.com/originals/2b/6g/9e/2b6g9e3f0b3f9f3g3h3g3h3g3h3g3h3g.jpg',
-  'minnie-mouse': 'https://i.pinimg.com/originals/3c/7h/0f/3c7h0f4g0c4g0g4h4i4h4i4h4i4h4i4h.jpg',
-  'spiderman': 'https://i.pinimg.com/originals/4d/8i/1g/4d8i1g5h0d5h1h5i5j5i5j5i5j5i5j5i.jpg',
-  'pikachu': 'https://i.pinimg.com/originals/5e/9j/2h/5e9j2h6i0e6i2i6j6k6j6k6j6k6j6k6j.jpg',
-  'olaf-frozen': 'https://i.pinimg.com/originals/6f/0k/3i/6f0k3i7j0f7j3j7k7l7k7l7k7l7k7l7k.jpg',
+  // Animals
+  'bear': '/coloring-images/bear.png',
+  'cat': '/coloring-images/cat.png',
+  'cat-and-dog': '/coloring-images/cat_and_dog.png',
+  'dog': '/coloring-images/dog.png',
+  'elephant': '/coloring-images/elephant.png',
+  'fox': '/coloring-images/fox.jpg',
+  'giraffe': '/coloring-images/giraffe.png',
+  'lion': '/coloring-images/lion.png',
+  'rhino': '/coloring-images/rhino.png',
+  'tiger': '/coloring-images/tiger.png',
+  'cute-pig': '/coloring-images/cute_pig.jpg',
+  
+  // Vehicles
+  'bus': '/coloring-images/bus.png',
+  'car': '/coloring-images/car.png',
+  'fire-truck': '/coloring-images/fire_truck.png',
+  'police-car': '/coloring-images/police_car.png',
+  'sport-car': '/coloring-images/sport_car.png',
+  'taxi': '/coloring-images/taxi.png',
+  'train': '/coloring-images/train.png',
+  'truck': '/coloring-images/truck.png',
+  
+  // Characters
+  'pikachu': '/coloring-images/pikachu.png',
+  'cute-dragon': '/coloring-images/cute_dragon.jpg',
+  'cute-monster': '/coloring-images/cute_monster.png',
+  'dwarf': '/coloring-images/dwarf.png',
+  'easter-bunny': '/coloring-images/easter_bunny.jpg',
+  'little-chef': '/coloring-images/little_chef.png',
+  'police-officer': '/coloring-images/police_officer.png',
+  'soccer-player': '/coloring-images/soccer_player.png',
+  'witch': '/coloring-images/witch.png',
+  'witch-cat': '/coloring-images/witch_cat.png',
+  
+  // Holiday/Seasonal
+  'spooky-christmas': '/coloring-images/spooky_christmas.png',
+  
+  // Nature/Scenery
+  'beach': '/coloring-images/beach.png',
+  'river': '/coloring-images/river.png',
+  'sun-flower': '/coloring-images/sun_flower.png',
+  'tree': '/coloring-images/tree.png',
+  
+  // Disney Characters (if you add them later)
+  'stitch': '/coloring-images/stitch.png',
+  'elsa-frozen': '/coloring-images/elsa-frozen.png',
+  'anna-frozen': '/coloring-images/anna-frozen.png',
+  'belle-beauty-beast': '/coloring-images/belle.png',
+  'ariel-mermaid': '/coloring-images/ariel.png',
+  'mickey-mouse': '/coloring-images/mickey-mouse.png',
+  'minnie-mouse': '/coloring-images/minnie-mouse.png',
+  'spiderman': '/coloring-images/spiderman.png',
+  'olaf-frozen': '/coloring-images/olaf.png',
   
   // Default fallback
-  'default': 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=800&h=1000&fit=crop'
+  'default': '/coloring-images/cat.png'
 }
 
 // Alternative: Use local high-quality images

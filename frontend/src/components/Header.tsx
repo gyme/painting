@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import SearchBar from './SearchBar'
+import MobileMenu from './MobileMenu'
 
 const HeaderContainer = styled.header`
   background: rgba(255, 255, 255, 0.95);
@@ -10,6 +11,10 @@ const HeaderContainer = styled.header`
   position: sticky;
   top: 0;
   z-index: 100;
+
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+  }
 `
 
 const Nav = styled.nav`
@@ -38,7 +43,7 @@ const Logo = styled(Link)`
   }
 
   @media (max-width: 768px) {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 `
 
@@ -49,8 +54,7 @@ const NavLinks = styled.div`
   flex-wrap: wrap;
 
   @media (max-width: 768px) {
-    width: 100%;
-    justify-content: center;
+    display: none;
   }
 `
 
@@ -94,6 +98,7 @@ function Header() {
           <NavButton to="/category/Nature">🌳 Nature</NavButton>
           <NavButton to="/category/Vehicles">🚗 Vehicles</NavButton>
         </NavLinks>
+        <MobileMenu />
       </Nav>
     </HeaderContainer>
   )

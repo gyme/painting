@@ -5,7 +5,7 @@ import { getProfessionalColoringArt } from './ProfessionalColoringArt'
 const Container = styled.div`
   position: relative;
   width: 100%;
-  max-width: 800px;
+  max-width: 1400px;
   margin: 0 auto;
   background: white;
   border-radius: 20px;
@@ -18,6 +18,86 @@ const Container = styled.div`
     max-width: 100%;
     margin: 0;
     box-shadow: none;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    flex: 1;
+  }
+`
+
+const MainContent = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  @media (max-width: 768px) {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+`
+
+const CanvasSection = styled.div`
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    flex: 1;
+    min-height: 0;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+`
+
+const ColorSection = styled.div<{ $isOpen?: boolean }>`
+  width: 360px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) ${props => props.$isOpen ? 'scale(1)' : 'scale(0.9)'};
+    width: 88%;
+    max-width: 380px;
+    padding: 0;
+    gap: 0;
+    background: transparent;
+    border-radius: 24px;
+    box-shadow: none;
+    z-index: 2000;
+    opacity: ${props => props.$isOpen ? '1' : '0'};
+    pointer-events: ${props => props.$isOpen ? 'all' : 'none'};
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: visible;
+    max-height: none;
   }
 `
 
@@ -28,6 +108,11 @@ const CanvasWrapper = styled.div`
   overflow: hidden;
   background: white;
   cursor: crosshair;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 100%;
   
   canvas {
     display: block;
@@ -39,104 +124,326 @@ const CanvasWrapper = styled.div`
     border: none;
     border-radius: 0;
     margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: calc(100vh - 220px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    position: relative;
+    
+    canvas {
+      display: block;
+      background: white;
+    }
   }
 `
 
 const ColorPaletteContainer = styled.div`
-  margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.1rem;
+  background: white;
+  padding: 1.75rem 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  
+  @media (max-width: 1024px) {
+    margin-top: 2rem;
+  }
   
   @media (max-width: 768px) {
     margin-top: 0;
-    padding: 1rem;
+    border-radius: 20px;
     background: white;
+    padding: 1.4rem 1.2rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    gap: 0.85rem;
   }
 `
 
 const PaletteTitle = styled.h3`
   font-size: 1.5rem;
   font-weight: 700;
-  color: #2d3436;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin: 0;
+  text-align: center;
+  flex-shrink: 0;
+  padding-bottom: 0.75rem;
   
   @media (max-width: 768px) {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    padding-bottom: 0.5rem;
   }
 `
 
 const ColorGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.85rem;
+  justify-items: center;
+  align-items: center;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.7rem;
+  }
   
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+    justify-content: center;
+    width: 100%;
   }
 `
 
-const ColorButton = styled.button<{ color: string; isSelected: boolean }>`
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  border: ${props => props.isSelected ? '4px solid #2d3436' : '3px solid #ddd'};
+const ColorButton = styled.button<{ color: string; $isSelected: boolean }>`
+  width: 50px;
+  height: 50px;
+  border-radius: 13px;
+  border: none;
   background: ${props => props.color};
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: ${props => props.isSelected ? '0 6px 20px rgba(0, 0, 0, 0.3)' : '0 2px 8px rgba(0, 0, 0, 0.1)'};
-  transform: ${props => props.isSelected ? 'scale(1.1)' : 'scale(1)'};
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: ${props => props.$isSelected 
+    ? '0 8px 25px rgba(102, 126, 234, 0.5), 0 0 0 4px white, 0 0 0 6px #667eea' 
+    : '0 4px 15px rgba(0, 0, 0, 0.15)'};
+  transform: ${props => props.$isSelected ? 'scale(1.05) translateY(-2px)' : 'scale(1)'};
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 15px;
+    background: ${props => props.$isSelected ? 'linear-gradient(135deg, #667eea, #764ba2)' : 'transparent'};
+    z-index: -1;
+    opacity: ${props => props.$isSelected ? '1' : '0'};
+    transition: opacity 0.3s ease;
+  }
 
   &:hover {
-    transform: scale(1.15);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: scale(1.12) translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   }
 
   &:active {
-    transform: scale(0.95);
+    transform: scale(0.95) translateY(0);
+  }
+  
+  @media (max-width: 1024px) {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
   }
   
   @media (max-width: 768px) {
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
+    width: 46px;
+    height: 46px;
+    border-radius: 11px;
+    margin: 0 auto;
   }
 `
 
 const ToolsContainer = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.4rem;
+  background: white;
+  padding: 0.75rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  
+  @media (max-width: 1024px) {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    padding: 1rem;
+  }
   
   @media (max-width: 768px) {
-    margin-top: 0.5rem;
-    padding: 0 1rem 1rem 1rem;
+    display: none;
   }
 `
 
-const ToolButton = styled.button<{ isActive?: boolean }>`
-  padding: 0.8rem 1.5rem;
-  background: ${props => props.isActive ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'white'};
-  color: ${props => props.isActive ? 'white' : '#2d3436'};
-  border: 3px solid ${props => props.isActive ? '#667eea' : '#ddd'};
-  border-radius: 12px;
-  font-size: 1rem;
+const ToolButton = styled.button<{ $isActive?: boolean }>`
+  padding: 0.5rem 0.5rem;
+  background: ${props => props.$isActive ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : '#f8f9fa'};
+  color: ${props => props.$isActive ? 'white' : '#2d3436'};
+  border: 2px solid ${props => props.$isActive ? '#667eea' : '#e9ecef'};
+  border-radius: 8px;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
+  text-align: center;
 
-  &:hover {
+  &:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background: ${props => props.$isActive ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'white'};
+  }
+  
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  @media (max-width: 1024px) {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    flex: 1;
+    min-width: 100px;
   }
   
   @media (max-width: 768px) {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
+    padding: 0.7rem 0.5rem;
+    font-size: 0.85rem;
+    border-radius: 10px;
+    white-space: nowrap;
   }
 `
+
+const MobileToolbar = styled.div`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 0.7rem 0.9rem calc(0.7rem + env(safe-area-inset-bottom)) 0.9rem;
+    box-shadow: 0 -4px 30px rgba(102, 126, 234, 0.4);
+    flex-shrink: 0;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+  }
+`
+
+const MobileButtonRow = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.7rem;
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+  justify-items: center;
+`
+
+const MobileToolButton = styled.button<{ color?: string }>`
+  padding: 0.9rem 0.8rem;
+  background: ${props => props.color || 'rgba(255, 255, 255, 0.25)'};
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 18px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 80px;
+  min-width: 85px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    
+    &::before {
+      opacity: 1;
+    }
+  }
+  
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+`
+
+
+const MobileOverlay = styled.div<{ $isOpen: boolean }>`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1999;
+    opacity: ${props => props.$isOpen ? '1' : '0'};
+    pointer-events: ${props => props.$isOpen ? 'all' : 'none'};
+    transition: opacity 0.3s ease;
+  }
+`
+
+const CloseButton = styled.button`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ff4757;
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+`
+
 
 interface InteractiveColoringProps {
   imageUrl: string
@@ -146,76 +453,80 @@ interface InteractiveColoringProps {
 }
 
 const colors = [
-  // Primary Colors
+  // Row 1: Dark shades
+  { name: 'Charcoal', value: '#36454F' },
+  { name: 'Maroon', value: '#800000' },
+  { name: 'Brown', value: '#8B4513' },
+  { name: 'Dark Green', value: '#006400' },
+  { name: 'Teal', value: '#008080' },
+  { name: 'Navy', value: '#000080' },
+  
+  // Row 2: Medium dark
+  { name: 'Indigo', value: '#4B0082' },
+  { name: 'Crimson', value: '#DC143C' },
+  { name: 'Sienna', value: '#A0522D' },
+  { name: 'Olive', value: '#808000' },
+  { name: 'Sea Green', value: '#2E8B57' },
+  { name: 'Royal Blue', value: '#4169E1' },
+  
+  // Row 3: Medium shades
+  { name: 'Purple', value: '#9370DB' },
   { name: 'Red', value: '#FF0000' },
   { name: 'Orange', value: '#FFA500' },
-  { name: 'Yellow', value: '#FFFF00' },
-  { name: 'Green', value: '#32CD32' },
-  { name: 'Blue', value: '#1E90FF' },
-  { name: 'Purple', value: '#9370DB' },
-  { name: 'Pink', value: '#FF69B4' },
-  { name: 'Brown', value: '#8B4513' },
-  
-  // Light/Pastel Colors
-  { name: 'Light Blue', value: '#87CEEB' },
-  { name: 'Light Pink', value: '#FFB6C1' },
-  { name: 'Light Green', value: '#90EE90' },
-  { name: 'Peach', value: '#FFCBA4' },
-  { name: 'Lavender', value: '#E6E6FA' },
-  { name: 'Mint', value: '#98FF98' },
-  { name: 'Baby Blue', value: '#89CFF0' },
-  { name: 'Cream', value: '#FFFDD0' },
-  
-  // Bright/Vibrant Colors
-  { name: 'Hot Pink', value: '#FF1493' },
-  { name: 'Lime Green', value: '#00FF00' },
-  { name: 'Turquoise', value: '#40E0D0' },
-  { name: 'Magenta', value: '#FF00FF' },
-  { name: 'Coral', value: '#FF7F50' },
-  { name: 'Teal', value: '#008080' },
-  
-  // Dark/Rich Colors
-  { name: 'Navy Blue', value: '#000080' },
-  { name: 'Forest Green', value: '#228B22' },
-  { name: 'Maroon', value: '#800000' },
-  { name: 'Dark Purple', value: '#6A0DAD' },
-  
-  // Neutrals
-  { name: 'White', value: '#FFFFFF' },
-  { name: 'Light Gray', value: '#D3D3D3' },
-  { name: 'Gray', value: '#808080' },
-  { name: 'Beige', value: '#F5F5DC' },
-  
-  // Metallic
-  { name: 'Gold', value: '#FFD700' },
-  { name: 'Silver', value: '#C0C0C0' },
-  
-  // Additional Vibrant Colors
-  { name: 'Cyan', value: '#00FFFF' },
-  { name: 'Violet', value: '#8B00FF' },
-  { name: 'Amber', value: '#FFBF00' },
-  { name: 'Salmon', value: '#FA8072' },
-  { name: 'Olive', value: '#808000' },
-  { name: 'Indigo', value: '#4B0082' },
-  { name: 'Rose', value: '#FF007F' },
+  { name: 'Yellow Green', value: '#9ACD32' },
   { name: 'Emerald', value: '#50C878' },
+  { name: 'Blue', value: '#0066FF' },
   
-  // More Colors
-  { name: 'Dark Gray', value: '#4A4A4A' },
-  { name: 'Burgundy', value: '#800020' },
-  { name: 'Sky Blue', value: '#87CEEB' },
-  { name: 'Tan', value: '#D2B48C' },
-  { name: 'Plum', value: '#8E4585' },
+  // Row 4: Bright shades
+  { name: 'Magenta', value: '#FF00FF' },
+  { name: 'Hot Pink', value: '#FF1493' },
+  { name: 'Coral', value: '#FF7F50' },
+  { name: 'Lime', value: '#00FF00' },
+  { name: 'Aqua', value: '#00CED1' },
+  { name: 'Sky Blue', value: '#00BFFF' },
+  
+  // Row 5: Pastel shades
+  { name: 'Lavender', value: '#E6E6FA' },
+  { name: 'Pink', value: '#FFB6C1' },
+  { name: 'Peach', value: '#FFDAB9' },
+  { name: 'Mint', value: '#98FF98' },
+  { name: 'Powder Blue', value: '#B0E0E6' },
+  { name: 'Periwinkle', value: '#CCCCFF' },
+  
+  // Row 6: Light & Neutral
+  { name: 'White', value: '#FFFFFF' },
+  { name: 'Cream', value: '#FFFDD0' },
+  { name: 'Yellow', value: '#FFFF00' },
+  { name: 'Beige', value: '#F5F5DC' },
+  { name: 'Silver', value: '#C0C0C0' },
+  { name: 'Gray', value: '#808080' },
 ]
 
-function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColoringProps) {
+function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: InteractiveColoringProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [selectedColor, setSelectedColor] = useState(colors[0].value)
   const originalImageRef = useRef<HTMLImageElement | null>(null)
+  const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
+  const isProcessingRef = useRef(false)
   
   // Undo/Redo history
   const [history, setHistory] = useState<ImageData[]>([])
   const [historyStep, setHistoryStep] = useState(-1)
+  
+  // Prevent scrolling on mobile
+  useEffect(() => {
+    if (window.innerWidth <= 768) {
+      document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
+      
+      return () => {
+        document.body.style.overflow = ''
+        document.body.style.position = ''
+        document.body.style.width = ''
+      }
+    }
+  }, [])
   
   // WATERMARK CONFIGURATION - Change this to your website name
   const WATERMARK_TEXT = 'MyColoringApp.com' // ← CHANGE THIS!
@@ -227,16 +538,18 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // Set canvas size - bigger on mobile for better visibility
+    // Set canvas size - optimized for performance on all devices
     const isMobile = window.innerWidth <= 768
     if (isMobile) {
-      // On mobile, use FULL width - edge to edge
+      // On mobile, fill entire available space
+      // Account for header (~50px), breadcrumbs (~25px) and toolbar (~110px) = 185px total
+      const availableHeight = window.innerHeight - 185
       canvas.width = window.innerWidth
-      // Make canvas very tall - most of the screen minus space for colors/buttons
-      canvas.height = Math.max(window.innerHeight * 0.65, window.innerWidth * 1.6)
+      canvas.height = availableHeight
     } else {
-      canvas.width = 800
-      canvas.height = 1000
+      // Desktop: also reduce size for better performance
+      canvas.width = 600
+      canvas.height = 800
     }
 
     // Fill with white background
@@ -248,16 +561,6 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
     img.crossOrigin = 'anonymous'
     
     // Try local images first, then fall back to drawing
-    const addWatermark = (ctx: CanvasRenderingContext2D) => {
-      ctx.save()
-      ctx.globalAlpha = 1.0
-      ctx.font = 'bold 24px Arial'
-      ctx.fillStyle = '#000000'
-      ctx.textAlign = 'center'
-      ctx.fillText(WATERMARK_TEXT, canvas.width / 2, canvas.height - 30)
-      ctx.restore()
-    }
-
     img.onload = () => {
       // Store the image for later use (clear, etc.)
       originalImageRef.current = img
@@ -271,8 +574,7 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
       const y = (canvas.height - img.height * scale) / 2
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
       
-      // Add watermark
-      addWatermark(ctx)
+      // No watermark during coloring - only on save/print
     }
     
     img.onerror = () => {
@@ -295,8 +597,7 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
           const y = (canvas.height - svgImg.height * scale) / 2
           ctx.drawImage(svgImg, x, y, svgImg.width * scale, svgImg.height * scale)
           
-          // Add watermark
-          addWatermark(ctx)
+          // No watermark during coloring - only on save/print
           
           URL.revokeObjectURL(url)
         }
@@ -305,10 +606,10 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
       // Remove fallback drawing - if no artwork exists, canvas stays white
     }
     
-    // Try to load PNG from public folder first
-    img.src = `/coloring-images/${urlKey}.png`
+    // Try to load the image from the provided imageUrl first
+    img.src = imageUrl
     
-  }, [urlKey, WATERMARK_TEXT])
+  }, [imageUrl, urlKey, WATERMARK_TEXT])
 
   // Removed all draw functions - using professional SVG artwork instead
 
@@ -322,8 +623,8 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
     const newHistory = history.slice(0, historyStep + 1)
     newHistory.push(imageData)
     
-    // Limit history to last 20 states to prevent memory issues
-    if (newHistory.length > 20) {
+    // Limit history to last 10 states to prevent memory issues on mobile
+    if (newHistory.length > 10) {
       newHistory.shift()
     } else {
       setHistoryStep(historyStep + 1)
@@ -333,28 +634,68 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
   }
 
   const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    // Prevent multiple simultaneous operations
+    if (isProcessingRef.current) {
+      console.log('Already processing, please wait...')
+      return
+    }
+    
     const canvas = canvasRef.current
     if (!canvas) return
 
     const rect = canvas.getBoundingClientRect()
-    const scaleX = canvas.width / rect.width
-    const scaleY = canvas.height / rect.height
-    const x = (e.clientX - rect.left) * scaleX
-    const y = (e.clientY - rect.top) * scaleY
+    
+    // Calculate the actual displayed canvas size with object-fit: contain
+    const canvasAspect = canvas.width / canvas.height
+    const displayAspect = rect.width / rect.height
+    
+    let displayWidth, displayHeight, offsetX, offsetY
+    
+    if (displayAspect > canvasAspect) {
+      // Pillarboxed (black bars on sides)
+      displayHeight = rect.height
+      displayWidth = displayHeight * canvasAspect
+      offsetX = (rect.width - displayWidth) / 2
+      offsetY = 0
+    } else {
+      // Letterboxed (black bars on top/bottom)
+      displayWidth = rect.width
+      displayHeight = displayWidth / canvasAspect
+      offsetX = 0
+      offsetY = (rect.height - displayHeight) / 2
+    }
+    
+    // Convert click position to canvas coordinates
+    const clickX = e.clientX - rect.left - offsetX
+    const clickY = e.clientY - rect.top - offsetY
+    
+    const x = (clickX / displayWidth) * canvas.width
+    const y = (clickY / displayHeight) * canvas.height
 
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // Save state before filling
-    saveToHistory(ctx)
+    // Set processing flag
+    isProcessingRef.current = true
     
-    // Only fill tool is available
-    floodFill(ctx, Math.floor(x), Math.floor(y), selectedColor)
+    try {
+      // Save state before filling
+      saveToHistory(ctx)
+      
+      // Only fill tool is available
+      floodFill(ctx, Math.floor(x), Math.floor(y), selectedColor)
+    } finally {
+      // Reset processing flag AFTER fill completes
+      // Use setTimeout to allow UI to update
+      setTimeout(() => {
+        isProcessingRef.current = false
+      }, 100)
+    }
   }
 
-  const floodFill = (ctx: CanvasRenderingContext2D, x: number, y: number, fillColor: string) => {
+  const floodFill = (ctx: CanvasRenderingContext2D, startX: number, startY: number, fillColor: string) => {
     const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
-    const targetColor = getPixelColor(imageData, x, y)
+    const targetColor = getPixelColor(imageData, startX, startY)
     const fillColorRGB = hexToRgb(fillColor)
     
     // Don't fill if clicking on black lines (original artwork)
@@ -363,96 +704,78 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
       return
     }
     
-    if (colorsMatch(targetColor, fillColorRGB)) return
+    if (colorsMatch(targetColor, fillColorRGB, 5)) return
 
-    const visited = new Set<string>()
-    const stack: [number, number][] = [[x, y]]
+    const width = imageData.width
+    const height = imageData.height
     
-    // Moderate tolerance to prevent color bleeding while still catching edges
-    const fillTolerance = 35
+    // Lower tolerance to prevent similar colors from overlapping
+    const tolerance = 25
+    
+    // Scanline flood fill - much faster than pixel-by-pixel
+    const stack: [number, number][] = [[startX, startY]]
     
     while (stack.length > 0) {
-      const [currentX, currentY] = stack.pop()!
+      const [x, y] = stack.pop()!
       
-      if (currentX < 0 || currentX >= imageData.width || currentY < 0 || currentY >= imageData.height) continue
+      if (y < 0 || y >= height || x < 0 || x >= width) continue
       
-      const key = `${currentX},${currentY}`
-      if (visited.has(key)) continue
-      visited.add(key)
+      let currentX = x
+      const currentY = y
       
-      const currentColor = getPixelColor(imageData, currentX, currentY)
+      // Move left to find the leftmost pixel in this row
+      while (currentX >= 0) {
+        const color = getPixelColor(imageData, currentX, currentY)
+        if (isBlackLine(color) || !colorsMatch(color, targetColor, tolerance)) break
+        currentX--
+      }
+      currentX++ // Step back to the valid pixel
       
-      // Don't color over black lines
-      if (isBlackLine(currentColor)) continue
+      let spanAbove = false
+      let spanBelow = false
       
-      // Use higher tolerance for matching to catch edge pixels
-      if (!colorsMatch(currentColor, targetColor, fillTolerance)) continue
-      
-      setPixelColor(imageData, currentX, currentY, fillColorRGB)
-      
-      // Add diagonal directions for better edge coverage
-      stack.push([currentX + 1, currentY])
-      stack.push([currentX - 1, currentY])
-      stack.push([currentX, currentY + 1])
-      stack.push([currentX, currentY - 1])
-      
-      // Add diagonal fills to catch corner pixels
-      stack.push([currentX + 1, currentY + 1])
-      stack.push([currentX + 1, currentY - 1])
-      stack.push([currentX - 1, currentY + 1])
-      stack.push([currentX - 1, currentY - 1])
-    }
-    
-    ctx.putImageData(imageData, 0, 0)
-    
-    // Apply 2 passes to fill small gaps near edges (reduced to prevent bleeding)
-    for (let pass = 0; pass < 2; pass++) {
-      fillEdgeGaps(ctx, imageData, fillColorRGB, targetColor)
-    }
-  }
-  
-  const fillEdgeGaps = (ctx: CanvasRenderingContext2D, _originalData: ImageData, fillColorRGB: any, originalTarget: any) => {
-    const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
-    let foundGaps = false
-    
-    // Look for white/light pixels near filled areas
-    for (let y = 1; y < imageData.height - 1; y++) {
-      for (let x = 1; x < imageData.width - 1; x++) {
-        const currentColor = getPixelColor(imageData, x, y)
+      // Fill the scanline from left to right
+      while (currentX < width) {
+        const color = getPixelColor(imageData, currentX, currentY)
         
-        // Skip if already filled or is a black line
-        if (colorsMatch(currentColor, fillColorRGB, 15)) continue
-        if (isBlackLine(currentColor)) continue
+        // Stop if we hit a boundary
+        if (isBlackLine(color) || !colorsMatch(color, targetColor, tolerance)) break
         
-        // Check if this pixel is similar to the original target color (moderate tolerance)
-        if (!colorsMatch(currentColor, originalTarget, 50)) continue
+        // Fill this pixel
+        setPixelColor(imageData, currentX, currentY, fillColorRGB)
         
-        // Check if surrounded by filled pixels (meaning it's a gap)
-        let filledNeighbors = 0
-        const neighbors = [
-          [x+1, y], [x-1, y], [x, y+1], [x, y-1],
-          [x+1, y+1], [x+1, y-1], [x-1, y+1], [x-1, y-1]
-        ]
-        
-        for (const [nx, ny] of neighbors) {
-          if (nx < 0 || nx >= imageData.width || ny < 0 || ny >= imageData.height) continue
-          const neighborColor = getPixelColor(imageData, nx, ny)
-          if (colorsMatch(neighborColor, fillColorRGB, 15)) {
-            filledNeighbors++
+        // Check pixel above
+        if (currentY > 0) {
+          const colorAbove = getPixelColor(imageData, currentX, currentY - 1)
+          if (!isBlackLine(colorAbove) && colorsMatch(colorAbove, targetColor, tolerance)) {
+            if (!spanAbove) {
+              stack.push([currentX, currentY - 1])
+              spanAbove = true
+            }
+          } else {
+            spanAbove = false
           }
         }
         
-        // Require 6 or more neighbors to be filled (more conservative to prevent bleeding)
-        if (filledNeighbors >= 6) {
-          setPixelColor(imageData, x, y, fillColorRGB)
-          foundGaps = true
+        // Check pixel below
+        if (currentY < height - 1) {
+          const colorBelow = getPixelColor(imageData, currentX, currentY + 1)
+          if (!isBlackLine(colorBelow) && colorsMatch(colorBelow, targetColor, tolerance)) {
+            if (!spanBelow) {
+              stack.push([currentX, currentY + 1])
+              spanBelow = true
+            }
+          } else {
+            spanBelow = false
+          }
         }
+        
+        currentX++
       }
     }
     
-    if (foundGaps) {
-      ctx.putImageData(imageData, 0, 0)
-    }
+    ctx.putImageData(imageData, 0, 0)
+    // Edge filling disabled for performance - flood fill with tolerance handles most cases
   }
 
   const getPixelColor = (imageData: ImageData, x: number, y: number) => {
@@ -482,11 +805,11 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
     } : { r: 0, g: 0, b: 0 }
   }
 
-  const colorsMatch = (a: any, b: any, tolerance: number = 30) => {
-    // Increased tolerance to handle anti-aliasing and color variations
-    return Math.abs(a.r - b.r) < tolerance && 
-           Math.abs(a.g - b.g) < tolerance && 
-           Math.abs(a.b - b.b) < tolerance
+  const colorsMatch = (a: any, b: any, tolerance: number = 10) => {
+    // Lower tolerance for more accurate fills - prevents color bleeding
+    return Math.abs(a.r - b.r) <= tolerance && 
+           Math.abs(a.g - b.g) <= tolerance && 
+           Math.abs(a.b - b.b) <= tolerance
   }
 
   const undo = () => {
@@ -535,14 +858,7 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
       const y = (canvas.height - img.height * scale) / 2
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
       
-      // Re-add watermark
-      ctx.save()
-      ctx.globalAlpha = 1.0
-      ctx.font = 'bold 24px Arial'
-      ctx.fillStyle = '#000000'
-      ctx.textAlign = 'center'
-      ctx.fillText(WATERMARK_TEXT, canvas.width / 2, canvas.height - 30)
-      ctx.restore()
+      // No watermark during coloring - only on save/print
     }
   }
 
@@ -550,11 +866,31 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
     const canvas = canvasRef.current
     if (!canvas) return
     
+    // Create a temporary canvas with watermark for saving
+    const saveCanvas = document.createElement('canvas')
+    saveCanvas.width = canvas.width
+    saveCanvas.height = canvas.height
+    const saveCtx = saveCanvas.getContext('2d')
+    if (!saveCtx) return
+    
+    // Copy current canvas
+    saveCtx.drawImage(canvas, 0, 0)
+    
+    // Add watermark for saved image
+    saveCtx.save()
+    saveCtx.globalAlpha = 1.0
+    saveCtx.font = 'bold 24px Arial'
+    saveCtx.fillStyle = '#000000'
+    saveCtx.textAlign = 'center'
+    saveCtx.fillText(WATERMARK_TEXT, saveCanvas.width / 2, saveCanvas.height - 30)
+    saveCtx.restore()
+    
     const link = document.createElement('a')
     link.download = `${title || 'coloring-page'}.png`
-    link.href = canvas.toDataURL()
+    link.href = saveCanvas.toDataURL()
     link.click()
   }
+
 
   const printImage = () => {
     const canvas = canvasRef.current
@@ -683,56 +1019,123 @@ function InteractiveColoring({ urlKey, title, onPrintReady }: InteractiveColorin
 
   return (
     <Container>
-      <CanvasWrapper>
-        <canvas
-          ref={canvasRef}
-          onClick={handleCanvasClick}
-        />
-      </CanvasWrapper>
-
-      <ColorPaletteContainer>
-        <PaletteTitle>🎨 Pick a Color:</PaletteTitle>
-        <ColorGrid>
-          {colors.map((color) => (
-            <ColorButton
-              key={color.value}
-              color={color.value}
-              isSelected={selectedColor === color.value}
-              onClick={() => setSelectedColor(color.value)}
-              title={color.name}
+      <MainContent>
+        <CanvasSection>
+          <CanvasWrapper>
+            <canvas
+              ref={canvasRef}
+              onClick={handleCanvasClick}
             />
-          ))}
-        </ColorGrid>
-      </ColorPaletteContainer>
+          </CanvasWrapper>
+        </CanvasSection>
 
-      <ToolsContainer>
-        <ToolButton isActive>
-          Fill
-        </ToolButton>
-        <ToolButton 
-          onClick={undo} 
-          disabled={historyStep <= 0}
-          style={{ opacity: historyStep <= 0 ? 0.5 : 1, cursor: historyStep <= 0 ? 'not-allowed' : 'pointer' }}
-        >
-          ↶ Undo
-        </ToolButton>
-        <ToolButton 
-          onClick={redo}
-          disabled={historyStep >= history.length - 1}
-          style={{ opacity: historyStep >= history.length - 1 ? 0.5 : 1, cursor: historyStep >= history.length - 1 ? 'not-allowed' : 'pointer' }}
-        >
-          ↷ Redo
-        </ToolButton>
-        <ToolButton onClick={clearCanvas}>
-          🗑️ Clear
-        </ToolButton>
-        <ToolButton onClick={saveImage}>
-          💾 Save
-        </ToolButton>
-        <ToolButton onClick={printImage}>
-          🖨️ Print
-        </ToolButton>
-      </ToolsContainer>
+        {/* Mobile Overlay */}
+        <MobileOverlay 
+          $isOpen={isColorPickerOpen} 
+          onClick={() => setIsColorPickerOpen(false)}
+        />
+
+        <ColorSection $isOpen={isColorPickerOpen}>
+          <CloseButton onClick={() => setIsColorPickerOpen(false)}>
+            ×
+          </CloseButton>
+          
+          <ColorPaletteContainer>
+            <PaletteTitle>🎨 Pick a Color</PaletteTitle>
+            <ColorGrid>
+              {colors.map((color, index) => (
+                <ColorButton
+                  key={`${color.name}-${index}`}
+                  color={color.value}
+                  $isSelected={selectedColor === color.value}
+                  onClick={() => {
+                    setSelectedColor(color.value)
+                    // Auto-close on mobile after selecting color
+                    if (window.innerWidth <= 768) {
+                      setTimeout(() => setIsColorPickerOpen(false), 300)
+                    }
+                  }}
+                  title={color.name}
+                />
+              ))}
+            </ColorGrid>
+          </ColorPaletteContainer>
+
+          <ToolsContainer>
+            <ToolButton 
+              onClick={() => {
+                undo()
+                if (window.innerWidth <= 768) {
+                  setIsColorPickerOpen(false)
+                }
+              }} 
+              disabled={historyStep <= 0}
+            >
+              ↶ Undo
+            </ToolButton>
+            <ToolButton 
+              onClick={() => {
+                redo()
+                if (window.innerWidth <= 768) {
+                  setIsColorPickerOpen(false)
+                }
+              }}
+              disabled={historyStep >= history.length - 1}
+            >
+              ↷ Redo
+            </ToolButton>
+            <ToolButton onClick={() => {
+              clearCanvas()
+              if (window.innerWidth <= 768) {
+                setIsColorPickerOpen(false)
+              }
+            }}>
+              🗑️ Clear
+            </ToolButton>
+            <ToolButton onClick={() => {
+              saveImage()
+              if (window.innerWidth <= 768) {
+                setIsColorPickerOpen(false)
+              }
+            }}>
+              💾 Save
+            </ToolButton>
+            <ToolButton onClick={() => {
+              printImage()
+              if (window.innerWidth <= 768) {
+                setIsColorPickerOpen(false)
+              }
+            }}>
+              🖨️ Print
+            </ToolButton>
+          </ToolsContainer>
+        </ColorSection>
+      </MainContent>
+
+      {/* Mobile Toolbar - Static at bottom */}
+        <MobileToolbar>
+          <MobileButtonRow>
+            <MobileToolButton
+              color={selectedColor}
+              onClick={() => setIsColorPickerOpen(true)}
+            >
+              <span style={{ fontSize: '2.2rem', lineHeight: '1' }}>🎨</span>
+              <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>Color</span>
+            </MobileToolButton>
+            <MobileToolButton onClick={undo} disabled={historyStep <= 0}>
+              <span style={{ fontSize: '2rem', lineHeight: '1' }}>↶</span>
+              <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>Undo</span>
+            </MobileToolButton>
+            <MobileToolButton onClick={redo} disabled={historyStep >= history.length - 1}>
+              <span style={{ fontSize: '2rem', lineHeight: '1' }}>↷</span>
+              <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>Redo</span>
+            </MobileToolButton>
+            <MobileToolButton onClick={clearCanvas}>
+              <span style={{ fontSize: '2rem', lineHeight: '1' }}>🗑️</span>
+              <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>Clear</span>
+            </MobileToolButton>
+          </MobileButtonRow>
+        </MobileToolbar>
     </Container>
   )
 }

@@ -10,6 +10,16 @@ const BreadcrumbContainer = styled.nav`
   margin-bottom: 2rem;
   flex-wrap: wrap;
   gap: 0.5rem;
+  
+  @media (max-width: 768px) {
+    padding: 0.3rem 0.5rem;
+    margin-bottom: 0;
+    font-size: 0.7rem;
+    border-radius: 0;
+    background: white;
+    border-bottom: none;
+    box-shadow: none;
+  }
 `
 
 const BreadcrumbLink = styled(Link)`
@@ -22,16 +32,29 @@ const BreadcrumbLink = styled(Link)`
     color: #764ba2;
     text-decoration: underline;
   }
+  
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
 `
 
 const BreadcrumbText = styled.span`
   color: #2d3748;
   font-weight: 600;
+  
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
 `
 
 const Separator = styled.span`
   color: #a0aec0;
   margin: 0 0.5rem;
+  
+  @media (max-width: 768px) {
+    margin: 0 0.3rem;
+    font-size: 0.7rem;
+  }
 `
 
 interface Breadcrumb {

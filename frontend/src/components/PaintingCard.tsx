@@ -192,7 +192,7 @@ function PaintingCard({ painting }: PaintingCardProps) {
     <Card to={`/painting/${painting.urlKey}`}>
       <ImageContainer>
         <CardImage 
-          src={`/coloring-images/${painting.urlKey}.png`}
+          src={painting.imageUrl || painting.thumbnailUrl}
           alt={painting.title}
           onError={(e) => {
             // Fallback to original artwork SVG, or mini SVG if not available

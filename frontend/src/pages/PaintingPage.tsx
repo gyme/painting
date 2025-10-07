@@ -12,6 +12,13 @@ const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  
+  @media (max-width: 768px) {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 75px); /* Account for header */
+  }
 `
 
 const BackButton = styled(Link)`
@@ -34,6 +41,10 @@ const BackButton = styled(Link)`
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   }
 
+  @media (max-width: 768px) {
+    display: none;
+  }
+
   @media print {
     display: none;
   }
@@ -45,20 +56,31 @@ const Card = styled.div`
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 
+  @media (max-width: 768px) {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
   @media print {
     box-shadow: none;
     border-radius: 0;
   }
 `
 
-const Content = styled.div`
+const Content = styled.div<{ style?: any }>`
   padding: 3rem;
 
   @media (max-width: 768px) {
-    padding: 2rem;
+    padding: 0;
   }
 
   @media print {
+    display: none;
+  }
+`
+
+const MobileHidden = styled.div`
+  @media (max-width: 768px) {
     display: none;
   }
 `
@@ -369,6 +391,7 @@ function PaintingPage() {
             onPrintReady={handlePrintReady}
           />
           
+          <MobileHidden>
           <div style={{ marginTop: '3rem' }}>
           <Header>
             <TitleSection>
@@ -405,6 +428,7 @@ function PaintingPage() {
             </Section>
           )}
           </div>
+          </MobileHidden>
         </Content>
       </Card>
       </Container>
