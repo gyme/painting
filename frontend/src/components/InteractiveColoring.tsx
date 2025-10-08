@@ -932,10 +932,10 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const width = imageData.width
     const height = imageData.height
     
-    // Optimized tolerance for ULTRA-high quality images (3x upscaled, heavy dilation)
-    // Balanced to handle both light and dark colors perfectly
-    // 25 is the sweet spot: dark colors fill cleanly, light colors don't bleed
-    const tolerance = 25
+    // Adaptive tolerance based on target color brightness
+    // Grey backgrounds need higher tolerance for perfect filling
+    const targetBrightness = (targetColor.r + targetColor.g + targetColor.b) / 3
+    const tolerance = targetBrightness > 60 ? 40 : 25  // Higher for grey backgrounds, normal for colors
     
     // Scanline flood fill - much faster than pixel-by-pixel
     const stack: [number, number][] = [[startX, startY]]
