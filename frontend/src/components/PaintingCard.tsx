@@ -220,8 +220,8 @@ const PaintingCard = memo(function PaintingCard({ painting }: PaintingCardProps)
             src={imagePath}
             alt={painting.title}
             onError={(e) => {
-              // If PNG fails, try JPG
               const target = e.target as HTMLImageElement
+              // If PNG fails, try JPG
               if (target.src.endsWith('.png')) {
                 target.src = target.src.replace('.png', '.jpg')
               } else {
