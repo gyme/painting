@@ -767,9 +767,9 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
   }, [])
 
   const isOriginalArtwork = useCallback((color: { r: number, g: number, b: number }): boolean => {
-    // For brush protection: protect darker pixels including shading
-    // This prevents the brush from painting over grey/shaded areas
-    return color.r < 80 && color.g < 80 && color.b < 80
+    // For brush protection: ONLY protect very dark black lines
+    // Allow painting over grey colors and user-painted areas
+    return color.r < 40 && color.g < 40 && color.b < 40
   }, [])
 
   const saveToHistory = useCallback((ctx: CanvasRenderingContext2D) => {
