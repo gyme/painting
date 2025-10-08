@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Paint palette shape -->
+  <ellipse cx="50" cy="55" rx="45" ry="40" fill="#FFF" stroke="#333" stroke-width="3"/>
+  
+  <!-- Thumb hole -->
+  <ellipse cx="75" cy="70" rx="8" ry="10" fill="#FFF" stroke="#333" stroke-width="2"/>
+  
+  <!-- Paint blobs - colorful dots -->
+  <circle cx="30" cy="35" r="8" fill="#FF6B6B"/>
+  <circle cx="50" cy="30" r="8" fill="#4ECDC4"/>
+  <circle cx="70" cy="35" r="8" fill="#FFE66D"/>
+  <circle cx="35" cy="55" r="8" fill="#A8E6CF"/>
+  <circle cx="55" cy="55" r="8" fill="#FFB6C1"/>
+  <circle cx="60" cy="70" r="8" fill="#C7B3E5"/>
+  
+  <!-- Paint brush -->
+  <g transform="translate(15, 15) rotate(-45 0 0)">
+    <!-- Brush handle -->
+    <rect x="-2" y="0" width="4" height="25" fill="#D4A574" stroke="#8B6F47" stroke-width="1"/>
+    <!-- Brush ferrule (metal part) -->
+    <rect x="-3" y="23" width="6" height="4" fill="#C0C0C0" stroke="#808080" stroke-width="0.5"/>
+    <!-- Brush bristles -->
+    <path d="M -3 27 L -3 32 L 0 35 L 3 32 L 3 27 Z" fill="#667EEA" stroke="#4C63B6" stroke-width="0.5"/>
+  </g>
+</svg>
+
