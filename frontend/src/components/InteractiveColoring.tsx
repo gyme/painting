@@ -608,35 +608,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       console.log('Drawing image at:', x, y, 'scale:', scale)
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
       
-      // Replace grey background with white for display (keeps original for perfect coloring)
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
-      const data = imageData.data
-      const greyBg = { r: 76, g: 105, b: 113 } // The grey background color
-      const tolerance = 30 // Color similarity threshold
-      
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i]
-        const g = data[i + 1]
-        const b = data[i + 2]
-        
-        // Calculate distance from grey background color
-        const distance = Math.sqrt(
-          Math.pow(r - greyBg.r, 2) +
-          Math.pow(g - greyBg.g, 2) +
-          Math.pow(b - greyBg.b, 2)
-        )
-        
-        // If pixel is close to grey background, make it white
-        if (distance <= tolerance) {
-          data[i] = 255     // R
-          data[i + 1] = 255 // G
-          data[i + 2] = 255 // B
-          // Keep alpha as-is
-        }
-      }
-      
-      ctx.putImageData(imageData, 0, 0)
-      
       // No watermark during coloring - only on save/print
     }
     
@@ -673,32 +644,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
           const x = (canvas.width - svgImg.width * scale) / 2
           const y = (canvas.height - svgImg.height * scale) / 2
           ctx.drawImage(svgImg, x, y, svgImg.width * scale, svgImg.height * scale)
-          
-          // Replace grey background with white for display
-          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
-          const data = imageData.data
-          const greyBg = { r: 76, g: 105, b: 113 }
-          const tolerance = 30
-          
-          for (let i = 0; i < data.length; i += 4) {
-            const r = data[i]
-            const g = data[i + 1]
-            const b = data[i + 2]
-            
-            const distance = Math.sqrt(
-              Math.pow(r - greyBg.r, 2) +
-              Math.pow(g - greyBg.g, 2) +
-              Math.pow(b - greyBg.b, 2)
-            )
-            
-            if (distance <= tolerance) {
-              data[i] = 255
-              data[i + 1] = 255
-              data[i + 2] = 255
-            }
-          }
-          
-          ctx.putImageData(imageData, 0, 0)
           
           // No watermark during coloring - only on save/print
           
@@ -1137,32 +1082,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       const x = (canvas.width - img.width * scale) / 2
       const y = (canvas.height - img.height * scale) / 2
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
-      
-      // Replace grey background with white for display
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
-      const data = imageData.data
-      const greyBg = { r: 76, g: 105, b: 113 }
-      const tolerance = 30
-      
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i]
-        const g = data[i + 1]
-        const b = data[i + 2]
-        
-        const distance = Math.sqrt(
-          Math.pow(r - greyBg.r, 2) +
-          Math.pow(g - greyBg.g, 2) +
-          Math.pow(b - greyBg.b, 2)
-        )
-        
-        if (distance <= tolerance) {
-          data[i] = 255
-          data[i + 1] = 255
-          data[i + 2] = 255
-        }
-      }
-      
-      ctx.putImageData(imageData, 0, 0)
       
       // No watermark during coloring - only on save/print
     }
