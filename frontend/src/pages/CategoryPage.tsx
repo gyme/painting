@@ -75,7 +75,10 @@ function CategoryPage() {
 
   const { data, isLoading, error } = useQuery(
     ['categoryPaintings', category],
-    () => paintingsApi.getPaintingsByCategory(category!, 0, 50)
+    () => paintingsApi.getPaintingsByCategory(category!, 0, 20), // Reduced from 50 to 20 for faster loading
+    {
+      staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    }
   )
 
   if (isLoading) {

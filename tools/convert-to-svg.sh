@@ -36,13 +36,12 @@ for input_file in "$INPUT_DIR"/*.png; do
     
     # Convert PNG to PBM (portable bitmap) using ImageMagick
     # -threshold 50% makes it pure black and white (no grey)
-    if magick "$input_file" -threshold 50% -negate "$temp_pbm" 2>/dev/null; then
+    # Removed -negate to keep black as black (not inverted)
+    if magick "$input_file" -threshold 50% "$temp_pbm" 2>&1; then
         # Convert PBM to SVG using potrace
         # -s: SVG output
-        # -t: suppress progress bar
-        # -k: retain white pixels (they become holes)
-        # -a: corner threshold (0-1.34, higher = more round corners)
-        if potrace -s -t -k 0.85 -a 1.0 "$temp_pbm" -o "$output_svg" 2>/dev/null; then
+        # -k: corner threshold (0-1.34, higher = more round corners)
+        if potrace -s -k 0.85 "$temp_pbm" -o "$output_svg" 2>&1; then
             echo "✓ Created: $filename.svg"
             ((processed++))
         else
@@ -70,7 +69,7 @@ for input_file in "$INPUT_DIR"/*.jpg; do
     temp_pbm="/tmp/${filename}.pbm"
     output_svg="$OUTPUT_DIR/${filename}.svg"
     
-    if magick "$input_file" -threshold 50% -negate "$temp_pbm" 2>&1; then
+    if magick "$input_file" -threshold 50% "$temp_pbm" 2>&1; then
         if potrace -s -k 0.85 "$temp_pbm" -o "$output_svg" 2>&1; then
             echo "✓ Created: $filename.svg"
             ((processed++))

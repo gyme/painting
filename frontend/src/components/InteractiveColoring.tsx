@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
 import { getProfessionalColoringArt } from './ProfessionalColoringArt'
 
@@ -575,8 +575,26 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const img = new Image()
     img.crossOrigin = 'anonymous'
     
+    // Construct proper image path
+    const getImagePath = () => {
+      // Check if imageUrl is valid
+      if (imageUrl && !imageUrl.includes('placeholder') && !imageUrl.includes('example.com')) {
+        console.log('Using imageUrl:', imageUrl)
+        // Always use PNG, not JPG
+        const pngUrl = imageUrl.replace('.jpg', '.png')
+        console.log('Corrected to PNG:', pngUrl)
+        return pngUrl
+      }
+      // Fallback: construct from urlKey
+      const fileName = urlKey.replace(/-/g, '_')
+      const path = `/coloring-images/${fileName}.png`
+      console.log('Using constructed path:', path)
+      return path
+    }
+    
     // Try local images first, then fall back to drawing
     img.onload = () => {
+      console.log('Image loaded successfully:', img.src, 'Size:', img.width, 'x', img.height)
       // Store the image for later use (clear, etc.)
       originalImageRef.current = img
       
@@ -587,20 +605,35 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       const scale = Math.min(canvas.width / img.width, canvas.height / img.height)
       const x = (canvas.width - img.width * scale) / 2
       const y = (canvas.height - img.height * scale) / 2
+      console.log('Drawing image at:', x, y, 'scale:', scale)
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
       
       // No watermark during coloring - only on save/print
     }
     
-    img.onerror = () => {
-      // PNG not found, try our professional high-quality SVG artwork
+    img.onerror = (e) => {
+      console.error('Image failed to load:', img.src, e)
+      // PNG failed, try JPG
+      if (img.src.endsWith('.png')) {
+        const fileName = urlKey.replace(/-/g, '_')
+        const jpgPath = `/coloring-images/${fileName}.jpg`
+        const absoluteJpgPath = `${window.location.origin}${jpgPath}`
+        console.log('Trying JPG fallback:', absoluteJpgPath)
+        img.src = absoluteJpgPath
+        return
+      }
+      
+      console.log('Both PNG and JPG failed, trying SVG artwork')
+      // Both PNG and JPG failed, try our professional high-quality SVG artwork
       const originalArt = getProfessionalColoringArt(urlKey)
       if (originalArt) {
+        console.log('Found SVG artwork for:', urlKey)
         // Render SVG to canvas
         const svgBlob = new Blob([originalArt], { type: 'image/svg+xml;charset=utf-8' })
         const url = URL.createObjectURL(svgBlob)
         const svgImg = new Image()
         svgImg.onload = () => {
+          console.log('SVG loaded successfully')
           // Store the SVG image for later use
           originalImageRef.current = svgImg
           
@@ -617,45 +650,126 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
           URL.revokeObjectURL(url)
         }
         svgImg.src = url
+      } else {
+        console.log('No SVG artwork found for:', urlKey)
       }
       // Remove fallback drawing - if no artwork exists, canvas stays white
     }
     
-    // Try to load the image from the provided imageUrl first
-    img.src = imageUrl
+    // Try to load the image
+    const imagePath = getImagePath()
+    // Force absolute URL with current origin to avoid cache issues
+    const absolutePath = imagePath.startsWith('http') ? imagePath : `${window.location.origin}${imagePath}`
+    console.log('Loading image from:', absolutePath)
+    img.src = absolutePath
     
   }, [imageUrl, urlKey, WATERMARK_TEXT])
 
+  // Attach touch event listeners with { passive: false } to allow preventDefault
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const handleTouchStart = (e: TouchEvent) => {
+      e.preventDefault()
+      const touch = e.touches[0]
+      const ctx = canvas.getContext('2d')
+      if (!ctx || !canvas) return
+
+      const coords = getCanvasCoordinates(touch as any)
+      if (!coords) return
+
+      const { x, y } = coords
+
+      if (selectedTool === 'fill' || selectedTool === 'eraser') {
+        if (isProcessingRef.current) {
+          console.log('Already processing, please wait...')
+          return
+        }
+
+        isProcessingRef.current = true
+        
+        try {
+          saveToHistory(ctx)
+          const fillColor = selectedTool === 'eraser' ? '#FFFFFF' : selectedColor
+          floodFill(ctx, Math.floor(x), Math.floor(y), fillColor)
+        } finally {
+          setTimeout(() => {
+            isProcessingRef.current = false
+          }, 100)
+        }
+      } else {
+        isDrawingRef.current = true
+        saveToHistory(ctx)
+        drawBrush(x, y, selectedColor)
+      }
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault()
+      if (!isDrawingRef.current || selectedTool === 'fill' || selectedTool === 'eraser') return
+
+      const touch = e.touches[0]
+      const coords = getCanvasCoordinates(touch as any)
+      if (!coords) return
+
+      const { x, y } = coords
+      drawBrush(x, y, selectedColor)
+    }
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      e.preventDefault()
+      isDrawingRef.current = false
+    }
+
+    // Add listeners with { passive: false } to allow preventDefault
+    canvas.addEventListener('touchstart', handleTouchStart, { passive: false })
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: false })
+    canvas.addEventListener('touchend', handleTouchEnd, { passive: false })
+
+    return () => {
+      canvas.removeEventListener('touchstart', handleTouchStart)
+      canvas.removeEventListener('touchmove', handleTouchMove)
+      canvas.removeEventListener('touchend', handleTouchEnd)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTool, selectedColor, brushSize])
+
   // Removed all draw functions - using professional SVG artwork instead
 
-  const isBlackLine = (color: { r: number, g: number, b: number }): boolean => {
+  const isBlackLine = useCallback((color: { r: number, g: number, b: number }): boolean => {
     // Consider pixels as black lines if they're very dark (black or near-black)
     // This threshold allows fill/erase to work on grey areas
     return color.r < 30 && color.g < 30 && color.b < 30
-  }
+  }, [])
 
-  const isOriginalArtwork = (color: { r: number, g: number, b: number }): boolean => {
+  const isOriginalArtwork = useCallback((color: { r: number, g: number, b: number }): boolean => {
     // For brush protection: protect darker pixels including shading
     // This prevents the brush from painting over grey/shaded areas
     return color.r < 80 && color.g < 80 && color.b < 80
-  }
+  }, [])
 
-  const saveToHistory = (ctx: CanvasRenderingContext2D) => {
+  const saveToHistory = useCallback((ctx: CanvasRenderingContext2D) => {
     const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
-    const newHistory = history.slice(0, historyStep + 1)
-    newHistory.push(imageData)
+    setHistory(prevHistory => {
+      const newHistory = prevHistory.slice(0, historyStep + 1)
+      newHistory.push(imageData)
+      
+      // Limit history to last 10 states to prevent memory issues on mobile
+      if (newHistory.length > 10) {
+        newHistory.shift()
+        return newHistory
+      }
+      return newHistory
+    })
     
-    // Limit history to last 10 states to prevent memory issues on mobile
-    if (newHistory.length > 10) {
-      newHistory.shift()
-    } else {
-      setHistoryStep(historyStep + 1)
-    }
-    
-    setHistory(newHistory)
-  }
+    setHistoryStep(prev => {
+      const newStep = prev + 1
+      return newStep >= 10 ? 9 : newStep
+    })
+  }, [historyStep])
 
-  const getCanvasCoordinates = (e: React.MouseEvent<HTMLCanvasElement> | React.Touch) => {
+  const getCanvasCoordinates = useCallback((e: React.MouseEvent<HTMLCanvasElement> | React.Touch) => {
     const canvas = canvasRef.current
     if (!canvas) return null
 
@@ -692,17 +806,24 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const y = (clickY / displayHeight) * canvas.height
 
     return { x, y }
-  }
+  }, [])
 
-  const drawBrush = (x: number, y: number, color: string) => {
+  const drawBrush = useCallback((x: number, y: number, color: string) => {
     const canvas = canvasRef.current
     const ctx = canvas?.getContext('2d')
     if (!ctx || !canvas) return
 
-    // Get image data to check if we're painting over original artwork
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+    // Optimize: Only read a small region around the brush, not the entire canvas
+    const size = brushSize * 2 + 1
+    const startX = Math.max(0, Math.floor(x - brushSize))
+    const startY = Math.max(0, Math.floor(y - brushSize))
+    const width = Math.min(size, canvas.width - startX)
+    const height = Math.min(size, canvas.height - startY)
     
-    // Draw brush stroke pixel by pixel, skipping original artwork
+    // Only read the small region we need
+    const imageData = ctx.getImageData(startX, startY, width, height)
+    
+    // Draw brush stroke pixel by pixel in the small region
     for (let i = -brushSize; i <= brushSize; i++) {
       for (let j = -brushSize; j <= brushSize; j++) {
         const distance = Math.sqrt(i * i + j * j)
@@ -710,12 +831,20 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
           const pixelX = Math.floor(x + i)
           const pixelY = Math.floor(y + j)
           
-          if (pixelX >= 0 && pixelX < canvas.width && pixelY >= 0 && pixelY < canvas.height) {
-            const pixelColor = getPixelColor(imageData, pixelX, pixelY)
+          // Convert to local coordinates in the small region
+          const localX = pixelX - startX
+          const localY = pixelY - startY
+          
+          if (localX >= 0 && localX < width && localY >= 0 && localY < height) {
+            const index = (localY * imageData.width + localX) * 4
+            const pixelColor = {
+              r: imageData.data[index],
+              g: imageData.data[index + 1],
+              b: imageData.data[index + 2]
+            }
             
             // Don't paint over original artwork (uses stricter threshold)
             if (!isOriginalArtwork(pixelColor)) {
-              const index = (pixelY * imageData.width + pixelX) * 4
               const rgb = hexToRgb(color)
               imageData.data[index] = rgb.r
               imageData.data[index + 1] = rgb.g
@@ -727,8 +856,9 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       }
     }
     
-    ctx.putImageData(imageData, 0, 0)
-  }
+    // Write back only the small region
+    ctx.putImageData(imageData, startX, startY)
+  }, [brushSize, isOriginalArtwork])
 
   const handleCanvasMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current
@@ -785,57 +915,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     isDrawingRef.current = false
   }
 
-  const handleCanvasTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
-    e.preventDefault()
-    const touch = e.touches[0]
-    const canvas = canvasRef.current
-    const ctx = canvas?.getContext('2d')
-    if (!ctx || !canvas) return
-
-    const coords = getCanvasCoordinates(touch)
-    if (!coords) return
-
-    const { x, y } = coords
-
-    if (selectedTool === 'fill' || selectedTool === 'eraser') {
-      if (isProcessingRef.current) {
-        console.log('Already processing, please wait...')
-        return
-      }
-
-      isProcessingRef.current = true
-      
-      try {
-        saveToHistory(ctx)
-        const fillColor = selectedTool === 'eraser' ? '#FFFFFF' : selectedColor
-        floodFill(ctx, Math.floor(x), Math.floor(y), fillColor)
-      } finally {
-        setTimeout(() => {
-          isProcessingRef.current = false
-        }, 100)
-      }
-    } else {
-      isDrawingRef.current = true
-      saveToHistory(ctx)
-      drawBrush(x, y, selectedColor)
-    }
-  }
-
-  const handleCanvasTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
-    e.preventDefault()
-    if (!isDrawingRef.current || selectedTool === 'fill' || selectedTool === 'eraser') return
-
-    const touch = e.touches[0]
-    const coords = getCanvasCoordinates(touch)
-    if (!coords) return
-
-    const { x, y } = coords
-    drawBrush(x, y, selectedColor)
-  }
-
-  const handleCanvasTouchEnd = () => {
-    isDrawingRef.current = false
-  }
 
   const floodFill = (ctx: CanvasRenderingContext2D, startX: number, startY: number, fillColor: string) => {
     const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
@@ -853,9 +932,10 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const width = imageData.width
     const height = imageData.height
     
-    // Moderate tolerance - images now have pure black lines without grey anti-aliasing
-    // This prevents color bleeding while filling properly
-    const tolerance = 35
+    // Optimized tolerance for ULTRA-high quality images (3x upscaled, heavy dilation)
+    // Balanced to handle both light and dark colors perfectly
+    // 25 is the sweet spot: dark colors fill cleanly, light colors don't bleed
+    const tolerance = 25
     
     // Scanline flood fill - much faster than pixel-by-pixel
     const stack: [number, number][] = [[startX, startY]]
@@ -941,23 +1021,23 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     imageData.data[index + 3] = 255
   }
 
-  const hexToRgb = (hex: string) => {
+  const hexToRgb = useCallback((hex: string) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
     return result ? {
       r: parseInt(result[1], 16),
       g: parseInt(result[2], 16),
       b: parseInt(result[3], 16)
     } : { r: 0, g: 0, b: 0 }
-  }
+  }, [])
 
-  const colorsMatch = (a: any, b: any, tolerance: number = 10) => {
+  const colorsMatch = useCallback((a: any, b: any, tolerance: number = 10) => {
     // Lower tolerance for more accurate fills - prevents color bleeding
     return Math.abs(a.r - b.r) <= tolerance && 
            Math.abs(a.g - b.g) <= tolerance && 
            Math.abs(a.b - b.b) <= tolerance
-  }
+  }, [])
 
-  const undo = () => {
+  const undo = useCallback(() => {
     if (historyStep <= 0) return
     
     const canvas = canvasRef.current
@@ -967,9 +1047,9 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const previousState = history[historyStep - 1]
     ctx.putImageData(previousState, 0, 0)
     setHistoryStep(historyStep - 1)
-  }
+  }, [history, historyStep])
 
-  const redo = () => {
+  const redo = useCallback(() => {
     if (historyStep >= history.length - 1) return
     
     const canvas = canvasRef.current
@@ -979,9 +1059,9 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const nextState = history[historyStep + 1]
     ctx.putImageData(nextState, 0, 0)
     setHistoryStep(historyStep + 1)
-  }
+  }, [history, historyStep])
 
-  const clearCanvas = () => {
+  const clearCanvas = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -1005,9 +1085,9 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       
       // No watermark during coloring - only on save/print
     }
-  }
+  }, [saveToHistory])
 
-  const saveImage = () => {
+  const saveImage = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     
@@ -1034,10 +1114,10 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     link.download = `${title || 'coloring-page'}.png`
     link.href = saveCanvas.toDataURL()
     link.click()
-  }
+  }, [title, WATERMARK_TEXT])
 
 
-  const printImage = () => {
+  const printImage = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     
@@ -1153,7 +1233,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       </html>
     `)
     printWindow.document.close()
-  }
+  }, [title, WATERMARK_TEXT])
   
   // Expose print function to parent component
   useEffect(() => {
@@ -1163,12 +1243,12 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
   }, [onPrintReady, printImage])
 
   // Determine cursor type based on selected tool
-  const getCursorType = () => {
+  const getCursorType = useCallback(() => {
     if (selectedTool === 'fill') return 'crosshair'
     if (selectedTool === 'brush') return 'crosshair'
     if (selectedTool === 'eraser') return 'cell'
     return 'default'
-  }
+  }, [selectedTool])
 
   return (
     <Container>
@@ -1181,9 +1261,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
               onMouseMove={handleCanvasMouseMove}
               onMouseUp={handleCanvasMouseUp}
               onMouseLeave={handleCanvasMouseUp}
-              onTouchStart={handleCanvasTouchStart}
-              onTouchMove={handleCanvasTouchMove}
-              onTouchEnd={handleCanvasTouchEnd}
             />
           </CanvasWrapper>
         </CanvasSection>

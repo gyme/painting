@@ -102,19 +102,28 @@ function HomePage() {
   const { data: featuredData, isLoading: featuredLoading, error: featuredError } = useQuery(
     'featuredPaintings',
     () => paintingsApi.getFeaturedPaintings(0, 6),
-    { enabled: !searchQuery }
+    { 
+      enabled: !searchQuery,
+      staleTime: 10 * 60 * 1000, // 10 minutes - featured content doesn't change often
+    }
   )
 
   const { data: popularData, isLoading: popularLoading, error: popularError } = useQuery(
     'popularPaintings',
     () => paintingsApi.getPopularPaintings(0, 6),
-    { enabled: !searchQuery }
+    { 
+      enabled: !searchQuery,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    }
   )
 
   const { data: allData, isLoading: allLoading, error: allError } = useQuery(
     'allPaintings',
     () => paintingsApi.getAllPaintings(0, 12),
-    { enabled: !searchQuery }
+    { 
+      enabled: !searchQuery,
+      staleTime: 3 * 60 * 1000, // 3 minutes
+    }
   )
 
   if (searchQuery) {

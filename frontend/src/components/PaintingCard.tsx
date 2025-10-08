@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { memo, useState } from 'react'
 import styled from 'styled-components'
 import { Painting } from '../api/paintings'
 import { getProfessionalColoringArt } from './ProfessionalColoringArt'
@@ -70,13 +71,15 @@ const ImageContainer = styled.div`
   overflow: hidden;
 `
 
-const CardImage = styled.img`
+const CardImage = styled.img.attrs({
+  loading: 'lazy' // Native lazy loading for better performance
+})`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Changed from cover to contain - shows full image without cropping */
   background: white;
 `
 
@@ -181,37 +184,58 @@ interface PaintingCardProps {
   painting: Painting
 }
 
-function PaintingCard({ painting }: PaintingCardProps) {
+const PaintingCard = memo(function PaintingCard({ painting }: PaintingCardProps) {
+  const [imageError, setImageError] = useState(false)
+  
   const getDifficultyText = (difficulty: number) => {
     if (difficulty === 1) return '⭐ Easy'
     if (difficulty === 2) return '⭐⭐ Medium'
     return '⭐⭐⭐ Hard'
   }
 
+  // Construct proper image path from urlKey
+  // Try PNG first, then fallback to JPG if PNG fails
+  const getImagePath = () => {
+    // First check if painting has a valid imageUrl
+    if (painting.imageUrl && 
+        !painting.imageUrl.includes('placeholder') && 
+        !painting.imageUrl.includes('example.com')) {
+      return painting.imageUrl
+    }
+    
+    // Fallback: construct from urlKey
+    // Convert urlKey like "spooky-christmas" to "spooky_christmas.png"
+    const fileName = painting.urlKey.replace(/-/g, '_')
+    return `/coloring-images/${fileName}.png`
+  }
+
+  const imagePath = getImagePath()
+  
   return (
     <Card to={`/painting/${painting.urlKey}`}>
       <ImageContainer>
-        <CardImage 
-          src={painting.imageUrl || painting.thumbnailUrl}
-          alt={painting.title}
-          onError={(e) => {
-            // Fallback to original artwork SVG, or mini SVG if not available
-            const target = e.target as HTMLImageElement
-            target.style.display = 'none'
-            const svgContainer = target.nextElementSibling as HTMLElement
-            if (svgContainer) {
-              const originalArt = getProfessionalColoringArt(painting.urlKey)
-              if (originalArt) {
-                svgContainer.innerHTML = originalArt
+        {/* Show PNG/JPG image directly - no SVG overlay */}
+        {!imageError ? (
+          <CardImage 
+            src={imagePath}
+            alt={painting.title}
+            onError={(e) => {
+              // If PNG fails, try JPG
+              const target = e.target as HTMLImageElement
+              if (target.src.endsWith('.png')) {
+                target.src = target.src.replace('.png', '.jpg')
+              } else {
+                // Both PNG and JPG failed - show SVG fallback
+                setImageError(true)
               }
-              svgContainer.style.display = 'flex'
-            }
-          }}
-        />
-        <SVGContainer 
-          style={{ display: 'none' }}
-          dangerouslySetInnerHTML={{ __html: getProfessionalColoringArt(painting.urlKey) || getMiniSVG(painting.urlKey) }} 
-        />
+            }}
+          />
+        ) : (
+          <SVGContainer 
+            dangerouslySetInnerHTML={{ __html: getProfessionalColoringArt(painting.urlKey) || getMiniSVG(painting.urlKey) }} 
+          />
+        )}
+        
         {painting.featured && <FeaturedBadge>⭐ Featured!</FeaturedBadge>}
         <Badge difficulty={painting.difficulty}>
           {getDifficultyText(painting.difficulty)}
@@ -227,6 +251,6 @@ function PaintingCard({ painting }: PaintingCardProps) {
       </Content>
     </Card>
   )
-}
+})
 
 export default PaintingCard

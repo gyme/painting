@@ -9,6 +9,9 @@ const queryClient = new QueryClient({
     queries: {
       refetchOnWindowFocus: false,
       retry: 1,
+      staleTime: 5 * 60 * 1000, // 5 minutes - data stays fresh
+      cacheTime: 10 * 60 * 1000, // 10 minutes - cache persists
+      refetchOnMount: false, // Don't refetch on component mount if data is fresh
     },
   },
 })
