@@ -550,7 +550,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
     if (!ctx) return
 
     // Set canvas size - optimized for performance on all devices
@@ -673,7 +673,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const handleTouchStart = (e: TouchEvent) => {
       e.preventDefault()
       const touch = e.touches[0]
-      const ctx = canvas.getContext('2d')
+      const ctx = canvas.getContext('2d', { willReadFrequently: true })
       if (!ctx || !canvas) return
 
       const coords = getCanvasCoordinates(touch as any)
@@ -810,7 +810,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
   const drawBrush = useCallback((x: number, y: number, color: string) => {
     const canvas = canvasRef.current
-    const ctx = canvas?.getContext('2d')
+    const ctx = canvas?.getContext('2d', { willReadFrequently: true })
     if (!ctx || !canvas) return
 
     // Optimize: Only read a small region around the brush, not the entire canvas
@@ -862,7 +862,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
   const handleCanvasMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current
-    const ctx = canvas?.getContext('2d')
+    const ctx = canvas?.getContext('2d', { willReadFrequently: true })
     if (!ctx || !canvas) return
 
     const coords = getCanvasCoordinates(e)
@@ -1041,7 +1041,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     if (historyStep <= 0) return
     
     const canvas = canvasRef.current
-    const ctx = canvas?.getContext('2d')
+    const ctx = canvas?.getContext('2d', { willReadFrequently: true })
     if (!ctx || !canvas) return
     
     const previousState = history[historyStep - 1]
@@ -1053,7 +1053,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     if (historyStep >= history.length - 1) return
     
     const canvas = canvasRef.current
-    const ctx = canvas?.getContext('2d')
+    const ctx = canvas?.getContext('2d', { willReadFrequently: true })
     if (!ctx || !canvas) return
     
     const nextState = history[historyStep + 1]
@@ -1064,7 +1064,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
   const clearCanvas = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
     if (!ctx) return
 
     // Save state before clearing
@@ -1095,7 +1095,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const saveCanvas = document.createElement('canvas')
     saveCanvas.width = canvas.width
     saveCanvas.height = canvas.height
-    const saveCtx = saveCanvas.getContext('2d')
+    const saveCtx = saveCanvas.getContext('2d', { willReadFrequently: true })
     if (!saveCtx) return
     
     // Copy current canvas
@@ -1125,11 +1125,11 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const printCanvas = document.createElement('canvas')
     printCanvas.width = canvas.width
     printCanvas.height = canvas.height
-    const printCtx = printCanvas.getContext('2d')
+    const printCtx = printCanvas.getContext('2d', { willReadFrequently: true })
     if (!printCtx) return
     
     // Get the current canvas data
-    const currentImageData = canvas.getContext('2d')?.getImageData(0, 0, canvas.width, canvas.height)
+    const currentImageData = canvas.getContext('2d', { willReadFrequently: true })?.getImageData(0, 0, canvas.width, canvas.height)
     if (!currentImageData) return
     
     // Draw white background
