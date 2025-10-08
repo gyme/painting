@@ -120,12 +120,13 @@ const CanvasWrapper = styled.div<{ $cursorType: string }>`
     margin: 0;
     padding: 0;
     width: 100vw;
-    height: calc(100vh - 240px);
+    height: calc(100vh - 280px);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     background: white;
     position: relative;
+    padding-top: 1rem;
     
     canvas {
       display: block;
