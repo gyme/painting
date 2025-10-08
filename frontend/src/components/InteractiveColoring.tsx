@@ -42,7 +42,7 @@ const MainContent = styled.div`
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    padding-bottom: 150px; /* Space for color slider + toolbar */
+    padding-bottom: 165px; /* Space for color slider + toolbar */
   }
 `
 
@@ -308,9 +308,9 @@ const MobileColorSlider = styled.div`
     display: block;
     background: rgba(255, 255, 255, 0.98);
     border-top: 2px solid rgba(102, 126, 234, 0.2);
-    padding: 0.8rem 0;
+    padding: 0.9rem 0 calc(0.9rem + env(safe-area-inset-bottom, 0px)) 0;
     position: fixed;
-    bottom: 70px; /* Above the toolbar */
+    bottom: 85px; /* Above the toolbar - increased space */
     left: 0;
     right: 0;
     z-index: 9;
