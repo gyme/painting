@@ -42,6 +42,7 @@ const MainContent = styled.div`
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    padding-bottom: 150px; /* Space for color slider + toolbar */
   }
 `
 
@@ -81,15 +82,8 @@ const ColorSection = styled.div<{ $isOpen?: boolean }>`
   }
   
   @media (max-width: 768px) {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) ${props => props.$isOpen ? 'scale(1)' : 'scale(0.9)'};
-    width: 88%;
-    max-width: 400px;
-    padding: 0;
-    gap: 0;
-    background: transparent;
+    /* Hidden - using bottom color slider instead */
+    display: none;
     border-radius: 24px;
     box-shadow: none;
     z-index: 2000;
@@ -307,6 +301,56 @@ const ToolButton = styled.button<{ $isActive?: boolean }>`
   }
 `
 
+const MobileColorSlider = styled.div`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: block;
+    background: rgba(255, 255, 255, 0.98);
+    border-top: 2px solid rgba(102, 126, 234, 0.2);
+    padding: 0.8rem 0;
+    position: fixed;
+    bottom: 70px; /* Above the toolbar */
+    left: 0;
+    right: 0;
+    z-index: 9;
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
+  }
+`
+
+const ColorSliderScroll = styled.div`
+  display: flex;
+  gap: 0.6rem;
+  padding: 0 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
+
+const MobileColorButton = styled.button<{ color: string; $isSelected: boolean }>`
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  border-radius: 12px;
+  background-color: ${props => props.color};
+  border: ${props => props.$isSelected ? '4px solid #667eea' : '3px solid white'};
+  box-shadow: ${props => props.$isSelected 
+    ? '0 4px 15px rgba(102, 126, 234, 0.5), inset 0 2px 10px rgba(255, 255, 255, 0.3)' 
+    : '0 2px 8px rgba(0, 0, 0, 0.2), inset 0 2px 10px rgba(255, 255, 255, 0.3)'};
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  
+  &:active {
+    transform: scale(0.9);
+  }
+`
+
 const MobileToolbar = styled.div`
   display: none;
   
@@ -410,18 +454,8 @@ const MobileOverlay = styled.div<{ $isOpen: boolean }>`
   display: none;
   
   @media (max-width: 768px) {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    z-index: 1999;
-    opacity: ${props => props.$isOpen ? '1' : '0'};
-    pointer-events: ${props => props.$isOpen ? 'all' : 'none'};
-    transition: opacity 0.3s ease;
+    /* Hidden - using bottom color slider instead of popup */
+    display: none;
   }
 `
 
@@ -1412,6 +1446,21 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
         </ColorSection>
       </MainContent>
 
+      {/* Mobile Color Slider - Horizontal scrollable colors */}
+      <MobileColorSlider>
+        <ColorSliderScroll>
+          {colors.map((color, index) => (
+            <MobileColorButton
+              key={`mobile-${color.name}-${index}`}
+              color={color.value}
+              $isSelected={selectedColor === color.value}
+              onClick={() => setSelectedColor(color.value)}
+              title={color.name}
+            />
+          ))}
+        </ColorSliderScroll>
+      </MobileColorSlider>
+
       {/* Mobile Toolbar - Static at bottom */}
         <MobileToolbar>
           <MobileButtonRow>
@@ -1436,12 +1485,9 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
               <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🧹</span>
               <span>Erase</span>
             </MobileToolButton>
-            <MobileToolButton
-              color={selectedColor}
-              onClick={() => setIsColorPickerOpen(true)}
-            >
-              <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🎨</span>
-              <span>Color</span>
+            <MobileToolButton onClick={clearCanvas}>
+              <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🗑️</span>
+              <span>Clear</span>
             </MobileToolButton>
             <MobileToolButton onClick={undo} disabled={historyStep <= 0}>
               <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>↶</span>
