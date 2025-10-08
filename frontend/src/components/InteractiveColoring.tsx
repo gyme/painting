@@ -608,6 +608,29 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       console.log('Drawing image at:', x, y, 'scale:', scale)
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
       
+      // Convert grey background to white for perfect coloring
+      // Keep anti-aliasing pixels intact (only replace exact grey)
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+      const data = imageData.data
+      const greyBg = { r: 76, g: 105, b: 113 }
+      
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i]
+        const g = data[i + 1]
+        const b = data[i + 2]
+        
+        // Only replace EXACT grey background (tolerance 3)
+        if (Math.abs(r - greyBg.r) <= 3 && 
+            Math.abs(g - greyBg.g) <= 3 && 
+            Math.abs(b - greyBg.b) <= 3) {
+          data[i] = 255
+          data[i + 1] = 255
+          data[i + 2] = 255
+        }
+      }
+      
+      ctx.putImageData(imageData, 0, 0)
+      
       // No watermark during coloring - only on save/print
     }
     
@@ -932,10 +955,8 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const width = imageData.width
     const height = imageData.height
     
-    // Adaptive tolerance based on target color brightness
-    // Grey backgrounds need higher tolerance for perfect filling
-    const targetBrightness = (targetColor.r + targetColor.g + targetColor.b) / 3
-    const tolerance = targetBrightness > 60 ? 40 : 25  // Higher for grey backgrounds, normal for colors
+    // Fixed tolerance - backgrounds are now white, anti-aliasing preserved
+    const tolerance = 30
     
     // Scanline flood fill - much faster than pixel-by-pixel
     const stack: [number, number][] = [[startX, startY]]
@@ -1082,6 +1103,27 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       const x = (canvas.width - img.width * scale) / 2
       const y = (canvas.height - img.height * scale) / 2
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
+      
+      // Convert grey background to white for perfect coloring
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+      const data = imageData.data
+      const greyBg = { r: 76, g: 105, b: 113 }
+      
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i]
+        const g = data[i + 1]
+        const b = data[i + 2]
+        
+        if (Math.abs(r - greyBg.r) <= 3 && 
+            Math.abs(g - greyBg.g) <= 3 && 
+            Math.abs(b - greyBg.b) <= 3) {
+          data[i] = 255
+          data[i + 1] = 255
+          data[i + 2] = 255
+        }
+      }
+      
+      ctx.putImageData(imageData, 0, 0)
       
       // No watermark during coloring - only on save/print
     }
