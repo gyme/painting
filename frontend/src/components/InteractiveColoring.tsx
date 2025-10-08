@@ -608,24 +608,27 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       console.log('Drawing image at:', x, y, 'scale:', scale)
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
       
-      // Convert grey background to white for perfect coloring
-      // Keep anti-aliasing pixels intact (only replace exact grey)
+      // Convert grey background to white for perfect coloring (like white brush)
+      // More aggressive to match manual white brush effectiveness
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
       const data = imageData.data
-      const greyBg = { r: 76, g: 105, b: 113 }
       
       for (let i = 0; i < data.length; i += 4) {
         const r = data[i]
         const g = data[i + 1]
         const b = data[i + 2]
+        const avg = (r + g + b) / 3
         
-        // Only replace EXACT grey background (tolerance 3)
-        if (Math.abs(r - greyBg.r) <= 3 && 
-            Math.abs(g - greyBg.g) <= 3 && 
-            Math.abs(b - greyBg.b) <= 3) {
-          data[i] = 255
-          data[i + 1] = 255
-          data[i + 2] = 255
+        // Replace grey background and light pixels (but not black lines)
+        // This matches what white brush does: paint over everything except dark lines
+        if (avg > 50) {  // Not black lines (< 50)
+          // Check if it's greyish (low color variation = background)
+          const colorRange = Math.max(r, g, b) - Math.min(r, g, b)
+          if (colorRange < 50) {  // Grey/neutral colors
+            data[i] = 255
+            data[i + 1] = 255
+            data[i + 2] = 255
+          }
         }
       }
       
@@ -1104,22 +1107,23 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       const y = (canvas.height - img.height * scale) / 2
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
       
-      // Convert grey background to white for perfect coloring
+      // Convert grey background to white for perfect coloring (like white brush)
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
       const data = imageData.data
-      const greyBg = { r: 76, g: 105, b: 113 }
       
       for (let i = 0; i < data.length; i += 4) {
         const r = data[i]
         const g = data[i + 1]
         const b = data[i + 2]
+        const avg = (r + g + b) / 3
         
-        if (Math.abs(r - greyBg.r) <= 3 && 
-            Math.abs(g - greyBg.g) <= 3 && 
-            Math.abs(b - greyBg.b) <= 3) {
-          data[i] = 255
-          data[i + 1] = 255
-          data[i + 2] = 255
+        if (avg > 50) {
+          const colorRange = Math.max(r, g, b) - Math.min(r, g, b)
+          if (colorRange < 50) {
+            data[i] = 255
+            data[i + 1] = 255
+            data[i + 2] = 255
+          }
         }
       }
       
