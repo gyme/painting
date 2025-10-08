@@ -958,8 +958,8 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const width = imageData.width
     const height = imageData.height
     
-    // Fixed tolerance - backgrounds are now white, anti-aliasing preserved
-    const tolerance = 30
+    // Reduced tolerance for better performance - white backgrounds need less
+    const tolerance = 20
     
     // Scanline flood fill - much faster than pixel-by-pixel
     const stack: [number, number][] = [[startX, startY]]
