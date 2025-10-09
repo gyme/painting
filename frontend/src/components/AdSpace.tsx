@@ -52,7 +52,7 @@ function AdSpace({ slot = 'top', height = 50 }: AdSpaceProps) {
   // Don't show placeholder if ads are enabled
   if (adsEnabled) {
     return (
-      <AdContainer $height={height} className="ad-enabled">
+      <AdContainer $height={height} className="ad-enabled" data-ad-slot={slot}>
         {/* Google AdSense code will go here */}
         {/* Example:
         <ins className="adsbygoogle"
@@ -67,10 +67,10 @@ function AdSpace({ slot = 'top', height = 50 }: AdSpaceProps) {
     )
   }
 
-  // Show placeholder in development
+  // Show placeholder in development (slot parameter available for future use)
   return (
-    <AdContainer $height={height}>
-      {/* Ad space reserved ({slot}) */}
+    <AdContainer $height={height} data-ad-slot={slot}>
+      {/* Ad space reserved */}
     </AdContainer>
   )
 }
