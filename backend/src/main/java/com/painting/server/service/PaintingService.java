@@ -5,6 +5,9 @@ import com.painting.server.repository.PaintingRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,9 +24,10 @@ public class PaintingService {
 
     private final PaintingRepository paintingRepository;
 
+    @Cacheable(value = "paintings", key = "#urlKey")
     @Transactional(readOnly = true)
     public Painting getPaintingByUrlKey(String urlKey) {
-        log.debug("Fetching painting with urlKey: {}", urlKey);
+        log.debug("Fetching painting with urlKey: {} (cache miss)", urlKey);
         return paintingRepository.findByUrlKey(urlKey)
                 .orElseThrow(() -> new EntityNotFoundException("Painting not found with urlKey: " + urlKey));
     }
@@ -49,8 +53,10 @@ public class PaintingService {
         return paintingRepository.findByCategory(category, pageable);
     }
 
+    @Cacheable(value = "featuredPaintings", key = "#page + '-' + #size")
     @Transactional(readOnly = true)
     public Page<Painting> getFeaturedPaintings(int page, int size) {
+        log.debug("Fetching featured paintings page {} size {} (cache miss)", page, size);
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         return paintingRepository.findByFeatured(true, pageable);
     }
@@ -61,14 +67,18 @@ public class PaintingService {
         return paintingRepository.searchByKeyword(keyword, pageable);
     }
 
+    @Cacheable(value = "popularPaintings", key = "#page + '-' + #size")
     @Transactional(readOnly = true)
     public Page<Painting> getMostPopular(int page, int size) {
+        log.debug("Fetching popular paintings page {} size {} (cache miss)", page, size);
         Pageable pageable = PageRequest.of(page, size);
         return paintingRepository.findMostPopular(pageable);
     }
 
+    @Cacheable(value = "categories")
     @Transactional(readOnly = true)
     public List<String> getAllCategories() {
+        log.debug("Fetching all categories (cache miss)");
         return paintingRepository.findAllCategories();
     }
 

@@ -10,10 +10,24 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false  # Disable in production for better performance
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
+        # Performance optimizations
+        jdbc:
+          batch_size: 20
+          fetch_size: 50
+        order_inserts: true
+        order_updates: true
+        # Query cache
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+        # Statistics for monitoring
+        generate_statistics: false
     open-in-view: false
   
   sql:
