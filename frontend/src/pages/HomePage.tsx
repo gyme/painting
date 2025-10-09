@@ -145,12 +145,6 @@ const CategoryName = styled.h3`
   }
 `
 
-const CategoryCount = styled.p`
-  font-size: 0.9rem;
-  color: #666;
-  margin: 0;
-`
-
 function HomePage() {
   const [searchParams] = useSearchParams()
   const searchQuery = searchParams.get('search')
