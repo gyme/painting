@@ -42,7 +42,9 @@ const MainContent = styled.div`
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    padding-bottom: 165px; /* Space for color slider + toolbar */
+    /* Space for color slider + toolbar + extra margin for future ads */
+    padding-bottom: 180px;
+    padding-top: 0.5rem;
   }
 `
 
@@ -120,21 +122,25 @@ const CanvasWrapper = styled.div<{ $cursorType: string }>`
     margin: 0;
     padding: 0;
     width: 100vw;
-    height: calc(100vh - 280px);
+    /* Account for header (now taller with search) + toolbars + safe margins for future ads */
+    /* Header: ~130px, Color slider: ~80px, Toolbar: ~85px, Margin for ads: ~50px = 345px */
+    height: calc(100vh - 345px);
+    max-height: calc(100vh - 345px);
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     background: white;
     position: relative;
-    padding-top: 1rem;
+    overflow: hidden;
     
     canvas {
       display: block;
       background: white;
-      width: 100% !important;
-      height: 100% !important;
+      max-width: 100% !important;
+      max-height: 100% !important;
+      width: auto !important;
+      height: auto !important;
       object-fit: contain;
-      margin: auto;
     }
   }
 `
