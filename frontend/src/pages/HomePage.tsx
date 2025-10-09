@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { paintingsApi } from '../api/paintings'
 import PaintingCard from '../components/PaintingCard'
@@ -89,6 +89,68 @@ const Error = styled.div`
   font-weight: 600;
 `
 
+const CategoriesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+`
+
+const CategoryCard = styled(Link)`
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 3px solid transparent;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    border-color: #667eea;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+  }
+`
+
+const CategoryIcon = styled.div`
+  font-size: 3rem;
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+`
+
+const CategoryName = styled.h3`
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+`
+
+const CategoryCount = styled.p`
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+`
+
 function HomePage() {
   const [searchParams] = useSearchParams()
   const searchQuery = searchParams.get('search')
@@ -125,6 +187,35 @@ function HomePage() {
       staleTime: 3 * 60 * 1000, // 3 minutes
     }
   )
+
+  const { data: categories } = useQuery(
+    'categories',
+    () => paintingsApi.getAllCategories(),
+    {
+      enabled: !searchQuery,
+      staleTime: 30 * 60 * 1000, // 30 minutes - categories rarely change
+    }
+  )
+
+  // Category icons mapping
+  const categoryIcons: Record<string, string> = {
+    'Animals': '🐶',
+    'Nature': '🌳',
+    'Vehicles': '🚗',
+    'Characters': '👦',
+    'Food': '🍕',
+    'Sports': '⚽',
+    'Holidays': '🎄',
+    'Space': '🚀',
+    'Ocean': '🌊',
+    'Fantasy': '🦄',
+    'Dinosaurs': '🦕',
+    'Mandalas': '🔯',
+  }
+
+  const getCategoryIcon = (category: string): string => {
+    return categoryIcons[category] || '🎨'
+  }
 
   if (searchQuery) {
     if (searchLoading) {
@@ -177,6 +268,21 @@ function HomePage() {
           <Title>🎨 Welcome to Kids Painting Fun! 🌈</Title>
           <Subtitle>Color amazing animals, nature, and so much more!</Subtitle>
         </Hero>
+
+        {/* Categories Section */}
+        {categories && categories.length > 0 && (
+          <Section>
+            <SectionTitle>📂 Browse by Category</SectionTitle>
+            <CategoriesGrid>
+              {categories.map((category) => (
+                <CategoryCard key={category} to={`/category/${category}`}>
+                  <CategoryIcon>{getCategoryIcon(category)}</CategoryIcon>
+                  <CategoryName>{category}</CategoryName>
+                </CategoryCard>
+              ))}
+            </CategoriesGrid>
+          </Section>
+        )}
 
       {featuredData && featuredData.content.length > 0 && (
         <Section>

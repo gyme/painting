@@ -25,6 +25,32 @@ const Nav = styled.nav`
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+`
+
+const TopRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  @media (min-width: 769px) {
+    width: auto;
+  }
+`
+
+const SearchWrapper = styled.div`
+  flex: 1;
+  max-width: 600px;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
+  }
 `
 
 const Logo = styled(Link)`
@@ -88,17 +114,25 @@ function Header() {
   return (
     <HeaderContainer>
       <Nav>
-        <Logo to="/">
-          🎨 Kids Painting Fun!
-        </Logo>
-        <NavLinks>
+        <TopRow>
+          <Logo to="/">
+            🎨 Kids Painting Fun!
+          </Logo>
+          <MobileMenu />
+        </TopRow>
+        
+        {/* Search bar visible on all screen sizes */}
+        <SearchWrapper>
           <SearchBar />
+        </SearchWrapper>
+        
+        {/* Desktop navigation */}
+        <NavLinks>
           <NavButton to="/">🏠 Home</NavButton>
           <NavButton to="/category/Animals">🐶 Animals</NavButton>
           <NavButton to="/category/Nature">🌳 Nature</NavButton>
           <NavButton to="/category/Vehicles">🚗 Vehicles</NavButton>
         </NavLinks>
-        <MobileMenu />
       </Nav>
     </HeaderContainer>
   )
