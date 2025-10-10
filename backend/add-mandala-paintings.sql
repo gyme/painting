@@ -27,7 +27,7 @@ VALUES (
   'A majestic lion mandala with beautiful patterns and symmetry!',
   'Animals',
   'lion,mandala,patterns,intricate,meditation,relaxing,coloring,kids,adults',
-  '/coloring-images/lion_mandala.png',
+  '/coloring-images/plion_mandala.png',
   '/coloring-images/lion_mandala.png',
   3,
   '["#FFD700","#FF8C00","#FF6347","#FFA500","#FFB347"]',

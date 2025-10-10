@@ -49,11 +49,11 @@ public class DatabaseConfig {
                     .build();
         }
         
-        // Otherwise, use H2 for local development
-        logger.info("Using H2 in-memory database for local development");
+        // Otherwise, use H2 file-based database for local development (persists data)
+        logger.info("Using H2 file-based database for local development");
         return DataSourceBuilder.create()
                 .driverClassName("org.h2.Driver")
-                .url("jdbc:h2:mem:painting_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE")
+                .url("jdbc:h2:file:./painting;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE")
                 .username("sa")
                 .password("")
                 .build();

@@ -12,13 +12,12 @@ const BreadcrumbContainer = styled.nav`
   gap: 0.5rem;
   
   @media (max-width: 768px) {
-    padding: 0.3rem 0.5rem;
-    margin-bottom: 0;
-    font-size: 0.7rem;
-    border-radius: 0;
-    background: white;
-    border-bottom: none;
-    box-shadow: none;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    background: #f8f9fa;
+    gap: 0.25rem;
   }
 `
 
@@ -34,7 +33,8 @@ const BreadcrumbLink = styled(Link)`
   }
   
   @media (max-width: 768px) {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
   }
 `
 
@@ -43,7 +43,8 @@ const BreadcrumbText = styled.span`
   font-weight: 600;
   
   @media (max-width: 768px) {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
   }
 `
 
@@ -52,8 +53,8 @@ const Separator = styled.span`
   margin: 0 0.5rem;
   
   @media (max-width: 768px) {
-    margin: 0 0.3rem;
-    font-size: 0.7rem;
+    margin: 0 0.25rem;
+    font-size: 0.875rem;
   }
 `
 

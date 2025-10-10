@@ -32,11 +32,12 @@ public class CorsConfig implements WebMvcConfigurer {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // Allow all Vercel domains and specified origins
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        // Allow all origins including null (for local file:// admin tool)
+        configuration.addAllowedOriginPattern("*"); // Allow all patterns
+        configuration.addAllowedOrigin("null"); // Explicitly allow file:// protocol
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(false); // Must be false when allowing all origins
         configuration.setMaxAge(3600L);
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -13,7 +13,8 @@ const Container = styled.div`
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   
   @media (max-width: 768px) {
-    padding: 0;
+    padding: 0 !important;
+    padding-top: 0 !important;
     border-radius: 0;
     max-width: 100%;
     margin: 0;
@@ -28,8 +29,12 @@ const Container = styled.div`
 
 const MainContent = styled.div`
   display: flex;
-  gap: 2rem;
   align-items: flex-start;
+  gap: 0;
+  
+  @media (min-width: 1025px) {
+    gap: 2rem;
+  }
   
   @media (max-width: 1024px) {
     flex-direction: column;
@@ -42,9 +47,9 @@ const MainContent = styled.div`
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    /* Space for color slider + toolbar + extra margin for future ads */
-    padding-bottom: 180px;
-    padding-top: 0.5rem;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 0 !important;
   }
 `
 
@@ -62,12 +67,12 @@ const CanvasSection = styled.div`
   @media (max-width: 768px) {
     flex: 1;
     min-height: 0;
-    overflow: visible;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     background: white;
-    padding: 0;
-    margin: 0;
+    padding: 0 !important;
+    margin: 0 !important;
     position: relative;
   }
 `
@@ -122,12 +127,9 @@ const CanvasWrapper = styled.div<{ $cursorType: string }>`
     margin: 0;
     padding: 0;
     width: 100vw;
-    /* Account for header (now taller with search) + toolbars + safe margins for future ads */
-    /* Header: ~130px, Color slider: ~80px, Toolbar: ~85px, Margin for ads: ~50px = 345px */
-    height: calc(100vh - 345px);
-    max-height: calc(100vh - 345px);
+    height: calc(100vh - 340px);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     background: white;
     position: relative;
@@ -136,11 +138,11 @@ const CanvasWrapper = styled.div<{ $cursorType: string }>`
     canvas {
       display: block;
       background: white;
-      max-width: 100% !important;
-      max-height: 100% !important;
-      width: auto !important;
-      height: auto !important;
-      object-fit: contain;
+      width: 100% !important;
+      height: 100% !important;
+      margin: 0;
+      padding: 0;
+      touch-action: manipulation;
     }
   }
 `
@@ -555,6 +557,7 @@ const colors = [
 
 function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: InteractiveColoringProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const mainContentRef = useRef<HTMLDivElement>(null)
   const [selectedColor, setSelectedColor] = useState(colors[0].value)
   const originalImageRef = useRef<HTMLImageElement | null>(null)
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
@@ -569,7 +572,51 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
   const [history, setHistory] = useState<ImageData[]>([])
   const [historyStep, setHistoryStep] = useState(-1)
   
-  // Prevent scrolling on mobile
+  // Remove gap on mobile - use MutationObserver to catch ANY style changes
+  useEffect(() => {
+    if (window.innerWidth <= 768 && mainContentRef.current) {
+      const element = mainContentRef.current
+      
+      const forceRemoveGap = () => {
+        element.style.setProperty('padding', '0', 'important')
+        element.style.setProperty('padding-top', '0', 'important')
+        element.style.setProperty('margin', '0', 'important')
+        element.style.setProperty('gap', '0', 'important')
+        
+        // Also remove the attribute entirely if it exists
+        if (element.getAttribute('style')?.includes('padding-top')) {
+          element.setAttribute('style', element.getAttribute('style')!.replace(/padding-top:\s*[^;]+;?/gi, ''))
+        }
+      }
+      
+      // Initial removal
+      forceRemoveGap()
+      
+      // Watch for any style attribute changes
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+            forceRemoveGap()
+          }
+        })
+      })
+      
+      observer.observe(element, {
+        attributes: true,
+        attributeFilter: ['style']
+      })
+      
+      // Also run periodically as backup
+      const interval = setInterval(forceRemoveGap, 100)
+      
+      return () => {
+        observer.disconnect()
+        clearInterval(interval)
+      }
+    }
+  }, [])
+
+  // Prevent scrolling on mobile - canvas fits viewport
   useEffect(() => {
     if (window.innerWidth <= 768) {
       document.body.style.overflow = 'hidden'
@@ -593,24 +640,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
     const ctx = canvas.getContext('2d', { willReadFrequently: true })
     if (!ctx) return
-
-    // Set canvas size - optimized for performance on all devices
-    const isMobile = window.innerWidth <= 768
-    if (isMobile) {
-      // On mobile, fill entire available space
-      // Account for header (~60px), breadcrumbs (~40px) and toolbar (~140px with safe area + margins + padding) = 240px total
-      const availableHeight = window.innerHeight - 240
-      canvas.width = window.innerWidth
-      canvas.height = availableHeight
-    } else {
-      // Desktop: also reduce size for better performance
-      canvas.width = 600
-      canvas.height = 800
-    }
-
-    // Fill with white background
-    ctx.fillStyle = 'white'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     // Try to load real coloring image first
     const img = new Image()
@@ -639,15 +668,58 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       // Store the image for later use (clear, etc.)
       originalImageRef.current = img
       
-      // Draw the loaded image
-      ctx.fillStyle = 'white'
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
-      // Always use contain mode (fit entire image) - never crop
-      const scale = Math.min(canvas.width / img.width, canvas.height / img.height)
-      const x = (canvas.width - img.width * scale) / 2
-      const y = (canvas.height - img.height * scale) / 2
-      console.log('Drawing image at:', x, y, 'scale:', scale)
-      ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
+      // Set canvas size AFTER image loads
+      const isMobile = window.innerWidth <= 768
+      if (isMobile) {
+        // On mobile: canvas fills the entire container
+        const availableWidth = window.innerWidth
+        const availableHeight = window.innerHeight - 340
+        
+        // Canvas fills entire available space
+        canvas.width = availableWidth
+        canvas.height = availableHeight
+        
+        console.log('Mobile canvas size:', canvas.width, 'x', canvas.height)
+        
+        // Fill entire canvas with white (so borders are paintable)
+        ctx.fillStyle = 'white'
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        
+        // Calculate how to draw the image - ALIGNED TO TOP
+        const imageAspect = img.width / img.height
+        const canvasAspect = canvas.width / canvas.height
+        
+        let drawWidth, drawHeight, drawX, drawY
+        
+        if (imageAspect > canvasAspect) {
+          // Image is wider - fit to width, align to top
+          drawWidth = canvas.width
+          drawHeight = canvas.width / imageAspect
+          drawX = 0
+          drawY = 0 // Top aligned instead of centered
+        } else {
+          // Image is taller - fit to height, center horizontally
+          drawHeight = canvas.height
+          drawWidth = canvas.height * imageAspect
+          drawX = (canvas.width - drawWidth) / 2
+          drawY = 0 // Top aligned instead of centered
+        }
+        
+        // Draw the image at the top (borders below are paintable)
+        ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight)
+      } else {
+        // Desktop: fixed width, height based on aspect ratio
+        canvas.width = 600
+        canvas.height = (img.height / img.width) * canvas.width
+        console.log('Desktop canvas size:', canvas.width, 'x', canvas.height)
+        
+        // Fill with white background
+        ctx.fillStyle = 'white'
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        
+        // Draw the loaded image at full canvas size
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+      }
       
       // Convert grey background to white for perfect coloring (like white brush)
       // More aggressive to match manual white brush effectiveness
@@ -700,17 +772,59 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
         const url = URL.createObjectURL(svgBlob)
         const svgImg = new Image()
         svgImg.onload = () => {
-          console.log('SVG loaded successfully')
+          console.log('SVG loaded successfully:', svgImg.width, 'x', svgImg.height)
           // Store the SVG image for later use
           originalImageRef.current = svgImg
           
-          ctx.fillStyle = 'white'
-          ctx.fillRect(0, 0, canvas.width, canvas.height)
-          // Always use contain mode (fit entire image) - never crop
-          const scale = Math.min(canvas.width / svgImg.width, canvas.height / svgImg.height)
-          const x = (canvas.width - svgImg.width * scale) / 2
-          const y = (canvas.height - svgImg.height * scale) / 2
-          ctx.drawImage(svgImg, x, y, svgImg.width * scale, svgImg.height * scale)
+          // Set canvas size AFTER SVG loads
+          const isMobile = window.innerWidth <= 768
+          if (isMobile) {
+            // On mobile: canvas fills the entire container
+            const availableWidth = window.innerWidth
+            const availableHeight = window.innerHeight - 340
+            
+            // Canvas fills entire available space
+            canvas.width = availableWidth
+            canvas.height = availableHeight
+            
+            // Fill entire canvas with white (so borders are paintable)
+            ctx.fillStyle = 'white'
+            ctx.fillRect(0, 0, canvas.width, canvas.height)
+            
+            // Calculate how to draw the image - ALIGNED TO TOP
+            const imageAspect = svgImg.width / svgImg.height
+            const canvasAspect = canvas.width / canvas.height
+            
+            let drawWidth, drawHeight, drawX, drawY
+            
+            if (imageAspect > canvasAspect) {
+              // Image is wider - fit to width, align to top
+              drawWidth = canvas.width
+              drawHeight = canvas.width / imageAspect
+              drawX = 0
+              drawY = 0 // Top aligned instead of centered
+            } else {
+              // Image is taller - fit to height, center horizontally
+              drawHeight = canvas.height
+              drawWidth = canvas.height * imageAspect
+              drawX = (canvas.width - drawWidth) / 2
+              drawY = 0 // Top aligned instead of centered
+            }
+            
+            // Draw the image at the top
+            ctx.drawImage(svgImg, drawX, drawY, drawWidth, drawHeight)
+          } else {
+            // Desktop: fixed width, height based on aspect ratio
+            canvas.width = 600
+            canvas.height = (svgImg.height / svgImg.width) * canvas.width
+            
+            // Fill with white background
+            ctx.fillStyle = 'white'
+            ctx.fillRect(0, 0, canvas.width, canvas.height)
+            
+            // Draw the loaded SVG at full canvas size
+            ctx.drawImage(svgImg, 0, 0, canvas.width, canvas.height)
+          }
           
           // No watermark during coloring - only on save/print
           
@@ -842,35 +956,16 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
     const rect = canvas.getBoundingClientRect()
     
-    // Calculate the actual displayed canvas size with object-fit: contain
-    const canvasAspect = canvas.width / canvas.height
-    const displayAspect = rect.width / rect.height
-    
-    let displayWidth, displayHeight, offsetX, offsetY
-    
-    if (displayAspect > canvasAspect) {
-      // Pillarboxed (black bars on sides)
-      displayHeight = rect.height
-      displayWidth = displayHeight * canvasAspect
-      offsetX = (rect.width - displayWidth) / 2
-      offsetY = 0
-    } else {
-      // Letterboxed (black bars on top/bottom)
-      displayWidth = rect.width
-      displayHeight = displayWidth / canvasAspect
-      offsetX = 0
-      offsetY = (rect.height - displayHeight) / 2
-    }
-    
-    // Convert click position to canvas coordinates
-    // Both MouseEvent and Touch have clientX and clientY properties
+    // Map displayed coordinates to canvas internal coordinates
+    // rect gives us the actual displayed size, canvas.width/height is the internal resolution
     const clientX = e.clientX
     const clientY = e.clientY
-    const clickX = clientX - rect.left - offsetX
-    const clickY = clientY - rect.top - offsetY
+    const clickX = clientX - rect.left
+    const clickY = clientY - rect.top
     
-    const x = (clickX / displayWidth) * canvas.width
-    const y = (clickY / displayHeight) * canvas.height
+    // Scale from display coordinates to canvas coordinates
+    const x = (clickX / rect.width) * canvas.width
+    const y = (clickY / rect.height) * canvas.height
 
     return { x, y }
   }, [])
@@ -1142,11 +1237,8 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     // Reload the original image if we have it stored
     if (originalImageRef.current) {
       const img = originalImageRef.current
-      // Always use contain mode (fit entire image) - never crop
-      const scale = Math.min(canvas.width / img.width, canvas.height / img.height)
-      const x = (canvas.width - img.width * scale) / 2
-      const y = (canvas.height - img.height * scale) / 2
-      ctx.drawImage(img, x, y, img.width * scale, img.height * scale)
+      // Draw at full canvas size (canvas already sized to match image aspect ratio)
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
       
       // Convert grey background to white for perfect coloring (like white brush)
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
@@ -1226,11 +1318,8 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     // Redraw the original image without watermark
     if (originalImageRef.current) {
       const img = originalImageRef.current
-      // Always use contain mode (fit entire image) - never crop
-      const scale = Math.min(printCanvas.width / img.width, printCanvas.height / img.height)
-      const x = (printCanvas.width - img.width * scale) / 2
-      const y = (printCanvas.height - img.height * scale) / 2
-      printCtx.drawImage(img, x, y, img.width * scale, img.height * scale)
+      // Draw at full canvas size (canvas already sized to match image aspect ratio)
+      printCtx.drawImage(img, 0, 0, printCanvas.width, printCanvas.height)
       
       // Apply all the colored areas from the current canvas (but skip the watermark area)
       const colored = printCtx.getImageData(0, 0, printCanvas.width, printCanvas.height)
@@ -1339,7 +1428,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
   return (
     <Container>
-      <MainContent>
+      <MainContent ref={mainContentRef}>
         <CanvasSection>
           <CanvasWrapper $cursorType={getCursorType()}>
             <canvas

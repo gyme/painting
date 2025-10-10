@@ -383,7 +383,7 @@ function PaintingPage() {
         ]} />
         <BackButton to="/">← Back to Gallery</BackButton>
         <Card>
-        <Content style={{ paddingTop: '2rem' }}>
+        <Content>
           <InteractiveColoring 
             title={painting.title}
             imageUrl={painting.imageUrl}

@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import styled from 'styled-components'
 import { paintingsApi } from '../api/paintings'
 import PaintingCard from '../components/PaintingCard'
+import Breadcrumbs from '../components/Breadcrumbs'
 import SEO from '../components/SEO'
 
 const Container = styled.div`
@@ -115,6 +116,10 @@ function CategoryPage() {
         keywords={`${category} coloring pages, ${category} coloring sheets, kids ${category}, printable ${category}`}
       />
       <Container>
+        <Breadcrumbs items={[
+          { label: 'Home', path: '/' },
+          { label: category || 'Category' }
+        ]} />
         <Header>
         <Title>{getCategoryEmoji(category!)} {category} Paintings</Title>
       </Header>
