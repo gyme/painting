@@ -50,6 +50,7 @@ const MainContent = styled.div`
     padding: 0 !important;
     margin: 0 !important;
     gap: 0 !important;
+    background: white;
   }
 `
 
@@ -114,11 +115,13 @@ const CanvasWrapper = styled.div<{ $cursorType: string }>`
   justify-content: center;
   margin: 0 auto;
   max-width: 100%;
+  max-height: 85vh;
   
   canvas {
     display: block;
     width: 100%;
     height: auto;
+    max-height: 85vh;
   }
   
   @media (max-width: 768px) {
@@ -127,7 +130,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string }>`
     margin: 0;
     padding: 0;
     width: 100vw;
-    height: calc(100vh - 340px);
+    height: calc(100vh - 420px);
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -189,6 +192,74 @@ const PaletteTitle = styled.h3`
   }
 `
 
+const ColorGridWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`
+
+const ScrollArrow = styled.button<{ $side: 'left' | 'right'; $visible: boolean }>`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: ${props => props.$visible ? 'flex' : 'none'};
+    position: absolute;
+    top: 50%;
+    ${props => props.$side}: 0;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: auto;
+    height: auto;
+    padding: 0;
+    background: none;
+    border: none;
+    color: #667eea;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    svg {
+      width: 32px;
+      height: 32px;
+      transition: all 0.2s ease;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+    }
+    
+    &:hover {
+      color: #764ba2;
+      transform: translateY(-50%) ${props => props.$side === 'left' ? 'translateX(-3px)' : 'translateX(3px)'};
+      
+      svg {
+        filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.3));
+      }
+    }
+    
+    &:active {
+      transform: translateY(-50%) scale(0.92);
+    }
+  }
+`
+
+const ColorGridScroll = styled.div`
+  width: 100%;
+  
+  @media (max-width: 768px) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Smooth scroll */
+    scroll-behavior: smooth;
+  }
+`
+
 const ColorGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -204,10 +275,13 @@ const ColorGrid = styled.div`
   }
   
   @media (max-width: 768px) {
-    grid-template-columns: repeat(6, 1fr);
-    gap: 0.5rem;
-    justify-content: center;
-    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    justify-content: flex-start;
+    width: auto;
+    min-width: max-content;
+    padding: 0 8px;
   }
 `
 
@@ -241,10 +315,11 @@ const ColorButton = styled.button<{ color: string; $isSelected: boolean }>`
   }
   
   @media (max-width: 768px) {
-    width: 46px;
-    height: 46px;
-    border-radius: 11px;
-    margin: 0 auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    margin: 0;
+    flex-shrink: 0;
   }
 `
 
@@ -316,25 +391,72 @@ const MobileColorSlider = styled.div`
   @media (max-width: 768px) {
     display: block;
     background: rgba(255, 255, 255, 0.98);
-    border-top: 2px solid rgba(102, 126, 234, 0.2);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(102, 126, 234, 0.1);
     padding: 0.9rem 0 calc(0.9rem + env(safe-area-inset-bottom, 0px)) 0;
     position: fixed;
-    bottom: 85px; /* Above the toolbar - increased space */
-    left: 0;
-    right: 0;
+    bottom: 90px; /* Above the toolbar - increased space */
+    left: 20px;
+    right: 20px;
     z-index: 9;
-    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 
+      0 8px 32px rgba(102, 126, 234, 0.08),
+      0 4px 16px rgba(0, 0, 0, 0.06),
+      inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+  }
+`
+
+const MobileSliderWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`
+
+const MobileScrollArrow = styled.button<{ $side: 'left' | 'right'; $visible: boolean }>`
+  display: ${props => props.$visible ? 'flex' : 'none'};
+  position: fixed;
+  bottom: 0px;
+  ${props => props.$side === 'left' ? 'left: -20px' : 'right: -18px'};
+  z-index: 11;
+  width: 20px;
+  height: 90px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: #667eea;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+  
+  svg {
+    width: 24px;
+    height: 24px;
+    transition: all 0.2s ease;
+  }
+  
+  &:hover {
+    color: #764ba2;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+    transform: scale(1.05);
+  }
+  
+  &:active {
+    transform: scale(0.92);
   }
 `
 
 const ColorSliderScroll = styled.div`
   display: flex;
   gap: 0.6rem;
-  padding: 0 1rem;
+  padding: 0 0.8rem;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  scroll-behavior: smooth;
   
   &::-webkit-scrollbar {
     display: none;
@@ -342,21 +464,41 @@ const ColorSliderScroll = styled.div`
 `
 
 const MobileColorButton = styled.button<{ color: string; $isSelected: boolean }>`
-  width: 50px;
-  height: 50px;
-  min-width: 50px;
-  border-radius: 12px;
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  border-radius: 16px;
   background-color: ${props => props.color};
-  border: ${props => props.$isSelected ? '4px solid #667eea' : '3px solid white'};
+  border: ${props => props.$isSelected ? '3px solid #667eea' : '2px solid rgba(255, 255, 255, 0.9)'};
   box-shadow: ${props => props.$isSelected 
-    ? '0 4px 15px rgba(102, 126, 234, 0.5), inset 0 2px 10px rgba(255, 255, 255, 0.3)' 
-    : '0 2px 8px rgba(0, 0, 0, 0.2), inset 0 2px 10px rgba(255, 255, 255, 0.3)'};
+    ? '0 6px 20px rgba(102, 126, 234, 0.35), 0 2px 8px rgba(0, 0, 0, 0.15), inset 0 2px 8px rgba(255, 255, 255, 0.25)' 
+    : '0 3px 12px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.08), inset 0 2px 8px rgba(255, 255, 255, 0.25)'};
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 14px;
+    padding: 1px;
+    background: ${props => props.$isSelected 
+      ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.4), rgba(118, 142, 247, 0.4))' 
+      : 'transparent'};
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: ${props => props.$isSelected ? 1 : 0};
+    transition: opacity 0.3s ease;
+  }
   
   &:active {
-    transform: scale(0.9);
+    transform: scale(0.92);
+    box-shadow: ${props => props.$isSelected 
+      ? '0 2px 10px rgba(102, 126, 234, 0.3), 0 1px 4px rgba(0, 0, 0, 0.1), inset 0 2px 8px rgba(255, 255, 255, 0.25)' 
+      : '0 1px 6px rgba(0, 0, 0, 0.15), inset 0 2px 8px rgba(255, 255, 255, 0.25)'};
   }
 `
 
@@ -367,10 +509,10 @@ const MobileToolbar = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    background: white;
+    border-top: 2px solid rgba(102, 126, 234, 0.1);
     padding: 0.7rem 0.9rem calc(0.7rem + env(safe-area-inset-bottom)) 0.9rem;
-    box-shadow: 0 -4px 30px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 -4px 20px rgba(102, 126, 234, 0.08);
     flex-shrink: 0;
     width: 100%;
     position: fixed;
@@ -399,17 +541,17 @@ const MobileButtonRow = styled.div`
 
 const MobileToolButton = styled.button<{ color?: string; $isActive?: boolean }>`
   padding: 0.7rem 0.5rem;
-  background: ${props => props.color || (props.$isActive ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 255, 255, 0.25)')};
-  color: white;
-  border: 2px solid ${props => props.$isActive ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.3)'};
+  background: ${props => props.color || (props.$isActive ? 'rgba(102, 126, 234, 0.15)' : 'rgba(102, 126, 234, 0.08)')};
+  color: ${props => props.$isActive ? '#667eea' : '#7c8ff0'};
+  border: 2px solid ${props => props.$isActive ? 'rgba(102, 126, 234, 0.3)' : 'rgba(102, 126, 234, 0.15)'};
   border-radius: 15px;
   font-size: 0.7rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: ${props => props.$isActive 
-    ? '0 6px 20px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.3)'
-    : '0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2)'};
+    ? '0 4px 12px rgba(102, 126, 234, 0.2), inset 0 2px 0 rgba(255, 255, 255, 0.5)'
+    : '0 2px 8px rgba(102, 126, 234, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.3)'};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -429,14 +571,14 @@ const MobileToolButton = styled.button<{ color?: string; $isActive?: boolean }>`
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(180deg, rgba(102, 126, 234, 0.15) 0%, rgba(102, 126, 234, 0) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
   }
   
   &:active {
     transform: scale(0.95);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     
     &::before {
       opacity: 1;
@@ -447,7 +589,7 @@ const MobileToolButton = styled.button<{ color?: string; $isActive?: boolean }>`
     opacity: 0.4;
     cursor: not-allowed;
     transform: none;
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(102, 126, 234, 0.08);
   }
   
   @media (max-width: 350px) {
@@ -562,6 +704,12 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
   const originalImageRef = useRef<HTMLImageElement | null>(null)
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
   const isProcessingRef = useRef(false)
+  const colorScrollRef = useRef<HTMLDivElement>(null)
+  const mobileColorScrollRef = useRef<HTMLDivElement>(null)
+  const [showLeftArrow, setShowLeftArrow] = useState(false)
+  const [showRightArrow, setShowRightArrow] = useState(false)
+  const [showMobileLeftArrow, setShowMobileLeftArrow] = useState(false)
+  const [showMobileRightArrow, setShowMobileRightArrow] = useState(false)
   
   // Tool selection: 'fill', 'brush', 'eraser'
   const [selectedTool, setSelectedTool] = useState<'fill' | 'brush' | 'eraser'>('fill')
@@ -612,6 +760,129 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       return () => {
         observer.disconnect()
         clearInterval(interval)
+      }
+    }
+  }, [])
+
+  // Handle scroll arrows visibility on mobile color palette
+  useEffect(() => {
+    const handleScroll = () => {
+      if (colorScrollRef.current && window.innerWidth <= 768) {
+        const { scrollLeft, scrollWidth, clientWidth } = colorScrollRef.current
+        const hasScroll = scrollWidth > clientWidth
+        console.log('🎨 Scroll check:', { 
+          scrollLeft, 
+          scrollWidth, 
+          clientWidth, 
+          hasScroll,
+          colorCount: colors.length,
+          showLeft: scrollLeft > 10,
+          showRight: hasScroll && scrollLeft < scrollWidth - clientWidth - 10
+        })
+        setShowLeftArrow(scrollLeft > 10)
+        setShowRightArrow(hasScroll && scrollLeft < scrollWidth - clientWidth - 10)
+      }
+    }
+
+    // Wait for the element to have dimensions
+    const checkDimensions = () => {
+      const scrollElement = colorScrollRef.current
+      if (scrollElement && scrollElement.clientWidth > 0) {
+        console.log('✅ Element has dimensions, setting up scroll detection')
+        // Initial check
+        handleScroll()
+        
+        // Listen to scroll events
+        scrollElement.addEventListener('scroll', handleScroll)
+        
+        // Also check on window resize
+        window.addEventListener('resize', handleScroll)
+        
+        return true
+      }
+      return false
+    }
+
+    // Try multiple times until element has dimensions
+    let attempts = 0
+    const maxAttempts = 10
+    const checkInterval = setInterval(() => {
+      attempts++
+      if (checkDimensions() || attempts >= maxAttempts) {
+        clearInterval(checkInterval)
+        if (attempts >= maxAttempts) {
+          console.warn('⚠️ Could not detect color palette dimensions after', attempts, 'attempts')
+        }
+      }
+    }, 50)
+
+    return () => {
+      clearInterval(checkInterval)
+      const scrollElement = colorScrollRef.current
+      if (scrollElement) {
+        scrollElement.removeEventListener('scroll', handleScroll)
+        window.removeEventListener('resize', handleScroll)
+      }
+    }
+  }, [isColorPickerOpen])
+
+  // Handle scroll arrows for mobile color slider (bottom of screen)
+  useEffect(() => {
+    const handleScroll = () => {
+      if (mobileColorScrollRef.current && window.innerWidth <= 768) {
+        const { scrollLeft, scrollWidth, clientWidth } = mobileColorScrollRef.current
+        const hasScroll = scrollWidth > clientWidth
+        console.log('📱 Mobile slider check:', { 
+          scrollLeft, 
+          scrollWidth, 
+          clientWidth, 
+          hasScroll,
+          showLeft: scrollLeft > 10,
+          showRight: hasScroll && scrollLeft < scrollWidth - clientWidth - 10
+        })
+        setShowMobileLeftArrow(scrollLeft > 10)
+        setShowMobileRightArrow(hasScroll && scrollLeft < scrollWidth - clientWidth - 10)
+      }
+    }
+
+    // Wait for the element to have dimensions
+    const checkDimensions = () => {
+      const scrollElement = mobileColorScrollRef.current
+      if (scrollElement && scrollElement.clientWidth > 0) {
+        console.log('✅ Mobile slider has dimensions, setting up scroll detection')
+        // Initial check
+        handleScroll()
+        
+        // Listen to scroll events
+        scrollElement.addEventListener('scroll', handleScroll)
+        
+        // Also check on window resize
+        window.addEventListener('resize', handleScroll)
+        
+        return true
+      }
+      return false
+    }
+
+    // Try multiple times until element has dimensions
+    let attempts = 0
+    const maxAttempts = 10
+    const checkInterval = setInterval(() => {
+      attempts++
+      if (checkDimensions() || attempts >= maxAttempts) {
+        clearInterval(checkInterval)
+        if (attempts >= maxAttempts) {
+          console.warn('⚠️ Could not detect mobile slider dimensions after', attempts, 'attempts')
+        }
+      }
+    }, 50)
+
+    return () => {
+      clearInterval(checkInterval)
+      const scrollElement = mobileColorScrollRef.current
+      if (scrollElement) {
+        scrollElement.removeEventListener('scroll', handleScroll)
+        window.removeEventListener('resize', handleScroll)
       }
     }
   }, [])
@@ -673,17 +944,15 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       if (isMobile) {
         // On mobile: canvas fills the entire container
         const availableWidth = window.innerWidth
-        const availableHeight = window.innerHeight - 340
+        const availableHeight = window.innerHeight - 420
         
         // Canvas fills entire available space
         canvas.width = availableWidth
         canvas.height = availableHeight
         
-        console.log('Mobile canvas size:', canvas.width, 'x', canvas.height)
-        
         // Fill entire canvas with white (so borders are paintable)
-        ctx.fillStyle = 'white'
-        ctx.fillRect(0, 0, canvas.width, canvas.height)
+      ctx.fillStyle = 'white'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
         
         // Calculate how to draw the image - ALIGNED TO TOP
         const imageAspect = img.width / img.height
@@ -781,15 +1050,15 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
           if (isMobile) {
             // On mobile: canvas fills the entire container
             const availableWidth = window.innerWidth
-            const availableHeight = window.innerHeight - 340
+            const availableHeight = window.innerHeight - 420
             
             // Canvas fills entire available space
             canvas.width = availableWidth
             canvas.height = availableHeight
             
             // Fill entire canvas with white (so borders are paintable)
-            ctx.fillStyle = 'white'
-            ctx.fillRect(0, 0, canvas.width, canvas.height)
+          ctx.fillStyle = 'white'
+          ctx.fillRect(0, 0, canvas.width, canvas.height)
             
             // Calculate how to draw the image - ALIGNED TO TOP
             const imageAspect = svgImg.width / svgImg.height
@@ -1454,8 +1723,26 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
           
           <ColorPaletteContainer>
             <PaletteTitle>🎨 Pick a Color</PaletteTitle>
+            <ColorGridWrapper>
+              <ScrollArrow 
+                $side="left" 
+                $visible={showLeftArrow}
+                onClick={() => {
+                  if (colorScrollRef.current) {
+                    colorScrollRef.current.scrollBy({ left: -200, behavior: 'smooth' })
+                  }
+                }}
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+              </ScrollArrow>
+              
+              <ColorGridScroll ref={colorScrollRef}>
             <ColorGrid>
-              {colors.map((color, index) => (
+                  {colors.map((color, index) => {
+                    if (index === 0) console.log('🎨 Rendering', colors.length, 'colors')
+                    return (
                 <ColorButton
                   key={`${color.name}-${index}`}
                   color={color.value}
@@ -1469,8 +1756,25 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
                   }}
                   title={color.name}
                 />
-              ))}
+                    )
+                  })}
             </ColorGrid>
+              </ColorGridScroll>
+              
+              <ScrollArrow 
+                $side="right" 
+                $visible={showRightArrow}
+                onClick={() => {
+                  if (colorScrollRef.current) {
+                    colorScrollRef.current.scrollBy({ left: 200, behavior: 'smooth' })
+                  }
+                }}
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                </svg>
+              </ScrollArrow>
+            </ColorGridWrapper>
           </ColorPaletteContainer>
 
           <ToolsContainer>
@@ -1544,7 +1848,23 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
       {/* Mobile Color Slider - Horizontal scrollable colors */}
       <MobileColorSlider>
-        <ColorSliderScroll>
+                <MobileScrollArrow
+            $side="left"
+            $visible={showMobileLeftArrow}
+            onClick={() => {
+              if (mobileColorScrollRef.current) {
+                mobileColorScrollRef.current.scrollBy({ left: -10, behavior: 'smooth' })
+              }
+            }}
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+          </MobileScrollArrow>
+
+        <MobileSliderWrapper>
+
+          <ColorSliderScroll ref={mobileColorScrollRef}>
           {colors.map((color, index) => (
             <MobileColorButton
               key={`mobile-${color.name}-${index}`}
@@ -1555,6 +1875,21 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
             />
           ))}
         </ColorSliderScroll>
+          
+          <MobileScrollArrow 
+            $side="right" 
+            $visible={showMobileRightArrow}
+            onClick={() => {
+              if (mobileColorScrollRef.current) {
+                mobileColorScrollRef.current.scrollBy({ left: 10, behavior: 'smooth' })
+              }
+            }}
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+            </svg>
+          </MobileScrollArrow>
+        </MobileSliderWrapper>
       </MobileColorSlider>
 
       {/* Mobile Toolbar - Static at bottom */}

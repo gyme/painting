@@ -4,10 +4,10 @@ import SearchBar from './SearchBar'
 import MobileMenu from './MobileMenu'
 
 const HeaderContainer = styled.header`
-  background: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   backdrop-filter: blur(10px);
   padding: 1rem 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -56,7 +56,7 @@ const SearchWrapper = styled.div`
 const Logo = styled(Link)`
   font-size: 2rem;
   font-weight: 700;
-  color: #667eea;
+  color: white;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -86,18 +86,19 @@ const NavLinks = styled.div`
 
 const NavButton = styled(Link)`
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: rgba(255, 255, 255, 0.2);
   color: white;
   text-decoration: none;
   border-radius: 25px;
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.3);
 
   &:hover {
+    background: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    border-color: rgba(255, 255, 255, 0.5);
   }
 
   &:active {

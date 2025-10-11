@@ -67,20 +67,20 @@ const ListItem = styled.li`
 const BackButton = styled(Link)`
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  justify-content: center;
+  color: #667eea;
   text-decoration: none;
-  border-radius: 25px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  font-size: 1.5rem;
+  transition: all 0.2s ease;
   margin-top: 2rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    color: #764ba2;
+    background: rgba(102, 126, 234, 0.1);
+    transform: translateX(-3px);
   }
 `
 
@@ -177,7 +177,7 @@ function TermsOfServicePage() {
             </Text>
           </Section>
 
-          <BackButton to="/">← Back to Gallery</BackButton>
+          <BackButton to="/">←</BackButton>
         </Card>
       </Container>
     </>
