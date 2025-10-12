@@ -23,7 +23,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     background: white;
-    padding-bottom: 320px !important;
+    padding-bottom: 240px !important;
   }
 `
 
@@ -133,8 +133,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
   @media (max-width: 768px) {
     border: none;
     border-radius: 0;
-    margin: 0;
-    padding: 0 0 320px 0;
+    margin: 0 0 200px 0;
+    padding: 0;
     width: calc(100vw - 1rem);
     max-width: calc(100vw - 1rem);
     height: auto;
@@ -149,10 +149,9 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
-      max-height: 50vh !important;
-      margin: 0 !important;
+      margin: 0 0 20px 0 !important;
       padding: 0 !important;
-      touch-action: none;
+      touch-action: pan-x pan-y pinch-zoom;
       object-fit: contain;
     }
   }
