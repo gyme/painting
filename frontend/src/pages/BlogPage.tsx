@@ -16,29 +16,34 @@ const Hero = styled.div`
   text-align: center;
   margin-bottom: 3rem;
   padding: 3rem 2rem;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
 `
 
 const Title = styled.h1`
   font-size: 3rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-weight: 700;
+  color: white;
   margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 `
 
 const Subtitle = styled.p`
   font-size: 1.3rem;
-  color: #666;
+  color: white;
   max-width: 600px;
   margin: 0 auto;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   
   @media (max-width: 768px) {
     font-size: 1.1rem;
