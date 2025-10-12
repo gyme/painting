@@ -220,18 +220,18 @@ function HomePage() {
     }
   )
 
-  const { isLoading: popularLoading, error: popularError } = useQuery(
+  const { data: popularData, isLoading: popularLoading, error: popularError } = useQuery(
     'popularPaintings',
-    () => paintingsApi.getPopularPaintings(0, 6),
+    () => paintingsApi.getPopularPaintings(0, 12),
     { 
       enabled: !searchQuery,
       staleTime: 5 * 60 * 1000, // 5 minutes
     }
   )
 
-  const { isLoading: allLoading, error: allError } = useQuery(
+  const { data: allData, isLoading: allLoading, error: allError } = useQuery(
     'allPaintings',
-    () => paintingsApi.getAllPaintings(0, 12),
+    () => paintingsApi.getAllPaintings(0, 20),
     { 
       enabled: !searchQuery,
       staleTime: 3 * 60 * 1000, // 3 minutes
@@ -339,16 +339,41 @@ function HomePage() {
           </Section>
         )}
 
-      {featuredData && featuredData.content.length > 0 && (
-        <Section>
-          <SectionTitle>🎨 Start Coloring</SectionTitle>
-          <Grid>
-            {featuredData.content.slice(0, 8).map((painting) => (
-              <PaintingCard key={painting.id} painting={painting} />
-            ))}
-          </Grid>
-        </Section>
-      )}
+        {/* Featured Paintings */}
+        {featuredData && featuredData.content.length > 0 && (
+          <Section>
+            <SectionTitle>⭐ Featured Pages</SectionTitle>
+            <Grid>
+              {featuredData.content.map((painting) => (
+                <PaintingCard key={painting.id} painting={painting} />
+              ))}
+            </Grid>
+          </Section>
+        )}
+
+        {/* Popular Paintings */}
+        {popularData && popularData.content.length > 0 && (
+          <Section>
+            <SectionTitle>🔥 Most Popular</SectionTitle>
+            <Grid>
+              {popularData.content.map((painting) => (
+                <PaintingCard key={painting.id} painting={painting} />
+              ))}
+            </Grid>
+          </Section>
+        )}
+
+        {/* All Paintings */}
+        {allData && allData.content.length > 0 && (
+          <Section>
+            <SectionTitle>🎨 All Coloring Pages</SectionTitle>
+            <Grid>
+              {allData.content.map((painting) => (
+                <PaintingCard key={painting.id} painting={painting} />
+              ))}
+            </Grid>
+          </Section>
+        )}
       </Container>
     </>
   )
