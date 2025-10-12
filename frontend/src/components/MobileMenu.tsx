@@ -229,6 +229,13 @@ function MobileMenu() {
                 🏠 Home
               </MenuLink>
               <MenuLink 
+                to="/blog" 
+                onClick={closeMenu}
+                $isActive={isActive('/blog')}
+              >
+                ✏️ Blog
+              </MenuLink>
+              <MenuLink 
                 to="/category/Animals" 
                 onClick={closeMenu}
                 $isActive={isActive('/category/Animals')}
@@ -281,7 +288,7 @@ function MobileMenu() {
         </MenuContent>
         
         <MenuFooter>
-          © {new Date().getFullYear()} MyColoringApp.com
+          © {new Date().getFullYear()} mycolor.fun
           <br />
           Free coloring pages for kids! 🌈
           <br />

@@ -18,7 +18,7 @@ function SEO({
   type = 'website'
 }: SEOProps) {
   
-  const siteName = 'MyColoringApp.com'
+  const siteName = 'mycolor.fun'
   const fullTitle = `${title} | ${siteName}`
   
   useEffect(() => {

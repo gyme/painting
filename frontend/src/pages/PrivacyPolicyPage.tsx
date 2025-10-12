@@ -89,7 +89,7 @@ function PrivacyPolicyPage() {
     <>
       <SEO
         title="Privacy Policy"
-        description="Privacy Policy for MyColoringApp.com - Learn how we protect your information"
+        description="Privacy Policy for mycolor.fun - Learn how we protect your information"
         keywords="privacy policy, privacy, data protection, security, kids safety"
       />
       <Container>
@@ -100,14 +100,14 @@ function PrivacyPolicyPage() {
           <Section>
             <SectionTitle>1. Introduction</SectionTitle>
             <Text>
-              Welcome to MyColoringApp.com ("we," "our," or "us"). We are committed to protecting your privacy and the privacy of children who use our website. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.
+              Welcome to mycolor.fun ("we," "our," or "us"). We are committed to protecting your privacy and the privacy of children who use our website. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.
             </Text>
           </Section>
 
           <Section>
             <SectionTitle>2. Information We Collect</SectionTitle>
             <Text>
-              MyColoringApp.com is designed to be safe for children. We do not knowingly collect personal information from children under 13 years of age.
+              mycolor.fun is designed to be safe for children. We do not knowingly collect personal information from children under 13 years of age.
             </Text>
             <Text>
               We may collect the following non-personal information:

@@ -120,7 +120,7 @@ function ContactUsPage() {
     <>
       <SEO
         title="Contact Us"
-        description="Get in touch with MyColoringApp.com - We'd love to hear from you!"
+        description="Get in touch with mycolor.fun - We'd love to hear from you!"
         keywords="contact us, contact, support, help, email, feedback"
       />
       <Container>
@@ -143,8 +143,8 @@ function ContactUsPage() {
               <Icon>📧</Icon>
               <div>
                 <strong>Email:</strong>{' '}
-                <Link2 href="mailto:support@mycoloringapp.com">
-                  support@mycoloringapp.com
+                <Link2 href="mailto:support@mycolor.fun">
+                  support@mycolor.fun
                 </Link2>
               </div>
             </InfoItem>

@@ -130,6 +130,7 @@ function Header() {
         {/* Desktop navigation */}
         <NavLinks>
           <NavButton to="/">🏠 Home</NavButton>
+          <NavButton to="/blog">✏️ Blog</NavButton>
           <NavButton to="/category/Animals">🐶 Animals</NavButton>
           <NavButton to="/category/Nature">🌳 Nature</NavButton>
           <NavButton to="/category/Vehicles">🚗 Vehicles</NavButton>

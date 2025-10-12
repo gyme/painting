@@ -9,6 +9,8 @@ import ErrorBoundary from './components/ErrorBoundary'
 const HomePage = lazy(() => import('./pages/HomePage'))
 const PaintingPage = lazy(() => import('./pages/PaintingPage'))
 const CategoryPage = lazy(() => import('./pages/CategoryPage'))
+const BlogPage = lazy(() => import('./pages/BlogPage'))
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 const TermsOfServicePage = lazy(() => import('./pages/TermsOfServicePage'))
 const ContactUsPage = lazy(() => import('./pages/ContactUsPage'))
@@ -40,6 +42,8 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/painting/:urlKey" element={<PaintingPage />} />
               <Route path="/category/:category" element={<CategoryPage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<BlogPostPage />} />
               <Route path="/terms" element={<TermsOfServicePage />} />
               <Route path="/contact" element={<ContactUsPage />} />
               <Route path="/privacy" element={<PrivacyPolicyPage />} />

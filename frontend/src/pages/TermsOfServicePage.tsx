@@ -89,7 +89,7 @@ function TermsOfServicePage() {
     <>
       <SEO
         title="Terms of Service"
-        description="Terms of Service for MyColoringApp.com - Free coloring pages for kids"
+        description="Terms of Service for mycolor.fun - Free coloring pages for kids"
         keywords="terms of service, terms and conditions, legal, coloring pages"
       />
       <Container>
@@ -100,14 +100,14 @@ function TermsOfServicePage() {
           <Section>
             <SectionTitle>1. Acceptance of Terms</SectionTitle>
             <Text>
-              By accessing and using MyColoringApp.com ("the Website"), you accept and agree to be bound by the terms and provision of this agreement.
+              By accessing and using mycolor.fun ("the Website"), you accept and agree to be bound by the terms and provision of this agreement.
             </Text>
           </Section>
 
           <Section>
             <SectionTitle>2. Use License</SectionTitle>
             <Text>
-              Permission is granted to temporarily download and print the coloring pages on MyColoringApp.com for personal, non-commercial use only. This is the grant of a license, not a transfer of title, and under this license you may not:
+              Permission is granted to temporarily download and print the coloring pages on mycolor.fun for personal, non-commercial use only. This is the grant of a license, not a transfer of title, and under this license you may not:
             </Text>
             <List>
               <ListItem>Modify or copy the materials</ListItem>
@@ -145,21 +145,21 @@ function TermsOfServicePage() {
           <Section>
             <SectionTitle>5. Intellectual Property</SectionTitle>
             <Text>
-              All content on this website, including but not limited to images, text, graphics, logos, and software, is the property of MyColoringApp.com and is protected by copyright laws.
+              All content on this website, including but not limited to images, text, graphics, logos, and software, is the property of mycolor.fun and is protected by copyright laws.
             </Text>
           </Section>
 
           <Section>
             <SectionTitle>6. Disclaimer</SectionTitle>
             <Text>
-              The materials on MyColoringApp.com are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
+              The materials on mycolor.fun are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
             </Text>
           </Section>
 
           <Section>
             <SectionTitle>7. Limitations</SectionTitle>
             <Text>
-              In no event shall MyColoringApp.com or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on MyColoringApp.com.
+              In no event shall mycolor.fun or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on mycolor.fun.
             </Text>
           </Section>
 

@@ -60,7 +60,7 @@ function Footer() {
   return (
     <FooterContainer>
       <FooterContent>
-        <Logo>🎨 MyColoringApp.com</Logo>
+        <Logo>🎨 mycolor.fun</Logo>
         
         <Links>
           <FooterLink to="/">Home</FooterLink>
@@ -70,7 +70,7 @@ function Footer() {
         </Links>
         
         <Copyright>
-          © {new Date().getFullYear()} MyColoringApp.com. All rights reserved.
+          © {new Date().getFullYear()} mycolor.fun. All rights reserved.
           <br />
           Free coloring pages for kids - Print, Color, and Have Fun! 🌈
         </Copyright>
