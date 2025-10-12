@@ -229,14 +229,7 @@ function HomePage() {
     }
   )
 
-  const { data: allData, isLoading: allLoading, error: allError } = useQuery(
-    'allPaintings',
-    () => paintingsApi.getAllPaintings(0, 20),
-    { 
-      enabled: !searchQuery,
-      staleTime: 3 * 60 * 1000, // 3 minutes
-    }
-  )
+  // Removed allPaintings query - not scalable for thousands of pages
 
   const { data: categories } = useQuery(
     'categories',
@@ -298,11 +291,11 @@ function HomePage() {
     )
   }
 
-  if (featuredLoading || popularLoading || allLoading) {
+  if (featuredLoading || popularLoading) {
     return <Loading>🎨 Loading amazing paintings... ✨</Loading>
   }
 
-  if (featuredError || popularError || allError) {
+  if (featuredError || popularError) {
     return <Error>😢 Oops! Something went wrong. Please try again later.</Error>
   }
 
@@ -357,18 +350,6 @@ function HomePage() {
             <SectionTitle>🔥 Most Popular</SectionTitle>
             <Grid>
               {popularData.content.map((painting) => (
-                <PaintingCard key={painting.id} painting={painting} />
-              ))}
-            </Grid>
-          </Section>
-        )}
-
-        {/* All Paintings */}
-        {allData && allData.content.length > 0 && (
-          <Section>
-            <SectionTitle>🎨 All Coloring Pages</SectionTitle>
-            <Grid>
-              {allData.content.map((painting) => (
                 <PaintingCard key={painting.id} painting={painting} />
               ))}
             </Grid>
