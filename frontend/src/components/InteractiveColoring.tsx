@@ -13,17 +13,17 @@ const Container = styled.div`
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   
   @media (max-width: 768px) {
-    padding: 0 0 180px 0 !important;
-    padding-top: 0 !important;
+    padding: 0 !important;
     border-radius: 0;
     max-width: 100%;
     margin: 0;
     box-shadow: none;
-    min-height: 0;
+    min-height: 100vh;
     height: auto;
     display: flex;
     flex-direction: column;
     background: white;
+    padding-bottom: 220px !important;
   }
 `
 
@@ -67,15 +67,17 @@ const CanvasSection = styled.div`
   }
   
   @media (max-width: 768px) {
-    flex: 0 0 auto;
+    flex: 1;
     min-height: 0;
     height: auto;
     overflow: visible;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     background: white;
-    padding: 0 0 200px 0 !important;
-    margin: 0 0 100px 0 !important;
+    padding: 1rem 0.5rem 0 0.5rem !important;
+    margin: 0 !important;
     position: relative;
     width: 100vw;
     max-width: 100vw;
@@ -131,10 +133,10 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
   @media (max-width: 768px) {
     border: none;
     border-radius: 0;
-    margin: 0 0 280px 0;
+    margin: 0;
     padding: 0;
-    width: 100vw;
-    max-width: 100vw;
+    width: calc(100vw - 1rem);
+    max-width: calc(100vw - 1rem);
     height: auto;
     display: block;
     background: white;
@@ -144,8 +146,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
     canvas {
       display: block;
       background: white;
-      width: 100vw !important;
-      max-width: 100vw !important;
+      width: 100% !important;
+      max-width: 100% !important;
       height: auto !important;
       margin: 0 !important;
       padding: 0 !important;
@@ -399,11 +401,11 @@ const MobileColorSlider = styled.div`
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1.5px solid rgba(102, 126, 234, 0.1);
-    padding: 0.9rem 0 calc(0.9rem + env(safe-area-inset-bottom, 0px)) 0;
+    padding: 0.9rem 0 0.9rem 0;
     position: fixed;
-    bottom: 90px; /* Above the toolbar - increased space */
-    left: 20px;
-    right: 20px;
+    bottom: 95px; /* Above the toolbar */
+    left: 0.5rem;
+    right: 0.5rem;
     z-index: 9;
     box-shadow: 
       0 8px 32px rgba(102, 126, 234, 0.08),
