@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://painting-1.onrender.com/sitemap.xml</loc>
+    <loc>https://painting-sand.vercel.app/sitemap.xml</loc>
     <lastmod>2025-10-12</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://painting-1.onrender.com/image-sitemap.xml</loc>
+    <loc>https://painting-sand.vercel.app/image-sitemap.xml</loc>
     <lastmod>2025-10-12</lastmod>
   </sitemap>
 </sitemapindex>

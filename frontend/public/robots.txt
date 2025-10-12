@@ -5,9 +5,9 @@ User-agent: *
 Allow: /
 
 # Sitemap locations (index points to all sitemaps)
-Sitemap: https://painting-1.onrender.com/sitemap-index.xml
-Sitemap: https://painting-1.onrender.com/sitemap.xml
-Sitemap: https://painting-1.onrender.com/image-sitemap.xml
+Sitemap: https://painting-sand.vercel.app/sitemap-index.xml
+Sitemap: https://painting-sand.vercel.app/sitemap.xml
+Sitemap: https://painting-sand.vercel.app/image-sitemap.xml
 
 # Crawl-delay (optional - uncomment if needed)
 # Crawl-delay: 1

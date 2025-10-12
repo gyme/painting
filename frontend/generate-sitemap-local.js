@@ -14,7 +14,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const SITE_URL = process.env.SITE_URL || 'https://painting-1.onrender.com';
+const SITE_URL = process.env.SITE_URL || 'https://painting-sand.vercel.app';
 const OUTPUT_PATH = path.join(__dirname, 'public', 'sitemap.xml');
 
 console.log('🗺️  Generating sitemap for:', SITE_URL);
