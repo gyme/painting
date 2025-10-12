@@ -142,22 +142,13 @@ const Badge = styled.span<{ color?: string }>`
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 `
 
-const Description = styled.p`
-  font-size: 1.3rem;
-  color: #636e72;
-  line-height: 1.8;
-  margin-bottom: 2rem;
-`
+// Removed unused styled components: Description, Section, SectionTitle
 
-const Section = styled.div`
-  margin-bottom: 2rem;
-`
-
-const SectionTitle = styled.h3`
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #2d3436;
-  margin-bottom: 1rem;
+const ActionsContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
 `
 
 const PrintButton = styled.button`
@@ -172,6 +163,9 @@ const PrintButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 
   &:hover {
     transform: translateY(-2px);
@@ -279,6 +273,31 @@ const PaintingsGrid = styled.div`
   }
 `
 
+const RelatedSection = styled.div`
+  margin-top: 4rem;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 30px;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+    margin-top: 2rem;
+  }
+`
+
+const RelatedTitle = styled.h2`
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 2rem;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+`
+
 function PaintingPage() {
   const { urlKey } = useParams<{ urlKey: string }>()
   const printFunctionRef = useRef<(() => void) | null>(null)
@@ -293,6 +312,16 @@ function PaintingPage() {
     'paintings-suggestions',
     () => paintingsApi.getAllPaintings(),
     { enabled: !isLoading && (!!error || !painting) }
+  )
+
+  // Fetch related paintings from the same category
+  const { data: relatedPaintings } = useQuery(
+    ['relatedPaintings', painting?.category, painting?.id],
+    () => paintingsApi.getPaintingsByCategory(painting!.category, 0, 6),
+    { 
+      enabled: !!painting,
+      staleTime: 5 * 60 * 1000,
+    }
   )
   
   // Store the print function from InteractiveColoring
@@ -352,15 +381,43 @@ function PaintingPage() {
     return 'Hard'
   }
 
-  // Add structured data for the painting
+  // Enhanced structured data for the painting with CreativeWork + ImageObject
+  const imageUrl = painting.imageUrl.startsWith('http') 
+    ? painting.imageUrl 
+    : `${window.location.origin}${painting.imageUrl}`
+    
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    "name": painting.title,
-    "description": painting.description,
-    "image": painting.imageUrl,
-    "category": painting.category,
+    "name": `${painting.title} – Printable PDF`,
+    "genre": "Coloring Page",
+    "about": painting.description,
+    "description": `Free printable ${painting.title.toLowerCase()} coloring page for kids. Perfect for ${painting.category.toLowerCase()} lovers!`,
+    "image": {
+      "@type": "ImageObject",
+      "url": imageUrl,
+      "contentUrl": imageUrl,
+      "thumbnailUrl": painting.thumbnailUrl || imageUrl,
+      "caption": `${painting.title} coloring page outline`,
+      "description": `Printable ${painting.title.toLowerCase()} coloring page for children`
+    },
+    "url": window.location.href,
+    "author": {
+      "@type": "Organization",
+      "name": "mycolor.fun"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "mycolor.fun",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${window.location.origin}/favicon-256x256.png`
+      }
+    },
+    "datePublished": painting.createdAt,
+    "dateModified": painting.updatedAt,
     "keywords": painting.tags,
+    "category": painting.category,
     "interactionStatistic": {
       "@type": "InteractionCounter",
       "interactionType": "https://schema.org/ViewAction",
@@ -370,7 +427,13 @@ function PaintingPage() {
     "offers": {
       "@type": "Offer",
       "price": "0",
-      "priceCurrency": "USD"
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "audience": {
+      "@type": "EducationalAudience",
+      "educationalRole": "student",
+      "audienceType": "children"
     }
   }
 
@@ -419,32 +482,33 @@ function PaintingPage() {
                 }>
                   {getDifficultyText(painting.difficulty)}
                 </Badge>
-                <Badge color="rgba(102, 126, 234, 0.8)">
-                  👁️ {painting.viewCount} views
-                </Badge>
               </Meta>
             </TitleSection>
-            <PrintButton onClick={handlePrint}>🖨️ Print & Color!</PrintButton>
+            <ActionsContainer>
+              <PrintButton onClick={handlePrint} aria-label="Print coloring page">
+                🖨️ Print
+              </PrintButton>
+            </ActionsContainer>
           </Header>
-
-          <Description>{painting.description}</Description>
-
-          {painting.tags && (
-            <Section>
-              <SectionTitle>🏷️ Tags:</SectionTitle>
-              <Meta>
-                {painting.tags.split(',').map((tag, index) => (
-                  <Badge key={index} color="rgba(118, 75, 162, 0.8)">
-                    {tag.trim()}
-                  </Badge>
-                ))}
-              </Meta>
-            </Section>
-          )}
           </div>
           </MobileHidden>
         </Content>
       </Card>
+
+      {/* Related Pages Section */}
+      {relatedPaintings && relatedPaintings.content.length > 0 && (
+        <RelatedSection>
+          <RelatedTitle>More {painting.category} Pages</RelatedTitle>
+          <PaintingsGrid>
+            {relatedPaintings.content
+              .filter(p => p.id !== painting.id)
+              .slice(0, 3)
+              .map((relatedPainting) => (
+                <PaintingCard key={relatedPainting.id} painting={relatedPainting} />
+              ))}
+          </PaintingsGrid>
+        </RelatedSection>
+      )}
       </Container>
     </>
   )

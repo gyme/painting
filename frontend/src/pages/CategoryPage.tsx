@@ -155,13 +155,7 @@ const Error = styled.div`
   font-weight: 600;
 `
 
-const Empty = styled.div`
-  text-align: center;
-  padding: 4rem 2rem;
-  font-size: 1.5rem;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-`
+// Empty styled component removed - using EmptyState instead
 
 const FiltersContainer = styled.div`
   background: rgba(255, 255, 255, 0.98);
