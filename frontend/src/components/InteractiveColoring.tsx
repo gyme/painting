@@ -76,7 +76,7 @@ const CanvasSection = styled.div`
     align-items: center;
     justify-content: flex-start;
     background: white;
-    padding: 1rem 0.5rem 3rem 0.5rem !important;
+    padding: 0rem 0.5rem 3rem 0.5rem !important;
     margin: 0 !important;
     position: relative;
     width: 100vw;
