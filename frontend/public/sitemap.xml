@@ -55,6 +55,30 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.mycolor.fun/blog</loc>
+    <lastmod>2025-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mycolor.fun/blog/educational-benefits-coloring</loc>
+    <lastmod>2025-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mycolor.fun/blog/coloring-child-development</loc>
+    <lastmod>2025-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mycolor.fun/blog/coloring-stress-relief-kids</loc>
+    <lastmod>2025-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.mycolor.fun/terms</loc>
     <lastmod>2025-10-12</lastmod>
     <changefreq>monthly</changefreq>

@@ -211,7 +211,26 @@ function generateSitemaps() {
       });
     });
     
-    // 4. Add static pages to regular sitemap
+    // 4. Add blog pages to regular sitemap
+    const blogPages = [
+      { path: '/blog', priority: '0.8', changefreq: 'weekly' },
+      { path: '/blog/educational-benefits-coloring', priority: '0.7', changefreq: 'monthly' },
+      { path: '/blog/coloring-child-development', priority: '0.7', changefreq: 'monthly' },
+      { path: '/blog/coloring-stress-relief-kids', priority: '0.7', changefreq: 'monthly' }
+    ];
+    
+    console.log('\n📝 Adding blog pages...');
+    blogPages.forEach(page => {
+      regularUrls.push({
+        loc: `${SITE_URL}${page.path}`,
+        lastmod: today,
+        changefreq: page.changefreq,
+        priority: page.priority
+      });
+    });
+    console.log(`✅ Added ${blogPages.length} blog pages`);
+    
+    // 5. Add static pages to regular sitemap
     const staticPages = [
       { path: '/terms', priority: '0.3', changefreq: 'monthly' },
       { path: '/privacy', priority: '0.3', changefreq: 'monthly' },
@@ -227,24 +246,24 @@ function generateSitemaps() {
       });
     });
     
-    // 5. Ensure output directory exists
+    // 6. Ensure output directory exists
     if (!fs.existsSync(OUTPUT_DIR)) {
       fs.mkdirSync(OUTPUT_DIR, { recursive: true });
     }
     
-    // 6. Generate and write regular sitemap
+    // 7. Generate and write regular sitemap
     console.log(`\n📝 Generating regular sitemap with ${regularUrls.length} URLs...`);
     const regularXml = generateRegularSitemap(regularUrls);
     fs.writeFileSync(REGULAR_SITEMAP, regularXml, 'utf8');
     console.log(`✅ Regular sitemap: ${REGULAR_SITEMAP}`);
     
-    // 7. Generate and write image sitemap
+    // 8. Generate and write image sitemap
     console.log(`\n📝 Generating image sitemap with ${imageUrls.length} URLs...`);
     const imageXml = generateImageSitemap(imageUrls);
     fs.writeFileSync(IMAGE_SITEMAP, imageXml, 'utf8');
     console.log(`✅ Image sitemap: ${IMAGE_SITEMAP}`);
     
-    // 8. Generate and write sitemap index
+    // 9. Generate and write sitemap index
     console.log(`\n📝 Generating sitemap index...`);
     const indexXml = generateSitemapIndex([
       {
@@ -259,12 +278,13 @@ function generateSitemaps() {
     fs.writeFileSync(INDEX_SITEMAP, indexXml, 'utf8');
     console.log(`✅ Sitemap index: ${INDEX_SITEMAP}`);
     
-    // 9. Summary
+    // 10. Summary
     console.log(`\n✅ All sitemaps generated successfully!`);
     console.log(`\n📊 Summary:`);
     console.log(`   📄 Regular sitemap: ${regularUrls.length} URLs`);
     console.log(`      - Home: 1`);
     console.log(`      - Categories: ${categories.length}`);
+    console.log(`      - Blog pages: ${blogPages.length}`);
     console.log(`      - Static pages: ${staticPages.length}`);
     console.log(`   🖼️  Image sitemap: ${imageUrls.length} URLs (with images)`);
     console.log(`      - Paintings: ${paintings.length}`);
