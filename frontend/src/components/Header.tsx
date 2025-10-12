@@ -18,13 +18,13 @@ const HeaderContainer = styled.header`
 `
 
 const Nav = styled.nav`
-  max-width: 1400px;
+  max-width: 1340px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.75rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -75,25 +75,26 @@ const Logo = styled(Link)`
 
 const NavLinks = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   align-items: center;
   flex-wrap: wrap;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
     display: none;
   }
 `
 
 const NavButton = styled(Link)`
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1rem;
   background: rgba(255, 255, 255, 0.2);
   color: white;
   text-decoration: none;
-  border-radius: 25px;
+  border-radius: 20px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.95rem;
   transition: all 0.3s ease;
   border: 2px solid rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
 
   &:hover {
     background: rgba(255, 255, 255, 0.3);
@@ -105,8 +106,17 @@ const NavButton = styled(Link)`
     transform: translateY(0);
   }
 
-  @media (max-width: 768px) {
-    padding: 0.6rem 1.2rem;
+  &.primary {
+    background: rgba(46, 204, 113, 0.8);
+    border-color: rgba(46, 204, 113, 1);
+    
+    &:hover {
+      background: rgba(46, 204, 113, 0.9);
+    }
+  }
+
+  @media (max-width: 1200px) {
+    padding: 0.5rem 0.8rem;
     font-size: 0.9rem;
   }
 `
@@ -117,7 +127,7 @@ function Header() {
       <Nav>
         <TopRow>
           <Logo to="/">
-            🎨 Kids Painting Fun!
+            🎨 mycolor.fun
           </Logo>
           <MobileMenu />
         </TopRow>
@@ -130,10 +140,8 @@ function Header() {
         {/* Desktop navigation */}
         <NavLinks>
           <NavButton to="/">🏠 Home</NavButton>
-          <NavButton to="/blog">✏️ Blog</NavButton>
-          <NavButton to="/category/Animals">🐶 Animals</NavButton>
-          <NavButton to="/category/Nature">🌳 Nature</NavButton>
-          <NavButton to="/category/Vehicles">🚗 Vehicles</NavButton>
+          <NavButton to="/random" className="primary">🎲 Random</NavButton>
+          <NavButton to="/blog">📝 Blog</NavButton>
         </NavLinks>
       </Nav>
     </HeaderContainer>

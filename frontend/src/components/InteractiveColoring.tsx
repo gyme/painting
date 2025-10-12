@@ -1176,9 +1176,18 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
           }, 100)
         }
       } else {
+        // Brush tool - draw immediately, then save to history
         isDrawingRef.current = true
-        saveToHistory(ctx)
-        drawBrush(x, y, selectedColor)
+        
+        // Draw first for immediate feedback
+        requestAnimationFrame(() => {
+          drawBrush(x, y, selectedColor)
+        })
+        
+        // Save history after drawing starts
+        requestAnimationFrame(() => {
+          saveToHistory(ctx)
+        })
       }
     }
 
@@ -1211,7 +1220,9 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       if (!coords) return
 
       const { x, y } = coords
-      drawBrush(x, y, selectedColor)
+      requestAnimationFrame(() => {
+        drawBrush(x, y, selectedColor)
+      })
     }
 
     const handleTouchEnd = (e: TouchEvent) => {
@@ -1359,6 +1370,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
   }, [brushSize, isOriginalArtwork])
 
   const handleCanvasMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    e.preventDefault()
     const canvas = canvasRef.current
     const ctx = canvas?.getContext('2d', { willReadFrequently: true })
     if (!ctx || !canvas) return
@@ -1392,21 +1404,32 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
         }, 100)
       }
     } else {
-      // Brush tool
+      // Brush tool - draw immediately, then save to history
       isDrawingRef.current = true
-      saveToHistory(ctx)
-      drawBrush(x, y, selectedColor)
+      
+      // Draw first for immediate feedback
+      requestAnimationFrame(() => {
+        drawBrush(x, y, selectedColor)
+      })
+      
+      // Save history after drawing starts
+      requestAnimationFrame(() => {
+        saveToHistory(ctx)
+      })
     }
   }
 
   const handleCanvasMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    e.preventDefault()
     if (!isDrawingRef.current || selectedTool === 'fill' || selectedTool === 'eraser') return
 
     const coords = getCanvasCoordinates(e)
     if (!coords) return
 
     const { x, y } = coords
-    drawBrush(x, y, selectedColor)
+    requestAnimationFrame(() => {
+      drawBrush(x, y, selectedColor)
+    })
   }
 
   const handleCanvasMouseUp = () => {
