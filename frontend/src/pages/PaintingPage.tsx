@@ -15,10 +15,16 @@ const Container = styled.div`
   
   @media (max-width: 768px) {
     padding: 0;
+    margin: 0;
+    max-width: 100%;
+    width: 100vw;
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 75px); /* Account for header */
+    min-height: 100vh;
+    height: auto;
     background: white;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 `
 
@@ -60,6 +66,10 @@ const Card = styled.div`
   @media (max-width: 768px) {
     border-radius: 0;
     box-shadow: none;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
   }
 
   @media print {
@@ -73,6 +83,9 @@ const Content = styled.div<{ style?: any }>`
 
   @media (max-width: 768px) {
     padding: 0;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
   }
 
   @media print {

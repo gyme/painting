@@ -13,17 +13,17 @@ const Container = styled.div`
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   
   @media (max-width: 768px) {
-    padding: 0 !important;
+    padding: 0 0 180px 0 !important;
     padding-top: 0 !important;
     border-radius: 0;
     max-width: 100%;
     margin: 0;
     box-shadow: none;
     min-height: 0;
+    height: auto;
     display: flex;
     flex-direction: column;
     background: white;
-    flex: 1;
   }
 `
 
@@ -42,9 +42,10 @@ const MainContent = styled.div`
   }
   
   @media (max-width: 768px) {
-    flex: 1;
+    flex: 0 0 auto;
     min-height: 0;
-    overflow: hidden;
+    height: auto;
+    overflow: visible;
     display: flex;
     flex-direction: column;
     padding: 0 !important;
@@ -66,15 +67,18 @@ const CanvasSection = styled.div`
   }
   
   @media (max-width: 768px) {
-    flex: 1;
+    flex: 0 0 auto;
     min-height: 0;
-    overflow: hidden;
+    height: auto;
+    overflow: visible;
     display: flex;
     flex-direction: column;
     background: white;
-    padding: 0 !important;
-    margin: 0 !important;
+    padding: 0 0 200px 0 !important;
+    margin: 0 0 100px 0 !important;
     position: relative;
+    width: 100vw;
+    max-width: 100vw;
   }
 `
 
@@ -121,37 +125,32 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
     display: block;
     width: 100%;
     height: auto;
-    max-height: 85vh;
+    max-height: 60vh;
   }
   
   @media (max-width: 768px) {
     border: none;
     border-radius: 0;
-    margin: 0;
+    margin: 0 0 280px 0;
     padding: 0;
     width: 100vw;
-    height: calc(100vh - 420px);
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    max-width: 100vw;
+    height: auto;
+    display: block;
     background: white;
     position: relative;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
+    overflow: visible;
     
     canvas {
       display: block;
       background: white;
-      width: 100% !important;
-      height: 100% !important;
-      margin: 0;
-      padding: 0;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
       touch-action: none;
-      transform: scale(${props => props.$scale || 1});
-      transform-origin: center center;
-      transition: transform 0.15s ease-out;
-      min-width: 100%;
-      min-height: 100%;
+      object-fit: contain;
     }
   }
 `
@@ -694,14 +693,14 @@ const colors = [
   { name: 'Baby Pink', value: '#FFC0CB' },
   { name: 'Coral', value: '#FF7F7F' },
   { name: 'Peach', value: '#FFCC99' },
-  { name: 'Pale Yellow', value: '#FFFFCC' },
+  { name: 'Magenta', value: '#a6ff00' },
   { name: 'Mint', value: '#BAFFC9' },
   { name: 'Sky Blue', value: '#BAE1FF' },
   { name: 'Lavender', value: '#D7C3F1' },
   
   // Row 6: Light & Neutral Colors
   { name: 'White', value: '#FFFFFF' },
-  { name: 'Ivory', value: '#FFFFF0' },
+  { name: 'Salmon', value: '#FA8072' },
   { name: 'Cream', value: '#FFF8DC' },
   { name: 'Sand', value: '#F4E4C1' },
   { name: 'Light Gray', value: '#D3D3D3' },
@@ -968,40 +967,22 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       // Set canvas size AFTER image loads
       const isMobile = window.innerWidth <= 768
       if (isMobile) {
-        // On mobile: canvas fills the entire container
+        // On mobile: canvas width is full screen, height based on image aspect ratio
         const availableWidth = window.innerWidth
-        const availableHeight = window.innerHeight - 420
         
-        // Canvas fills entire available space
-        canvas.width = availableWidth
-        canvas.height = availableHeight
-        
-        // Fill entire canvas with white (so borders are paintable)
-      ctx.fillStyle = 'white'
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
-        
-        // Calculate how to draw the image - ALIGNED TO TOP
+        // Calculate image aspect ratio
         const imageAspect = img.width / img.height
-        const canvasAspect = canvas.width / canvas.height
         
-        let drawWidth, drawHeight, drawX, drawY
+        // Set canvas to full width, height based on image aspect ratio
+        canvas.width = availableWidth
+        canvas.height = availableWidth / imageAspect
         
-        if (imageAspect > canvasAspect) {
-          // Image is wider - fit to width, align to top
-          drawWidth = canvas.width
-          drawHeight = canvas.width / imageAspect
-          drawX = 0
-          drawY = 0 // Top aligned instead of centered
-        } else {
-          // Image is taller - fit to height, center horizontally
-          drawHeight = canvas.height
-          drawWidth = canvas.height * imageAspect
-          drawX = (canvas.width - drawWidth) / 2
-          drawY = 0 // Top aligned instead of centered
-        }
+        // Fill entire canvas with white
+        ctx.fillStyle = 'white'
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
         
-        // Draw the image at the top (borders below are paintable)
-        ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight)
+        // Draw image to fill entire canvas (full width, no black borders)
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
       } else {
         // Desktop: fixed width, height based on aspect ratio
         canvas.width = 600
@@ -1092,40 +1073,22 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
           // Set canvas size AFTER SVG loads
           const isMobile = window.innerWidth <= 768
           if (isMobile) {
-            // On mobile: canvas fills the entire container
+            // On mobile: canvas width is full screen, height based on image aspect ratio
             const availableWidth = window.innerWidth
-            const availableHeight = window.innerHeight - 420
             
-            // Canvas fills entire available space
-            canvas.width = availableWidth
-            canvas.height = availableHeight
-            
-            // Fill entire canvas with white (so borders are paintable)
-          ctx.fillStyle = 'white'
-          ctx.fillRect(0, 0, canvas.width, canvas.height)
-            
-            // Calculate how to draw the image - ALIGNED TO TOP
+            // Calculate image aspect ratio
             const imageAspect = svgImg.width / svgImg.height
-            const canvasAspect = canvas.width / canvas.height
             
-            let drawWidth, drawHeight, drawX, drawY
+            // Set canvas to full width, height based on image aspect ratio
+            canvas.width = availableWidth
+            canvas.height = availableWidth / imageAspect
             
-            if (imageAspect > canvasAspect) {
-              // Image is wider - fit to width, align to top
-              drawWidth = canvas.width
-              drawHeight = canvas.width / imageAspect
-              drawX = 0
-              drawY = 0 // Top aligned instead of centered
-            } else {
-              // Image is taller - fit to height, center horizontally
-              drawHeight = canvas.height
-              drawWidth = canvas.height * imageAspect
-              drawX = (canvas.width - drawWidth) / 2
-              drawY = 0 // Top aligned instead of centered
-            }
+            // Fill entire canvas with white
+            ctx.fillStyle = 'white'
+            ctx.fillRect(0, 0, canvas.width, canvas.height)
             
-            // Draw the image at the top
-            ctx.drawImage(svgImg, drawX, drawY, drawWidth, drawHeight)
+            // Draw image to fill entire canvas (full width, no black borders)
+            ctx.drawImage(svgImg, 0, 0, canvas.width, canvas.height)
           } else {
             // Desktop: fixed width, height based on aspect ratio
             canvas.width = 600
@@ -1319,14 +1282,24 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
     const rect = canvas.getBoundingClientRect()
     
-    // Map displayed coordinates to canvas internal coordinates
-    // rect gives us the actual displayed size, canvas.width/height is the internal resolution
-    const clientX = e.clientX
-    const clientY = e.clientY
-    const clickX = clientX - rect.left
-    const clickY = clientY - rect.top
+    // For mouse events, use offsetX/offsetY for better precision
+    // For touch events, calculate from clientX/clientY
+    let clickX: number
+    let clickY: number
     
-    // Scale from display coordinates to canvas coordinates
+    if ('offsetX' in e && 'offsetY' in e && typeof e.offsetX === 'number' && typeof e.offsetY === 'number') {
+      // Mouse event - use offset coordinates directly (more accurate)
+      clickX = e.offsetX as number
+      clickY = e.offsetY as number
+    } else {
+      // Touch event - calculate from client coordinates
+      const clientX = e.clientX
+      const clientY = e.clientY
+      clickX = clientX - rect.left
+      clickY = clientY - rect.top
+    }
+    
+    // Scale from display coordinates to canvas internal coordinates
     const x = (clickX / rect.width) * canvas.width
     const y = (clickY / rect.height) * canvas.height
 
@@ -1618,31 +1591,12 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       // Use same positioning logic as initial image load
       const isMobile = window.innerWidth <= 768
       if (isMobile) {
-        // Mobile: fill entire canvas with white, then draw image at top
+        // Mobile: fill entire canvas with white
         ctx.fillStyle = 'white'
         ctx.fillRect(0, 0, canvas.width, canvas.height)
         
-        // Calculate positioning (same as initial load)
-        const imageAspect = img.width / img.height
-        const canvasAspect = canvas.width / canvas.height
-        
-        let drawWidth, drawHeight, drawX, drawY
-        
-        if (imageAspect > canvasAspect) {
-          // Image is wider - fit to width, align to top
-          drawWidth = canvas.width
-          drawHeight = canvas.width / imageAspect
-          drawX = 0
-          drawY = 0
-        } else {
-          // Image is taller - fit to height, center horizontally
-          drawHeight = canvas.height
-          drawWidth = canvas.height * imageAspect
-          drawX = (canvas.width - drawWidth) / 2
-          drawY = 0
-        }
-        
-        ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight)
+        // Draw image to fill entire canvas (full width, no black borders)
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
       } else {
         // Desktop: draw at full canvas size
         ctx.fillStyle = 'white'
@@ -1706,13 +1660,13 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     // Copy current canvas
     saveCtx.drawImage(canvas, 0, 0)
     
-    // Add watermark for saved image
+    // Add minimal watermark at bottom right for saved image
     saveCtx.save()
-    saveCtx.globalAlpha = 1.0
-    saveCtx.font = 'bold 24px Arial'
-    saveCtx.fillStyle = '#000000'
-    saveCtx.textAlign = 'center'
-    saveCtx.fillText(WATERMARK_TEXT, saveCanvas.width / 2, saveCanvas.height - 30)
+    saveCtx.globalAlpha = 0.8
+    saveCtx.font = '14px Arial'
+    saveCtx.fillStyle = '#666666'
+    saveCtx.textAlign = 'right'
+    saveCtx.fillText(WATERMARK_TEXT, saveCanvas.width - 10, saveCanvas.height - 10)
     saveCtx.restore()
     
     const link = document.createElement('a')
@@ -1769,13 +1723,13 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       printCtx.putImageData(currentImageData, 0, 0)
     }
     
-    // Add watermark in solid black for printing (no transparency, clear and sharp)
+    // Add minimal watermark at bottom right for printing
     printCtx.save()
-    printCtx.globalAlpha = 1.0
-    printCtx.font = 'bold 24px Arial'
-    printCtx.fillStyle = '#000000' // Solid black
-    printCtx.textAlign = 'center'
-    printCtx.fillText(WATERMARK_TEXT, printCanvas.width / 2, printCanvas.height - 30)
+    printCtx.globalAlpha = 0.6
+    printCtx.font = '12px Arial'
+    printCtx.fillStyle = '#888888'
+    printCtx.textAlign = 'right'
+    printCtx.fillText(WATERMARK_TEXT, printCanvas.width - 10, printCanvas.height - 10)
     printCtx.restore()
     
     const dataUrl = printCanvas.toDataURL()

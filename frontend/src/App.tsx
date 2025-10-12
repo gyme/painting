@@ -16,9 +16,17 @@ const TermsOfServicePage = lazy(() => import('./pages/TermsOfServicePage'))
 const ContactUsPage = lazy(() => import('./pages/ContactUsPage'))
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'))
 
+// Collection/Listicle pages
+const TopAnimalsPage = lazy(() => import('./pages/TopAnimalsPage'))
+const TopVehiclesPage = lazy(() => import('./pages/TopVehiclesPage'))
+const BestForToddlersPage = lazy(() => import('./pages/BestForToddlersPage'))
+const MostPopularPage = lazy(() => import('./pages/MostPopularPage'))
+const EasyColoringPage = lazy(() => import('./pages/EasyColoringPage'))
+
 const AppContainer = styled.div`
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow-x: hidden;
 `
 
 const LoadingFallback = styled.div`
@@ -44,6 +52,15 @@ function App() {
               <Route path="/category/:category" element={<CategoryPage />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
+              
+              {/* Collection/Listicle Pages */}
+              <Route path="/top-animal-coloring-pages" element={<TopAnimalsPage />} />
+              <Route path="/top-vehicle-coloring-pages" element={<TopVehiclesPage />} />
+              <Route path="/best-coloring-pages-for-toddlers" element={<BestForToddlersPage />} />
+              <Route path="/most-popular-coloring-pages" element={<MostPopularPage />} />
+              <Route path="/easy-coloring-pages" element={<EasyColoringPage />} />
+              
+              {/* Static Pages */}
               <Route path="/terms" element={<TermsOfServicePage />} />
               <Route path="/contact" element={<ContactUsPage />} />
               <Route path="/privacy" element={<PrivacyPolicyPage />} />

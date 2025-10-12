@@ -216,7 +216,16 @@ function generateSitemaps() {
       { path: '/blog', priority: '0.8', changefreq: 'weekly' },
       { path: '/blog/educational-benefits-coloring', priority: '0.7', changefreq: 'monthly' },
       { path: '/blog/coloring-child-development', priority: '0.7', changefreq: 'monthly' },
-      { path: '/blog/coloring-stress-relief-kids', priority: '0.7', changefreq: 'monthly' }
+      { path: '/blog/coloring-stress-relief-kids', priority: '0.7', changefreq: 'monthly' },
+      { path: '/blog/coloring-pages-by-age', priority: '0.7', changefreq: 'monthly' },
+      { path: '/blog/homeschool-coloring-activities', priority: '0.7', changefreq: 'monthly' },
+      { path: '/blog/fine-motor-skills-development', priority: '0.7', changefreq: 'monthly' },
+      { path: '/blog/printable-coloring-pages-guide', priority: '0.7', changefreq: 'monthly' },
+      { path: '/blog/seasonal-coloring-activities', priority: '0.7', changefreq: 'monthly' },
+      { path: '/blog/color-theory-for-kids', priority: '0.7', changefreq: 'monthly' },
+      { path: '/blog/screen-free-activities', priority: '0.7', changefreq: 'monthly' },
+      { path: '/blog/mindful-coloring-meditation', priority: '0.7', changefreq: 'monthly' },
+      { path: '/blog/party-activities-coloring', priority: '0.7', changefreq: 'monthly' }
     ];
     
     console.log('\n📝 Adding blog pages...');
@@ -229,6 +238,26 @@ function generateSitemaps() {
       });
     });
     console.log(`✅ Added ${blogPages.length} blog pages`);
+    
+    // 4b. Add collection/listicle pages to regular sitemap
+    const collectionPages = [
+      { path: '/top-animal-coloring-pages', priority: '0.8', changefreq: 'monthly' },
+      { path: '/top-vehicle-coloring-pages', priority: '0.8', changefreq: 'monthly' },
+      { path: '/best-coloring-pages-for-toddlers', priority: '0.8', changefreq: 'monthly' },
+      { path: '/most-popular-coloring-pages', priority: '0.9', changefreq: 'weekly' },
+      { path: '/easy-coloring-pages', priority: '0.8', changefreq: 'monthly' }
+    ];
+    
+    console.log('\n📄 Adding collection pages...');
+    collectionPages.forEach(page => {
+      regularUrls.push({
+        loc: `${SITE_URL}${page.path}`,
+        lastmod: today,
+        changefreq: page.changefreq,
+        priority: page.priority
+      });
+    });
+    console.log(`✅ Added ${collectionPages.length} collection pages`);
     
     // 5. Add static pages to regular sitemap
     const staticPages = [

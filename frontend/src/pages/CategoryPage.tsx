@@ -5,6 +5,7 @@ import { paintingsApi } from '../api/paintings'
 import PaintingCard from '../components/PaintingCard'
 import Breadcrumbs from '../components/Breadcrumbs'
 import SEO from '../components/SEO'
+import { getCategoryContent } from '../data/categoryContent'
 
 const Container = styled.div`
   max-width: 1400px;
@@ -31,6 +32,96 @@ const Title = styled.h1`
 
   @media (max-width: 768px) {
     font-size: 2rem;
+  }
+`
+
+const Description = styled.div`
+  max-width: 1200px;
+  margin: 3rem auto 2rem;
+  padding: 3rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  
+  h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 2rem 0 1rem 0;
+    font-weight: 700;
+    
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+  
+  p {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+    
+    strong {
+      color: #333;
+      font-weight: 600;
+    }
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+    
+    li {
+      padding: 0.75rem 0;
+      padding-left: 2rem;
+      position: relative;
+      color: #555;
+      line-height: 1.6;
+      font-size: 1.05rem;
+      
+      &:before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: #667eea;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    margin: 2rem 0 1rem;
+    padding: 1.5rem;
+    border-radius: 15px;
+    
+    h2 {
+      font-size: 1.4rem;
+      margin: 1.5rem 0 0.75rem 0;
+      
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+    
+    p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    ul {
+      margin: 1rem 0;
+      
+      li {
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        font-size: 0.95rem;
+        
+        &:before {
+          font-size: 1rem;
+        }
+      }
+    }
   }
 `
 
@@ -105,15 +196,20 @@ function CategoryPage() {
     nature: 'Explore beautiful nature coloring pages! Color trees, flowers, beaches, rivers, and stunning landscapes. Bring nature to life with colors!',
     vehicles: 'Rev up with exciting vehicle coloring pages! Color cars, trucks, buses, trains, and more. Perfect for kids who love transportation!',
     fantasy: 'Enter a magical world with fantasy coloring pages! Color unicorns, dragons, castles, and magical creatures. Let imagination soar!',
-    characters: 'Color your favorite characters! From Pikachu to Disney princesses, bring beloved characters to life with your creativity!'
+    characters: 'Color your favorite characters! From Pikachu to Disney princesses, bring beloved characters to life with your creativity!',
+    mandalas: 'Find peace and focus with beautiful mandala coloring pages! Symmetrical patterns perfect for mindfulness and relaxation.',
+    sports: 'Get active with sports coloring pages! Soccer, basketball, swimming, and more athletic activities await.',
+    holidays: 'Celebrate year-round with holiday coloring pages! Christmas, Halloween, Easter, and all your favorite special occasions.'
   }
+  
+  const content = getCategoryContent(category)
 
   return (
     <>
       <SEO
-        title={`${category} Coloring Pages`}
-        description={categoryDescriptions[category?.toLowerCase() || ''] || `Browse our collection of ${category} coloring pages for kids. Free printable coloring sheets perfect for children of all ages!`}
-        keywords={`${category} coloring pages, ${category} coloring sheets, kids ${category}, printable ${category}`}
+        title={`${category} Coloring Pages - Free Printable for Kids`}
+        description={content?.description || categoryDescriptions[category?.toLowerCase() || ''] || `Browse our collection of ${category} coloring pages for kids. Free printable coloring sheets perfect for children of all ages!`}
+        keywords={`${category} coloring pages, ${category} coloring sheets, kids ${category}, printable ${category}, free ${category} coloring, ${category} activities for kids`}
       />
       <Container>
         <Breadcrumbs items={[
@@ -121,18 +217,35 @@ function CategoryPage() {
           { label: category || 'Category' }
         ]} />
         <Header>
-        <Title>{getCategoryEmoji(category!)} {category} Paintings</Title>
-      </Header>
+          <Title>{getCategoryEmoji(category!)} {category} Coloring Pages</Title>
+        </Header>
 
-      {data && data.content.length > 0 ? (
-        <Grid>
-          {data.content.map((painting) => (
-            <PaintingCard key={painting.id} painting={painting} />
-          ))}
-        </Grid>
-      ) : (
-        <Empty>No paintings found in this category yet. Check back soon! 🎨</Empty>
-      )}
+        {data && data.content.length > 0 ? (
+          <Grid>
+            {data.content.map((painting) => (
+              <PaintingCard key={painting.id} painting={painting} />
+            ))}
+          </Grid>
+        ) : (
+          <Empty>No paintings found in this category yet. Check back soon! 🎨</Empty>
+        )}
+        
+        {content && (
+          <Description>
+            <h2>Why Choose Our {category} Coloring Pages?</h2>
+            <p>{content.description}</p>
+            
+            <h2>Educational Benefits</h2>
+            <ul>
+              {content.benefits.map((benefit, index) => (
+                <li key={index}>{benefit}</li>
+              ))}
+            </ul>
+            
+            <p><strong>Age Range:</strong> {content.ageRange}</p>
+            <p><strong>Learning Value:</strong> {content.learningValue}</p>
+          </Description>
+        )}
       </Container>
     </>
   )

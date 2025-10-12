@@ -155,6 +155,87 @@ const blogPosts = [
     readTime: '6 min read',
     emoji: '😌',
     color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+  },
+  {
+    id: 'coloring-pages-by-age',
+    title: 'Best Coloring Pages for Every Age: 2-10 Years Complete Guide',
+    excerpt: 'Find the perfect coloring pages for your child\'s age and skill level. Age-appropriate recommendations for toddlers to elementary kids.',
+    date: 'October 12, 2025',
+    readTime: '8 min read',
+    emoji: '👶',
+    color: 'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)'
+  },
+  {
+    id: 'homeschool-coloring-activities',
+    title: 'Using Coloring Pages for Homeschooling: Creative Learning Activities',
+    excerpt: 'Transform coloring pages into powerful educational tools. Practical activities for teaching math, science, language arts, and more through coloring.',
+    date: 'October 12, 2025',
+    readTime: '9 min read',
+    emoji: '📚',
+    color: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+  },
+  {
+    id: 'fine-motor-skills-development',
+    title: 'Fine Motor Skills: How Coloring Prepares Children for Writing',
+    excerpt: 'The crucial connection between coloring and handwriting. Learn how coloring develops the muscles and coordination needed for writing success.',
+    date: 'October 12, 2025',
+    readTime: '7 min read',
+    emoji: '✍️',
+    color: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
+  },
+  {
+    id: 'printable-coloring-pages-guide',
+    title: 'Complete Guide to Printing Coloring Pages: Save Money & Get Best Results',
+    excerpt: 'Expert tips for printing high-quality coloring pages at home. Learn how to save ink, choose the right paper, and troubleshoot common printing problems.',
+    date: 'October 12, 2025',
+    readTime: '6 min read',
+    emoji: '🖨️',
+    color: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
+  },
+  {
+    id: 'seasonal-coloring-activities',
+    title: 'Seasonal Coloring Pages: Year-Round Activities for Every Holiday',
+    excerpt: 'Complete guide to seasonal coloring activities. Holiday-specific ideas, seasonal crafts, and themed projects for every time of year.',
+    date: 'October 12, 2025',
+    readTime: '10 min read',
+    emoji: '🎃',
+    color: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #ffecd2 100%)'
+  },
+  {
+    id: 'color-theory-for-kids',
+    title: 'Teaching Color Theory Through Coloring: Fun Art Lessons for Kids',
+    excerpt: 'Make color theory fun and accessible! Learn how to teach primary colors, color mixing, warm/cool colors, and more through coloring activities.',
+    date: 'October 12, 2025',
+    readTime: '8 min read',
+    emoji: '🎨',
+    color: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)'
+  },
+  {
+    id: 'screen-free-activities',
+    title: 'Screen-Free Activities: Why Coloring is the Perfect Digital Detox for Kids',
+    excerpt: 'Combat screen addiction with engaging coloring activities. Practical strategies for reducing screen time and creating healthy tech boundaries.',
+    date: 'October 12, 2025',
+    readTime: '7 min read',
+    emoji: '📵',
+    color: 'linear-gradient(135deg, #30cfd0 0%, #330867 100%)'
+  },
+  {
+    id: 'mindful-coloring-meditation',
+    title: 'Mindful Coloring: Teaching Meditation and Mindfulness to Children',
+    excerpt: 'Use coloring as a gateway to mindfulness practice. Simple techniques to help children develop focus, calm, and emotional regulation through mindful coloring.',
+    date: 'October 12, 2025',
+    readTime: '7 min read',
+    emoji: '🧘',
+    color: 'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)'
+  },
+  {
+    id: 'party-activities-coloring',
+    title: 'Coloring Pages for Parties: Creative Activities for Birthday Parties & Events',
+    excerpt: 'Make parties memorable with coloring activities! Ideas for birthday parties, baby showers, school events, and more. Includes free party planning tips.',
+    date: 'October 12, 2025',
+    readTime: '9 min read',
+    emoji: '🎉',
+    color: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%)'
   }
 ]
 

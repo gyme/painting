@@ -2,6 +2,12 @@ spring:
   application:
     name: kids-painting-api
   
+  datasource:
+    url: jdbc:h2:file:./painting
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
   h2:
     console:
       enabled: true

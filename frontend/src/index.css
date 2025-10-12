@@ -10,10 +10,16 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 #root {
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Fun animations for kids */
@@ -42,7 +48,7 @@ body {
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 0px;
 }
 
 ::-webkit-scrollbar-track {
