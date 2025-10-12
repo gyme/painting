@@ -1,0 +1,286 @@
+#!/usr/bin/env node
+
+/**
+ * Split Sitemap Generator for Kids Painting Website
+ * 
+ * Generates 3 files:
+ * 1. sitemap.xml - Regular pages (home, categories, static pages)
+ * 2. image-sitemap.xml - All painting pages with image data
+ * 3. sitemap-index.xml - Index file pointing to both sitemaps
+ * 
+ * Usage: node generate-sitemaps-split.js
+ * Output: public/sitemap.xml, public/image-sitemap.xml, public/sitemap-index.xml
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+// Configuration
+const SITE_URL = process.env.SITE_URL || 'https://painting-1.onrender.com';
+const OUTPUT_DIR = path.join(__dirname, 'public');
+const REGULAR_SITEMAP = path.join(OUTPUT_DIR, 'sitemap.xml');
+const IMAGE_SITEMAP = path.join(OUTPUT_DIR, 'image-sitemap.xml');
+const INDEX_SITEMAP = path.join(OUTPUT_DIR, 'sitemap-index.xml');
+
+console.log('🗺️  Generating split sitemaps for:', SITE_URL);
+console.log('📁 Using local data from coloringImages.ts');
+
+// Read coloringImages.ts to extract painting keys
+function extractPaintingsFromLocalData() {
+  const coloringImagesPath = path.join(__dirname, 'src', 'utils', 'coloringImages.ts');
+  
+  if (!fs.existsSync(coloringImagesPath)) {
+    console.error('❌ Could not find coloringImages.ts');
+    return [];
+  }
+  
+  const content = fs.readFileSync(coloringImagesPath, 'utf8');
+  
+  // Extract painting keys from the object
+  const keyRegex = /'([^']+)':\s*'\/coloring-images\//g;
+  const paintings = [];
+  let match;
+  
+  while ((match = keyRegex.exec(content)) !== null) {
+    const key = match[1];
+    if (key !== 'default') {
+      paintings.push({
+        urlKey: key,
+        title: key.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+      });
+    }
+  }
+  
+  return paintings;
+}
+
+// Extract categories from paintings
+function extractCategories() {
+  const categories = [
+    'Animals',
+    'Vehicles',
+    'Characters',
+    'Nature',
+    'Fantasy',
+    'Mandalas',
+    'Sports',
+    'Holidays'
+  ];
+  
+  return categories;
+}
+
+// Format date to W3C format (YYYY-MM-DD)
+function formatDate(date) {
+  return date.toISOString().split('T')[0];
+}
+
+// Helper function to escape XML special characters
+function escapeXml(text) {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+// Generate regular sitemap (home, categories, static pages - NO images)
+function generateRegularSitemap(urls) {
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+  
+  urls.forEach(url => {
+    xml += '  <url>\n';
+    xml += `    <loc>${url.loc}</loc>\n`;
+    xml += `    <lastmod>${url.lastmod}</lastmod>\n`;
+    xml += `    <changefreq>${url.changefreq}</changefreq>\n`;
+    xml += `    <priority>${url.priority}</priority>\n`;
+    xml += '  </url>\n';
+  });
+  
+  xml += '</urlset>';
+  
+  return xml;
+}
+
+// Generate image sitemap (painting pages with image data)
+function generateImageSitemap(urls) {
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n';
+  xml += '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n';
+  
+  urls.forEach(url => {
+    xml += '  <url>\n';
+    xml += `    <loc>${url.loc}</loc>\n`;
+    xml += `    <lastmod>${url.lastmod}</lastmod>\n`;
+    xml += `    <changefreq>${url.changefreq}</changefreq>\n`;
+    xml += `    <priority>${url.priority}</priority>\n`;
+    
+    // Add image tags
+    if (url.images && url.images.length > 0) {
+      url.images.forEach(image => {
+        xml += '    <image:image>\n';
+        xml += `      <image:loc>${image.loc}</image:loc>\n`;
+        if (image.title) {
+          xml += `      <image:title>${escapeXml(image.title)}</image:title>\n`;
+        }
+        if (image.caption) {
+          xml += `      <image:caption>${escapeXml(image.caption)}</image:caption>\n`;
+        }
+        xml += '    </image:image>\n';
+      });
+    }
+    
+    xml += '  </url>\n';
+  });
+  
+  xml += '</urlset>';
+  
+  return xml;
+}
+
+// Generate sitemap index
+function generateSitemapIndex(sitemaps) {
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  xml += '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+  
+  sitemaps.forEach(sitemap => {
+    xml += '  <sitemap>\n';
+    xml += `    <loc>${sitemap.loc}</loc>\n`;
+    xml += `    <lastmod>${sitemap.lastmod}</lastmod>\n`;
+    xml += '  </sitemap>\n';
+  });
+  
+  xml += '</sitemapindex>';
+  
+  return xml;
+}
+
+// Main function
+function generateSitemaps() {
+  try {
+    const today = formatDate(new Date());
+    const regularUrls = [];
+    const imageUrls = [];
+    
+    // 1. Home page
+    regularUrls.push({
+      loc: SITE_URL,
+      lastmod: today,
+      changefreq: 'daily',
+      priority: '1.0'
+    });
+    
+    // 2. Get all paintings and add to image sitemap
+    console.log('\n🎨 Reading local painting data...');
+    const paintings = extractPaintingsFromLocalData();
+    console.log(`✅ Found ${paintings.length} paintings in local data`);
+    
+    paintings.forEach(painting => {
+      // Get the image path for this painting
+      const imagePath = `/coloring-images/${painting.urlKey.replace(/-/g, '_')}.png`;
+      const imageUrl = `${SITE_URL}${imagePath}`;
+      
+      imageUrls.push({
+        loc: `${SITE_URL}/painting/${painting.urlKey}`,
+        lastmod: today,
+        changefreq: 'weekly',
+        priority: '0.8',
+        images: [
+          {
+            loc: imageUrl,
+            title: `${painting.title} - Free Coloring Page`,
+            caption: `Print and color this ${painting.title.toLowerCase()} coloring page. Free printable coloring sheet for kids.`
+          }
+        ]
+      });
+    });
+    
+    // 3. Add all category pages to regular sitemap
+    console.log('\n📂 Adding categories...');
+    const categories = extractCategories();
+    console.log(`✅ Found ${categories.length} categories`);
+    
+    categories.forEach(category => {
+      regularUrls.push({
+        loc: `${SITE_URL}/category/${encodeURIComponent(category)}`,
+        lastmod: today,
+        changefreq: 'weekly',
+        priority: '0.7'
+      });
+    });
+    
+    // 4. Add static pages to regular sitemap
+    const staticPages = [
+      { path: '/terms', priority: '0.3', changefreq: 'monthly' },
+      { path: '/privacy', priority: '0.3', changefreq: 'monthly' },
+      { path: '/contact', priority: '0.5', changefreq: 'monthly' }
+    ];
+    
+    staticPages.forEach(page => {
+      regularUrls.push({
+        loc: `${SITE_URL}${page.path}`,
+        lastmod: today,
+        changefreq: page.changefreq,
+        priority: page.priority
+      });
+    });
+    
+    // 5. Ensure output directory exists
+    if (!fs.existsSync(OUTPUT_DIR)) {
+      fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+    }
+    
+    // 6. Generate and write regular sitemap
+    console.log(`\n📝 Generating regular sitemap with ${regularUrls.length} URLs...`);
+    const regularXml = generateRegularSitemap(regularUrls);
+    fs.writeFileSync(REGULAR_SITEMAP, regularXml, 'utf8');
+    console.log(`✅ Regular sitemap: ${REGULAR_SITEMAP}`);
+    
+    // 7. Generate and write image sitemap
+    console.log(`\n📝 Generating image sitemap with ${imageUrls.length} URLs...`);
+    const imageXml = generateImageSitemap(imageUrls);
+    fs.writeFileSync(IMAGE_SITEMAP, imageXml, 'utf8');
+    console.log(`✅ Image sitemap: ${IMAGE_SITEMAP}`);
+    
+    // 8. Generate and write sitemap index
+    console.log(`\n📝 Generating sitemap index...`);
+    const indexXml = generateSitemapIndex([
+      {
+        loc: `${SITE_URL}/sitemap.xml`,
+        lastmod: today
+      },
+      {
+        loc: `${SITE_URL}/image-sitemap.xml`,
+        lastmod: today
+      }
+    ]);
+    fs.writeFileSync(INDEX_SITEMAP, indexXml, 'utf8');
+    console.log(`✅ Sitemap index: ${INDEX_SITEMAP}`);
+    
+    // 9. Summary
+    console.log(`\n✅ All sitemaps generated successfully!`);
+    console.log(`\n📊 Summary:`);
+    console.log(`   📄 Regular sitemap: ${regularUrls.length} URLs`);
+    console.log(`      - Home: 1`);
+    console.log(`      - Categories: ${categories.length}`);
+    console.log(`      - Static pages: ${staticPages.length}`);
+    console.log(`   🖼️  Image sitemap: ${imageUrls.length} URLs (with images)`);
+    console.log(`      - Paintings: ${paintings.length}`);
+    console.log(`   📇 Sitemap index: 2 sitemaps`);
+    console.log(`\n🔗 Submit to Google Search Console:`);
+    console.log(`   ${SITE_URL}/sitemap-index.xml`);
+    console.log(`\n💡 Individual sitemaps:`);
+    console.log(`   ${SITE_URL}/sitemap.xml (regular pages)`);
+    console.log(`   ${SITE_URL}/image-sitemap.xml (images)`);
+    
+  } catch (error) {
+    console.error('\n❌ Error generating sitemaps:', error);
+    process.exit(1);
+  }
+}
+
+// Run the script
+generateSitemaps();
+

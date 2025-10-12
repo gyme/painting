@@ -119,12 +119,16 @@ public class PaintingService {
     @Transactional(readOnly = true)
     public List<String> autocompletePaintings(String query, int limit) {
         log.debug("Autocomplete search for: {}", query);
+        // Fetch more results than needed to account for duplicates
         Page<Painting> results = paintingRepository.searchByKeyword(
             query, 
-            PageRequest.of(0, limit, Sort.by(Sort.Direction.DESC, "viewCount"))
+            PageRequest.of(0, limit * 3, Sort.by(Sort.Direction.DESC, "viewCount"))
         );
+        // Return distinct titles only, limited to requested size
         return results.getContent().stream()
                 .map(Painting::getTitle)
+                .distinct()
+                .limit(limit)
                 .collect(java.util.stream.Collectors.toList());
     }
 }

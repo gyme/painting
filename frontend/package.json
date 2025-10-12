@@ -24,7 +24,11 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src --ext ts,tsx",
+    "generate-sitemap": "node generate-sitemap.js",
+    "generate-sitemap:local": "node generate-sitemap-local.js",
+    "generate-sitemap:split": "node generate-sitemaps-split.js",
+    "build:sitemap": "npm run generate-sitemap:split && npm run build"
   },
   "browserslist": {
     "production": [

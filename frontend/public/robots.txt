@@ -1,0 +1,18 @@
+# Robots.txt for mycolor.fun
+# Allow all crawlers to access all pages
+
+User-agent: *
+Allow: /
+
+# Sitemap locations (index points to all sitemaps)
+Sitemap: https://painting-1.onrender.com/sitemap-index.xml
+Sitemap: https://painting-1.onrender.com/sitemap.xml
+Sitemap: https://painting-1.onrender.com/image-sitemap.xml
+
+# Crawl-delay (optional - uncomment if needed)
+# Crawl-delay: 1
+
+# Disallow specific paths if needed (currently none)
+# Disallow: /admin
+# Disallow: /api
+

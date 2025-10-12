@@ -103,7 +103,7 @@ const ColorSection = styled.div<{ $isOpen?: boolean }>`
   }
 `
 
-const CanvasWrapper = styled.div<{ $cursorType: string }>`
+const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $translateX?: number; $translateY?: number }>`
   position: relative;
   border: 4px solid #333;
   border-radius: 15px;
@@ -136,7 +136,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string }>`
     justify-content: center;
     background: white;
     position: relative;
-    overflow: hidden;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
     
     canvas {
       display: block;
@@ -145,7 +146,12 @@ const CanvasWrapper = styled.div<{ $cursorType: string }>`
       height: 100% !important;
       margin: 0;
       padding: 0;
-      touch-action: manipulation;
+      touch-action: none;
+      transform: scale(${props => props.$scale || 1});
+      transform-origin: center center;
+      transition: transform 0.15s ease-out;
+      min-width: 100%;
+      min-height: 100%;
     }
   }
 `
@@ -648,53 +654,59 @@ interface InteractiveColoringProps {
 }
 
 const colors = [
-  // Row 1: Dark shades
-  { name: 'Charcoal', value: '#36454F' },
-  { name: 'Maroon', value: '#800000' },
+  // Row 1: Deep Dark Colors
+  { name: 'Black', value: '#000000' },
+  { name: 'Dark Brown', value: '#3E2723' },
+  { name: 'Dark Red', value: '#8B0000' },
+  { name: 'Forest Green', value: '#0B4D1B' },
+  { name: 'Navy Blue', value: '#001F3F' },
+  { name: 'Deep Purple', value: '#4A148C' },
+  { name: 'Charcoal', value: '#2C3539' },
+  
+  // Row 2: Rich Medium Colors
   { name: 'Brown', value: '#8B4513' },
-  { name: 'Dark Green', value: '#006400' },
-  { name: 'Teal', value: '#008080' },
-  { name: 'Navy', value: '#000080' },
+  { name: 'Maroon', value: '#B03060' },
+  { name: 'Burnt Orange', value: '#CC5500' },
+  { name: 'Olive', value: '#6B8E23' },
+  { name: 'Teal', value: '#008B8B' },
+  { name: 'Royal Blue', value: '#2B5FD3' },
+  { name: 'Indigo', value: '#6A0DAD' },
   
-  // Row 2: Medium dark
-  { name: 'Indigo', value: '#4B0082' },
-  { name: 'Crimson', value: '#DC143C' },
-  { name: 'Rust', value: '#B7410E' },
-  { name: 'Olive', value: '#808000' },
-  { name: 'Sea Green', value: '#2E8B57' },
-  { name: 'Royal Blue', value: '#4169E1' },
+  // Row 3: Bold Vibrant Colors
+  { name: 'Bright Red', value: '#FF0000' },
+  { name: 'Tangerine', value: '#FF8C00' },
+  { name: 'Golden Yellow', value: '#FFD700' },
+  { name: 'Lime Green', value: '#32CD32' },
+  { name: 'Emerald', value: '#00C853' },
+  { name: 'Cyan', value: '#00BCD4' },
+  { name: 'Bright Blue', value: '#0066FF' },
   
-  // Row 3: Medium shades
-  { name: 'Purple', value: '#9370DB' },
-  { name: 'Red', value: '#FF0000' },
-  { name: 'Orange', value: '#FFA500' },
-  { name: 'Yellow Green', value: '#9ACD32' },
-  { name: 'Emerald', value: '#50C878' },
-  { name: 'Blue', value: '#0066FF' },
-  
-  // Row 4: Bright shades
-  { name: 'Magenta', value: '#FF00FF' },
+  // Row 4: Electric Bright Colors
   { name: 'Hot Pink', value: '#FF1493' },
-  { name: 'Coral', value: '#FF7F50' },
-  { name: 'Lime', value: '#00FF00' },
-  { name: 'Aqua', value: '#00CED1' },
-  { name: 'Sky Blue', value: '#00BFFF' },
+  { name: 'Magenta', value: '#E91E63' },
+  { name: 'Neon Orange', value: '#FF6600' },
+  { name: 'Neon Yellow', value: '#FFFF33' },
+  { name: 'Neon Lime', value: '#00FF00' },
+  { name: 'Aqua', value: '#00FFFF' },
+  { name: 'Electric Blue', value: '#7DF9FF' },
   
-  // Row 5: Pastel shades
-  { name: 'Lavender', value: '#E6E6FA' },
-  { name: 'Pink', value: '#FFB6C1' },
-  { name: 'Peach', value: '#FFDAB9' },
-  { name: 'Mint', value: '#98FF98' },
-  { name: 'Powder Blue', value: '#B0E0E6' },
-  { name: 'Periwinkle', value: '#CCCCFF' },
+  // Row 5: Soft Pastel Colors
+  { name: 'Baby Pink', value: '#FFC0CB' },
+  { name: 'Rose', value: '#FFB3BA' },
+  { name: 'Peach', value: '#FFCC99' },
+  { name: 'Lemon', value: '#FFFFBA' },
+  { name: 'Mint', value: '#BAFFC9' },
+  { name: 'Sky Blue', value: '#BAE1FF' },
+  { name: 'Lavender', value: '#D7C3F1' },
   
-  // Row 6: Light & Neutral
+  // Row 6: Light & Neutral Colors
   { name: 'White', value: '#FFFFFF' },
-  { name: 'Cream', value: '#FFFDD0' },
-  { name: 'Yellow', value: '#FFFF00' },
-  { name: 'Beige', value: '#F5F5DC' },
-  { name: 'Silver', value: '#C0C0C0' },
-  { name: 'Gray', value: '#808080' },
+  { name: 'Ivory', value: '#FFFFF0' },
+  { name: 'Cream', value: '#FFF8DC' },
+  { name: 'Sand', value: '#F4E4C1' },
+  { name: 'Light Gray', value: '#D3D3D3' },
+  { name: 'Medium Gray', value: '#808080' },
+  { name: 'Steel Gray', value: '#4D4D4D' },
 ]
 
 function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: InteractiveColoringProps) {
@@ -719,6 +731,20 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
   // Undo/Redo history
   const [history, setHistory] = useState<ImageData[]>([])
   const [historyStep, setHistoryStep] = useState(-1)
+  const historyStepRef = useRef(-1)
+  
+  // Store original black pixels to distinguish from user-painted black
+  const originalBlackPixelsRef = useRef<Set<string>>(new Set())
+  
+  // Mobile zoom state - using scroll instead of translate
+  const [scale, setScale] = useState(1)
+  const lastTouchDistanceRef = useRef<number>(0)
+  const lastTouchCenterRef = useRef<{ x: number, y: number } | null>(null)
+  
+  // Keep historyStepRef in sync with historyStep state
+  useEffect(() => {
+    historyStepRef.current = historyStep
+  }, [historyStep])
   
   // Remove gap on mobile - use MutationObserver to catch ANY style changes
   useEffect(() => {
@@ -903,7 +929,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
   }, [])
   
   // WATERMARK CONFIGURATION - Change this to your website name
-  const WATERMARK_TEXT = 'MyColoringApp.com' // ← CHANGE THIS!
+  const WATERMARK_TEXT = 'mycolor.fun' // ← CHANGE THIS!
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -1016,6 +1042,24 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       
       ctx.putImageData(imageData, 0, 0)
       
+      // Store original black pixels for protection (after cleaning background)
+      originalBlackPixelsRef.current.clear()
+      const finalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+      const finalData = finalImageData.data
+      for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+          const idx = (y * canvas.width + x) * 4
+          const r = finalData[idx]
+          const g = finalData[idx + 1]
+          const b = finalData[idx + 2]
+          // Store coordinates of original black/dark pixels
+          if (r < 30 && g < 30 && b < 30) {
+            originalBlackPixelsRef.current.add(`${x},${y}`)
+          }
+        }
+      }
+      console.log('Stored', originalBlackPixelsRef.current.size, 'original black pixels for protection')
+      
       // No watermark during coloring - only on save/print
     }
     
@@ -1120,9 +1164,29 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const canvas = canvasRef.current
     if (!canvas) return
 
+    const isMobile = window.innerWidth <= 768
+
     const handleTouchStart = (e: TouchEvent) => {
       e.preventDefault()
+      
+      // Handle pinch-to-zoom on mobile
+      if (isMobile && e.touches.length === 2) {
+        const touch1 = e.touches[0]
+        const touch2 = e.touches[1]
+        const distance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
+        )
+        lastTouchDistanceRef.current = distance
+        lastTouchCenterRef.current = {
+          x: (touch1.clientX + touch2.clientX) / 2,
+          y: (touch1.clientY + touch2.clientY) / 2
+        }
+        return
+      }
+
       const touch = e.touches[0]
+
       const ctx = canvas.getContext('2d', { willReadFrequently: true })
       if (!ctx || !canvas) return
 
@@ -1157,6 +1221,26 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
     const handleTouchMove = (e: TouchEvent) => {
       e.preventDefault()
+      
+      // Handle pinch-to-zoom on mobile
+      if (isMobile && e.touches.length === 2) {
+        const touch1 = e.touches[0]
+        const touch2 = e.touches[1]
+        const distance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
+        )
+        
+        if (lastTouchDistanceRef.current > 0) {
+          const scaleChange = distance / lastTouchDistanceRef.current
+          const newScale = Math.min(Math.max(scale * scaleChange, 1), 5)
+          setScale(newScale)
+        }
+        
+        lastTouchDistanceRef.current = distance
+        return
+      }
+      
       if (!isDrawingRef.current || selectedTool === 'fill' || selectedTool === 'eraser') return
 
       const touch = e.touches[0]
@@ -1169,7 +1253,11 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
     const handleTouchEnd = (e: TouchEvent) => {
       e.preventDefault()
-      isDrawingRef.current = false
+      if (e.touches.length === 0) {
+        isDrawingRef.current = false
+        lastTouchDistanceRef.current = 0
+        lastTouchCenterRef.current = null
+      }
     }
 
     // Add listeners with { passive: false } to allow preventDefault
@@ -1183,41 +1271,47 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       canvas.removeEventListener('touchend', handleTouchEnd)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTool, selectedColor, brushSize])
+  }, [selectedTool, selectedColor, brushSize, scale])
 
   // Removed all draw functions - using professional SVG artwork instead
 
-  const isBlackLine = useCallback((color: { r: number, g: number, b: number }): boolean => {
-    // Consider pixels as black lines if they're very dark (black or near-black)
-    // This threshold allows fill/erase to work on grey areas
-    return color.r < 30 && color.g < 30 && color.b < 30
+  const isBlackLine = useCallback((x: number, y: number, _color: { r: number, g: number, b: number }): boolean => {
+    // Only protect original black pixels, not user-painted black
+    const pixelKey = `${x},${y}`
+    return originalBlackPixelsRef.current.has(pixelKey)
   }, [])
 
-  const isOriginalArtwork = useCallback((color: { r: number, g: number, b: number }): boolean => {
-    // For brush protection: ONLY protect very dark black lines
-    // Allow painting over grey colors and user-painted areas
-    return color.r < 40 && color.g < 40 && color.b < 40
+  const isOriginalArtwork = useCallback((x: number, y: number, _color: { r: number, g: number, b: number }): boolean => {
+    // For brush protection: ONLY protect original black pixels, not user-painted black
+    // This allows overriding user-painted black areas with other colors
+    const pixelKey = `${x},${y}`
+    return originalBlackPixelsRef.current.has(pixelKey)
   }, [])
 
   const saveToHistory = useCallback((ctx: CanvasRenderingContext2D) => {
     const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height)
+    
     setHistory(prevHistory => {
-      const newHistory = prevHistory.slice(0, historyStep + 1)
+      // Use ref to get the actual current step
+      const currentStep = historyStepRef.current
+      const newHistory = prevHistory.slice(0, currentStep + 1)
       newHistory.push(imageData)
       
-      // Limit history to last 10 states to prevent memory issues on mobile
+      // Limit history to last 10 states
       if (newHistory.length > 10) {
-        newHistory.shift()
-        return newHistory
+        const trimmed = newHistory.slice(newHistory.length - 10)
+        // Update step to point to last item after trimming
+        historyStepRef.current = 9
+        setHistoryStep(9)
+        return trimmed
       }
+      
+      // Update step to point to the newly added item
+      historyStepRef.current = newHistory.length - 1
+      setHistoryStep(newHistory.length - 1)
       return newHistory
     })
-    
-    setHistoryStep(prev => {
-      const newStep = prev + 1
-      return newStep >= 10 ? 9 : newStep
-    })
-  }, [historyStep])
+  }, [])
 
   const getCanvasCoordinates = useCallback((e: React.MouseEvent<HTMLCanvasElement> | React.Touch) => {
     const canvas = canvasRef.current
@@ -1274,8 +1368,8 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
               b: imageData.data[index + 2]
             }
             
-            // Don't paint over original artwork (uses stricter threshold)
-            if (!isOriginalArtwork(pixelColor)) {
+            // Don't paint over original artwork (only original black pixels)
+            if (!isOriginalArtwork(pixelX, pixelY, pixelColor)) {
               const rgb = hexToRgb(color)
               imageData.data[index] = rgb.r
               imageData.data[index + 1] = rgb.g
@@ -1352,9 +1446,9 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const targetColor = getPixelColor(imageData, startX, startY)
     const fillColorRGB = hexToRgb(fillColor)
     
-    // Don't fill if clicking on black lines (original artwork)
-    if (isBlackLine(targetColor)) {
-      console.log('Cannot color over black lines!')
+    // Don't fill if clicking on original black lines (original artwork)
+    if (isBlackLine(startX, startY, targetColor)) {
+      console.log('Cannot color over original black lines!')
       return
     }
     
@@ -1380,7 +1474,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       // Move left to find the leftmost pixel in this row
       while (currentX >= 0) {
         const color = getPixelColor(imageData, currentX, currentY)
-        if (isBlackLine(color) || !colorsMatch(color, targetColor, tolerance)) break
+        if (isBlackLine(currentX, currentY, color) || !colorsMatch(color, targetColor, tolerance)) break
         currentX--
       }
       currentX++ // Step back to the valid pixel
@@ -1393,7 +1487,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
         const color = getPixelColor(imageData, currentX, currentY)
         
         // Stop if we hit a boundary
-        if (isBlackLine(color) || !colorsMatch(color, targetColor, tolerance)) break
+        if (isBlackLine(currentX, currentY, color) || !colorsMatch(color, targetColor, tolerance)) break
         
         // Fill this pixel
         setPixelColor(imageData, currentX, currentY, fillColorRGB)
@@ -1401,7 +1495,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
         // Check pixel above
         if (currentY > 0) {
           const colorAbove = getPixelColor(imageData, currentX, currentY - 1)
-          if (!isBlackLine(colorAbove) && colorsMatch(colorAbove, targetColor, tolerance)) {
+          if (!isBlackLine(currentX, currentY - 1, colorAbove) && colorsMatch(colorAbove, targetColor, tolerance)) {
             if (!spanAbove) {
               stack.push([currentX, currentY - 1])
               spanAbove = true
@@ -1414,7 +1508,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
         // Check pixel below
         if (currentY < height - 1) {
           const colorBelow = getPixelColor(imageData, currentX, currentY + 1)
-          if (!isBlackLine(colorBelow) && colorsMatch(colorBelow, targetColor, tolerance)) {
+          if (!isBlackLine(currentX, currentY + 1, colorBelow) && colorsMatch(colorBelow, targetColor, tolerance)) {
             if (!spanBelow) {
               stack.push([currentX, currentY + 1])
               spanBelow = true
@@ -1467,28 +1561,42 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
   }, [])
 
   const undo = useCallback(() => {
-    if (historyStep <= 0) return
+    const currentStep = historyStepRef.current
+    if (currentStep <= 0) return
     
     const canvas = canvasRef.current
     const ctx = canvas?.getContext('2d', { willReadFrequently: true })
     if (!ctx || !canvas) return
     
-    const previousState = history[historyStep - 1]
-    ctx.putImageData(previousState, 0, 0)
-    setHistoryStep(historyStep - 1)
-  }, [history, historyStep])
+    setHistory(prevHistory => {
+      const previousState = prevHistory[currentStep - 1]
+      if (previousState) {
+        ctx.putImageData(previousState, 0, 0)
+        historyStepRef.current = currentStep - 1
+        setHistoryStep(currentStep - 1)
+      }
+      return prevHistory
+    })
+  }, [])
 
   const redo = useCallback(() => {
-    if (historyStep >= history.length - 1) return
-    
     const canvas = canvasRef.current
     const ctx = canvas?.getContext('2d', { willReadFrequently: true })
     if (!ctx || !canvas) return
     
-    const nextState = history[historyStep + 1]
-    ctx.putImageData(nextState, 0, 0)
-    setHistoryStep(historyStep + 1)
-  }, [history, historyStep])
+    setHistory(prevHistory => {
+      const currentStep = historyStepRef.current
+      if (currentStep >= prevHistory.length - 1) return prevHistory
+      
+      const nextState = prevHistory[currentStep + 1]
+      if (nextState) {
+        ctx.putImageData(nextState, 0, 0)
+        historyStepRef.current = currentStep + 1
+        setHistoryStep(currentStep + 1)
+      }
+      return prevHistory
+    })
+  }, [])
 
   const clearCanvas = useCallback(() => {
     const canvas = canvasRef.current
@@ -1506,8 +1614,41 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     // Reload the original image if we have it stored
     if (originalImageRef.current) {
       const img = originalImageRef.current
-      // Draw at full canvas size (canvas already sized to match image aspect ratio)
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+      
+      // Use same positioning logic as initial image load
+      const isMobile = window.innerWidth <= 768
+      if (isMobile) {
+        // Mobile: fill entire canvas with white, then draw image at top
+        ctx.fillStyle = 'white'
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        
+        // Calculate positioning (same as initial load)
+        const imageAspect = img.width / img.height
+        const canvasAspect = canvas.width / canvas.height
+        
+        let drawWidth, drawHeight, drawX, drawY
+        
+        if (imageAspect > canvasAspect) {
+          // Image is wider - fit to width, align to top
+          drawWidth = canvas.width
+          drawHeight = canvas.width / imageAspect
+          drawX = 0
+          drawY = 0
+        } else {
+          // Image is taller - fit to height, center horizontally
+          drawHeight = canvas.height
+          drawWidth = canvas.height * imageAspect
+          drawX = (canvas.width - drawWidth) / 2
+          drawY = 0
+        }
+        
+        ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight)
+      } else {
+        // Desktop: draw at full canvas size
+        ctx.fillStyle = 'white'
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+      }
       
       // Convert grey background to white for perfect coloring (like white brush)
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
@@ -1530,6 +1671,22 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       }
       
       ctx.putImageData(imageData, 0, 0)
+      
+      // Restore original black pixels map
+      originalBlackPixelsRef.current.clear()
+      const finalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+      const finalData = finalImageData.data
+      for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+          const idx = (y * canvas.width + x) * 4
+          const r = finalData[idx]
+          const g = finalData[idx + 1]
+          const b = finalData[idx + 2]
+          if (r < 30 && g < 30 && b < 30) {
+            originalBlackPixelsRef.current.add(`${x},${y}`)
+          }
+        }
+      }
       
       // No watermark during coloring - only on save/print
     }
@@ -1699,7 +1856,10 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     <Container>
       <MainContent ref={mainContentRef}>
         <CanvasSection>
-          <CanvasWrapper $cursorType={getCursorType()}>
+          <CanvasWrapper 
+            $cursorType={getCursorType()} 
+            $scale={scale}
+          >
             <canvas
               ref={canvasRef}
               onMouseDown={handleCanvasMouseDown}
@@ -1924,10 +2084,22 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
               <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>↶</span>
               <span>Undo</span>
             </MobileToolButton>
-            <MobileToolButton onClick={printImage}>
-              <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🖨️</span>
-              <span>Print</span>
-            </MobileToolButton>
+            {scale > 1 ? (
+              <MobileToolButton 
+                onClick={() => {
+                  setScale(1)
+                }}
+                $isActive={true}
+              >
+                <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🔍</span>
+                <span>Reset</span>
+              </MobileToolButton>
+            ) : (
+              <MobileToolButton onClick={printImage}>
+                <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🖨️</span>
+                <span>Print</span>
+              </MobileToolButton>
+            )}
           </MobileButtonRow>
         </MobileToolbar>
     </Container>
