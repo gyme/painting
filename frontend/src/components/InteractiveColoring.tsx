@@ -133,8 +133,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
   @media (max-width: 768px) {
     border: none;
     border-radius: 0;
-    margin: 0 0 2rem 0;
-    padding: 0 0 2rem 0;
+    margin: 0 0 210px 0;
+    padding: 0;
     width: calc(100vw - 1rem);
     max-width: calc(100vw - 1rem);
     height: auto;
@@ -149,8 +149,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
-      margin: 0 0 2rem 0 !important;
-      padding: 0 !important;
+      margin: 0 !important;
+      padding: 0 0 1rem 0 !important;
       touch-action: none;
       object-fit: contain;
     }
