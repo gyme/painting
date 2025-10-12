@@ -16,7 +16,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const SITE_URL = process.env.SITE_URL || 'https://painting-sand.vercel.app';
+const SITE_URL = process.env.SITE_URL || 'https://www.mycolor.fun';
 const OUTPUT_DIR = path.join(__dirname, 'public');
 const REGULAR_SITEMAP = path.join(OUTPUT_DIR, 'sitemap.xml');
 const IMAGE_SITEMAP = path.join(OUTPUT_DIR, 'image-sitemap.xml');

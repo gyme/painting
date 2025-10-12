@@ -19,7 +19,7 @@ const https = require('https');
 const http = require('http');
 
 // Configuration
-const SITE_URL = process.env.SITE_URL || 'https://painting-sand.vercel.app';
+const SITE_URL = process.env.SITE_URL || 'https://www.mycolor.fun';
 const API_URL = process.env.VITE_API_BASE_URL || 'https://painting-backend.onrender.com/api';
 const OUTPUT_PATH = path.join(__dirname, 'public', 'sitemap.xml');
 
