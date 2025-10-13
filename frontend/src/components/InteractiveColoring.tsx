@@ -23,7 +23,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     background: white;
-    padding-bottom: 200px !important; /* Bottom padding for fixed controls */
+    padding-bottom: 0 !important; /* No padding - canvas margin handles it */
     overflow-x: hidden;
     overflow-y: scroll; /* Always show scroll to make space clear */
     -webkit-overflow-scrolling: touch;
@@ -79,7 +79,7 @@ const CanvasSection = styled.div`
     align-items: center;
     justify-content: flex-start;
     background: white;
-    padding: 0rem 0.5rem 200px 0.5rem !important; /* Bottom padding for scroll space */
+    padding: 0rem 0.5rem 100px 0.5rem !important; /* Some bottom padding */
     margin: 0 !important;
     position: relative;
     width: 100vw;
@@ -136,8 +136,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
   @media (max-width: 768px) {
     border: none;
     border-radius: 0;
-    margin: 0 0 50px 0;
-    padding: 0 0 300px 0; /* Large bottom padding ensures space for scrolling */
+    margin: 0;
+    padding: 0;
     width: calc(100vw - 1rem);
     max-width: calc(100vw - 1rem);
     height: auto;
@@ -153,8 +153,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
-      max-height: 65vh !important; /* Reasonable size that allows full visibility */
-      margin: 0 !important;
+      max-height: 60vh !important; /* Reasonable size */
+      margin: 0 0 280px 0 !important; /* Large margin below canvas = clearance for fixed controls */
       padding: 0 !important;
       touch-action: pan-x pan-y pinch-zoom; /* Allow zoom and panning */
       object-fit: contain;
