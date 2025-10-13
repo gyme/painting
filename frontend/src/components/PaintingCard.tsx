@@ -72,7 +72,10 @@ const ImageContainer = styled.div`
 `
 
 const CardImage = styled.img.attrs({
-  loading: 'lazy' // Native lazy loading for better performance
+  loading: 'lazy', // Native lazy loading for better performance
+  decoding: 'async', // Async image decoding for better performance
+  width: '400', // Explicit width for layout stability
+  height: '300' // Explicit height for layout stability (4:3 aspect ratio)
 })`
   position: absolute;
   top: 0;
