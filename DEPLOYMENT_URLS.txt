@@ -1,0 +1,28 @@
+═══════════════════════════════════════════════════════════════
+  🎉 YOUR APPLICATION IS LIVE! 
+═══════════════════════════════════════════════════════════════
+
+🌐 FRONTEND (Vercel)
+   Primary: https://painting-sand.vercel.app
+   Alternative: https://painting-guym99-gmailcoms-projects.vercel.app
+
+🔧 BACKEND API (Railway)
+   API: https://docker-composeyaml-production.up.railway.app/api
+   
+📊 MANAGEMENT DASHBOARDS
+   Railway: https://railway.app/dashboard
+   Vercel: https://vercel.com/dashboard
+
+🧪 TEST API
+   curl https://docker-composeyaml-production.up.railway.app/api/paintings
+
+📝 VIEW LOGS
+   Backend: cd backend && railway logs
+   Frontend: cd frontend && vercel logs
+
+🚀 REDEPLOY
+   Backend: cd backend && railway up
+   Frontend: cd frontend && vercel --prod
+   Both: ./deploy-all.sh
+
+═══════════════════════════════════════════════════════════════

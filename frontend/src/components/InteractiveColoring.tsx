@@ -153,10 +153,10 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
-      max-height: 50vh !important; /* Smaller canvas to ensure full visibility */
-      margin: 0 0 400px 0 !important; /* Very large margin - ensures clearance for fixed controls */
+      max-height: 45vh !important; /* Even smaller to ensure no cropping */
+      margin: 0 0 450px 0 !important; /* Extra large margin for fixed controls clearance */
       padding: 0 !important;
-      touch-action: pan-x pan-y pinch-zoom; /* Allow zoom and panning */
+      touch-action: auto; /* Allow native browser touch handling including zoom */
       object-fit: contain;
     }
   }
@@ -1144,10 +1144,10 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     if (!canvas) return
 
     const handleTouchStart = (e: TouchEvent) => {
-      // With touch-action: pan-x pan-y pinch-zoom, browser handles multi-touch zoom
-      // We only get single-touch events for drawing
-      if (e.touches.length !== 1) {
-        return // Ignore if not exactly one touch
+      // Allow multi-touch for native zoom - don't handle it
+      if (e.touches.length > 1) {
+        isDrawingRef.current = false
+        return // Let browser handle multi-touch zoom
       }
 
       const touch = e.touches[0]
@@ -1161,7 +1161,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       const { x, y } = coords
 
       if (selectedTool === 'fill' || selectedTool === 'eraser') {
-        e.preventDefault() // Prevent scrolling only when actively using tools
+        // Don't preventDefault - let browser handle potential zoom gestures
         
         if (isProcessingRef.current) {
           console.log('Already processing, please wait...')
@@ -1181,7 +1181,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
         }
       } else {
         // Brush tool - draw immediately, then save to history
-        e.preventDefault() // Prevent scrolling during drawing
+        // Don't preventDefault - let browser handle potential zoom gestures
         isDrawingRef.current = true
         
         // Draw first for immediate feedback
@@ -1197,14 +1197,15 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     }
 
     const handleTouchMove = (e: TouchEvent) => {
-      // With touch-action: pan-x pan-y pinch-zoom, browser handles zoom
-      if (e.touches.length !== 1) {
-        return // Ignore if not exactly one touch
+      // Allow multi-touch for native zoom
+      if (e.touches.length > 1) {
+        isDrawingRef.current = false
+        return // Let browser handle multi-touch zoom
       }
       
       if (!isDrawingRef.current || selectedTool === 'fill' || selectedTool === 'eraser') return
 
-      e.preventDefault() // Prevent scrolling during brush drawing
+      // Don't preventDefault - let browser handle potential zoom gestures
       
       const touch = e.touches[0]
       const coords = getCanvasCoordinates(touch as any)
@@ -1218,18 +1219,17 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
     const handleTouchEnd = (e: TouchEvent) => {
       if (e.touches.length === 0) {
-        e.preventDefault()
+        // Don't preventDefault - allow browser to handle all touch gestures
         isDrawingRef.current = false
         lastTouchDistanceRef.current = 0
         lastTouchCenterRef.current = null
       }
-      // Don't prevent default if touches remain (user may be zooming)
     }
 
-    // Add listeners with { passive: false } to allow preventDefault
-    canvas.addEventListener('touchstart', handleTouchStart, { passive: false })
-    canvas.addEventListener('touchmove', handleTouchMove, { passive: false })
-    canvas.addEventListener('touchend', handleTouchEnd, { passive: false })
+    // Add listeners as passive for better scroll performance (we don't call preventDefault anymore)
+    canvas.addEventListener('touchstart', handleTouchStart, { passive: true })
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: true })
+    canvas.addEventListener('touchend', handleTouchEnd, { passive: true })
 
     return () => {
       canvas.removeEventListener('touchstart', handleTouchStart)

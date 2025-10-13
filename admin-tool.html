@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painting Admin Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        h1 {
+            color: #2d3436;
+            font-size: 2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-success {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge-animals { background: #f39c12; }
+        .badge-vehicles { background: #3498db; }
+        .badge-nature { background: #2ecc71; }
+        .badge-fantasy { background: #9b59b6; }
+        .badge-characters { background: #e74c3c; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 15px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .modal-header h2 {
+            color: #2d3436;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2d3436;
+        }
+
+        .help-text {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Painting Admin Tool</h1>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh</button>
+                <button class="btn btn-warning" onclick="showSyncModal()">☁️ Sync to Production</button>
+            </div>
+        </div>
+
+        <div id="alert-container"></div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="total-paintings">-</div>
+                <div class="stat-label">Total Paintings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-views">-</div>
+                <div class="stat-label">Total Views</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="featured-count">-</div>
+                <div class="stat-label">Featured</div>
+            </div>
+        </div>
+
+        <input type="text" class="search-bar" id="search" placeholder="🔍 Search by title, category, or URL key..." onkeyup="filterTable()">
+
+        <div class="table-container">
+            <table id="paintings-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Difficulty</th>
+                        <th>Featured</th>
+                        <th>Views</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 2rem;">
+                            <div class="loading">Loading paintings...</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Painting</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="edit-form" onsubmit="savePainting(event)">
+                <div class="form-group">
+                    <label>ID</label>
+                    <input type="text" id="edit-id" readonly style="background: #f0f0f0;">
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-title">Title *</label>
+                    <input type="text" id="edit-title" required>
+                    <div class="help-text">The main title shown on the card and page</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-url-key">URL Key *</label>
+                    <input type="text" id="edit-url-key" required>
+                    <div class="help-text">Used in URL: /painting/[url-key]. Use lowercase with dashes</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-description">Description *</label>
+                    <textarea id="edit-description" required></textarea>
+                    <div class="help-text">Meta description for SEO (150-160 characters recommended)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-category">Category *</label>
+                    <select id="edit-category" required>
+                        <option value="Animals">🐶 Animals</option>
+                        <option value="Vehicles">🚗 Vehicles</option>
+                        <option value="Nature">🌳 Nature</option>
+                        <option value="Fantasy">🦄 Fantasy</option>
+                        <option value="Characters">👾 Characters</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-tags">Tags</label>
+                    <input type="text" id="edit-tags">
+                    <div class="help-text">Comma-separated keywords for SEO</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-image-url">Image URL *</label>
+                    <input type="text" id="edit-image-url" required>
+                    <div class="help-text">Path to the coloring image (e.g., /coloring-images/tiger.png)</div>
+                    <img id="image-preview" class="preview-image" style="display: none; margin-top: 1rem;">
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-thumbnail-url">Thumbnail URL *</label>
+                    <input type="text" id="edit-thumbnail-url" required>
+                    <div class="help-text">Usually same as image URL</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-difficulty">Difficulty *</label>
+                    <select id="edit-difficulty" required>
+                        <option value="1">⭐ Easy (1)</option>
+                        <option value="2">⭐⭐ Medium (2)</option>
+                        <option value="3">⭐⭐⭐ Hard (3)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-color-palette">Color Palette (JSON)</label>
+                    <textarea id="edit-color-palette" rows="3"></textarea>
+                    <div class="help-text">JSON array of hex colors, e.g., ["#FF6B6B","#4ECDC4"]</div>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="edit-featured">
+                    <label for="edit-featured" style="margin-bottom: 0;">⭐ Featured (show on homepage)</label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-success">💾 Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE = 'http://localhost:8080/api';
+        let allPaintings = [];
+        let currentPainting = null;
+
+        // Load paintings on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadPaintings();
+        });
+
+        // Load all paintings from API
+        async function loadPaintings() {
+            try {
+                const response = await fetch(`${API_BASE}/paintings?page=0&size=1000`);
+                if (!response.ok) throw new Error('Failed to load paintings');
+                
+                const data = await response.json();
+                allPaintings = data.content;
+                
+                updateStats();
+                renderTable();
+            } catch (error) {
+                showAlert('Error loading paintings: ' + error.message, 'error');
+            }
+        }
+
+        // Update statistics
+        function updateStats() {
+            document.getElementById('total-paintings').textContent = allPaintings.length;
+            
+            const totalViews = allPaintings.reduce((sum, p) => sum + p.viewCount, 0);
+            document.getElementById('total-views').textContent = totalViews.toLocaleString();
+            
+            const featuredCount = allPaintings.filter(p => p.featured).length;
+            document.getElementById('featured-count').textContent = featuredCount;
+        }
+
+        // Render table
+        function renderTable(filtered = allPaintings) {
+            const tbody = document.getElementById('table-body');
+            
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem;">No paintings found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(p => `
+                <tr>
+                    <td>#${p.id}</td>
+                    <td><strong>${p.title}</strong></td>
+                    <td><span class="badge badge-${p.category.toLowerCase()}">${p.category}</span></td>
+                    <td>${'⭐'.repeat(p.difficulty)}</td>
+                    <td>${p.featured ? '✅' : '—'}</td>
+                    <td>${p.viewCount}</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="editPainting('${p.urlKey}')" style="padding: 0.5rem 1rem;">✏️ Edit</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Filter table based on search
+        function filterTable() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const filtered = allPaintings.filter(p => 
+                p.title.toLowerCase().includes(searchTerm) ||
+                p.category.toLowerCase().includes(searchTerm) ||
+                p.urlKey.toLowerCase().includes(searchTerm) ||
+                p.tags.toLowerCase().includes(searchTerm)
+            );
+            renderTable(filtered);
+        }
+
+        // Edit painting
+        async function editPainting(urlKey) {
+            const painting = allPaintings.find(p => p.urlKey === urlKey);
+            if (!painting) return;
+
+            currentPainting = painting;
+
+            // Populate form
+            document.getElementById('edit-id').value = painting.id;
+            document.getElementById('edit-title').value = painting.title;
+            document.getElementById('edit-url-key').value = painting.urlKey;
+            document.getElementById('edit-description').value = painting.description;
+            document.getElementById('edit-category').value = painting.category;
+            document.getElementById('edit-tags').value = painting.tags;
+            document.getElementById('edit-image-url').value = painting.imageUrl;
+            document.getElementById('edit-thumbnail-url').value = painting.thumbnailUrl;
+            document.getElementById('edit-difficulty').value = painting.difficulty;
+            document.getElementById('edit-color-palette').value = painting.colorPalette;
+            document.getElementById('edit-featured').checked = painting.featured;
+
+            // Show image preview
+            const preview = document.getElementById('image-preview');
+            preview.src = painting.imageUrl;
+            preview.style.display = 'block';
+
+            // Show modal
+            document.getElementById('edit-modal').style.display = 'block';
+        }
+
+        // Save painting
+        async function savePainting(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('edit-id').value;
+            const updatedPainting = {
+                id: parseInt(id),
+                urlKey: document.getElementById('edit-url-key').value,
+                title: document.getElementById('edit-title').value,
+                description: document.getElementById('edit-description').value,
+                category: document.getElementById('edit-category').value,
+                tags: document.getElementById('edit-tags').value,
+                imageUrl: document.getElementById('edit-image-url').value,
+                thumbnailUrl: document.getElementById('edit-thumbnail-url').value,
+                difficulty: parseInt(document.getElementById('edit-difficulty').value),
+                colorPalette: document.getElementById('edit-color-palette').value,
+                featured: document.getElementById('edit-featured').checked,
+                svgPath: currentPainting.svgPath,
+                viewCount: currentPainting.viewCount
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/paintings/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedPainting)
+                });
+
+                if (!response.ok) throw new Error('Failed to save painting');
+
+                showAlert(`✅ Successfully updated "${updatedPainting.title}"!`, 'success');
+                closeModal();
+                await loadPaintings();
+            } catch (error) {
+                showAlert('Error saving painting: ' + error.message, 'error');
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('edit-modal').style.display = 'none';
+            currentPainting = null;
+        }
+
+        // Refresh data
+        function refreshData() {
+            loadPaintings();
+            showAlert('Data refreshed!', 'success');
+        }
+
+        // Show sync modal
+        function showSyncModal() {
+            if (confirm('⚠️ This will export your local database and prepare it for production sync.\n\nProceed?')) {
+                alert('Feature coming soon!\n\n1. Export local H2 database\n2. Generate SQL migration script\n3. Apply to production\n\nFor now, use the backend SQL files to sync manually.');
+            }
+        }
+
+        // Show alert
+        function showAlert(message, type) {
+            const container = document.getElementById('alert-container');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            container.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+
+        // Update image preview when URL changes
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('edit-image-url').addEventListener('input', (e) => {
+                const preview = document.getElementById('image-preview');
+                if (e.target.value) {
+                    preview.src = e.target.value;
+                    preview.style.display = 'block';
+                } else {
+                    preview.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

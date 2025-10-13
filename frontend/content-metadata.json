@@ -1,0 +1,40 @@
+[
+  {
+    "urlKey": "lion",
+    "title": "Lion Coloring Page",
+    "category": "Animals",
+    "license": "owned"
+  },
+  {
+    "urlKey": "cat",
+    "title": "Cat Coloring Page",
+    "category": "Animals",
+    "license": "owned"
+  },
+  {
+    "urlKey": "dog",
+    "title": "Dog Coloring Page",
+    "category": "Animals",
+    "license": "owned"
+  },
+  {
+    "urlKey": "unicorn",
+    "title": "Unicorn Coloring Page",
+    "category": "Fantasy",
+    "license": "owned"
+  },
+  {
+    "urlKey": "fire-truck",
+    "title": "Fire Truck Coloring Page",
+    "category": "Vehicles",
+    "license": "owned"
+  },
+  {
+    "urlKey": "pikachu",
+    "title": "Pikachu Coloring Page",
+    "category": "Characters",
+    "license": "licensed",
+    "licenseDetails": "Licensed from The Pokémon Company"
+  }
+]
+

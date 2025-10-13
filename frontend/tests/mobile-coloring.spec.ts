@@ -84,10 +84,10 @@ test.describe('Mobile Coloring Page Layout', () => {
       return window.getComputedStyle(el).touchAction;
     });
     
-    // touch-action should allow pinch-zoom (pan-x pan-y pinch-zoom)
-    expect(touchAction).toContain('pinch-zoom');
+    // touch-action should be 'auto' which allows all browser gestures including zoom
+    expect(touchAction).toBe('auto');
     
-    console.log('✅ Test passed: Touch action allows zooming');
+    console.log('✅ Test passed: Touch action is auto, allowing zooming');
   });
 });
 
