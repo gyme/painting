@@ -137,7 +137,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
     border: none;
     border-radius: 0;
     margin: 0 0 250px 0;
-    padding: 0 0 100px 0;
+    padding: 0 0 160px 0; /* Increased from 100px to 160px to compensate for removed canvas padding */
     width: calc(100vw - 1rem);
     max-width: calc(100vw - 1rem);
     height: auto;
@@ -154,7 +154,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       max-width: 100% !important;
       height: auto !important;
       margin: 0 0 100px 0 !important;
-      padding-bottom: 60px !important;
+      padding: 0 !important; /* Removed padding-bottom - use wrapper padding instead */
       touch-action: manipulation;
       object-fit: contain;
     }
@@ -1299,12 +1299,12 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
     const rect = canvas.getBoundingClientRect()
     
-    // Always use clientX/clientY for consistency across mouse and touch
-    // This is more reliable than offsetX/offsetY, especially with CSS transforms
+    // Get click position in viewport
     const clientX = e.clientX
     const clientY = e.clientY
     
     // Calculate click position relative to canvas
+    // rect.left and rect.top already account for scroll position
     const clickX = clientX - rect.left
     const clickY = clientY - rect.top
     
