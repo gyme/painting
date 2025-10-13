@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback, memo } from 'react'
 import styled from 'styled-components'
 import { getProfessionalColoringArt } from './ProfessionalColoringArt'
 
@@ -724,7 +724,7 @@ const colors = [
   { name: 'Steel Gray', value: '#4D4D4D' },
 ]
 
-function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: InteractiveColoringProps) {
+const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: InteractiveColoringProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mainContentRef = useRef<HTMLDivElement>(null)
   const [selectedColor, setSelectedColor] = useState(colors[0].value)
@@ -811,15 +811,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       if (colorScrollRef.current && window.innerWidth <= 768) {
         const { scrollLeft, scrollWidth, clientWidth } = colorScrollRef.current
         const hasScroll = scrollWidth > clientWidth
-        console.log('🎨 Scroll check:', { 
-          scrollLeft, 
-          scrollWidth, 
-          clientWidth, 
-          hasScroll,
-          colorCount: colors.length,
-          showLeft: scrollLeft > 10,
-          showRight: hasScroll && scrollLeft < scrollWidth - clientWidth - 10
-        })
         setShowLeftArrow(scrollLeft > 10)
         setShowRightArrow(hasScroll && scrollLeft < scrollWidth - clientWidth - 10)
       }
@@ -829,7 +820,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const checkDimensions = () => {
       const scrollElement = colorScrollRef.current
       if (scrollElement && scrollElement.clientWidth > 0) {
-        console.log('✅ Element has dimensions, setting up scroll detection')
         // Initial check
         handleScroll()
         
@@ -851,9 +841,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       attempts++
       if (checkDimensions() || attempts >= maxAttempts) {
         clearInterval(checkInterval)
-        if (attempts >= maxAttempts) {
-          console.warn('⚠️ Could not detect color palette dimensions after', attempts, 'attempts')
-        }
       }
     }, 50)
 
@@ -873,14 +860,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       if (mobileColorScrollRef.current && window.innerWidth <= 768) {
         const { scrollLeft, scrollWidth, clientWidth } = mobileColorScrollRef.current
         const hasScroll = scrollWidth > clientWidth
-        console.log('📱 Mobile slider check:', { 
-          scrollLeft, 
-          scrollWidth, 
-          clientWidth, 
-          hasScroll,
-          showLeft: scrollLeft > 10,
-          showRight: hasScroll && scrollLeft < scrollWidth - clientWidth - 10
-        })
         setShowMobileLeftArrow(scrollLeft > 10)
         setShowMobileRightArrow(hasScroll && scrollLeft < scrollWidth - clientWidth - 10)
       }
@@ -890,7 +869,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const checkDimensions = () => {
       const scrollElement = mobileColorScrollRef.current
       if (scrollElement && scrollElement.clientWidth > 0) {
-        console.log('✅ Mobile slider has dimensions, setting up scroll detection')
         // Initial check
         handleScroll()
         
@@ -912,9 +890,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       attempts++
       if (checkDimensions() || attempts >= maxAttempts) {
         clearInterval(checkInterval)
-        if (attempts >= maxAttempts) {
-          console.warn('⚠️ Could not detect mobile slider dimensions after', attempts, 'attempts')
-        }
       }
     }, 50)
 
@@ -961,22 +936,18 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const getImagePath = () => {
       // Check if imageUrl is valid
       if (imageUrl && !imageUrl.includes('placeholder') && !imageUrl.includes('example.com')) {
-        console.log('Using imageUrl:', imageUrl)
         // Always use PNG, not JPG
         const pngUrl = imageUrl.replace('.jpg', '.png')
-        console.log('Corrected to PNG:', pngUrl)
         return pngUrl
       }
       // Fallback: construct from urlKey
       const fileName = urlKey.replace(/-/g, '_')
       const path = `/coloring-images/${fileName}.png`
-      console.log('Using constructed path:', path)
       return path
     }
     
     // Try local images first, then fall back to drawing
     img.onload = () => {
-      console.log('Image loaded successfully:', img.src, 'Size:', img.width, 'x', img.height)
       // Store the image for later use (clear, etc.)
       originalImageRef.current = img
       
@@ -1003,7 +974,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
         // Desktop: fixed width, height based on aspect ratio
         canvas.width = 600
         canvas.height = (img.height / img.width) * canvas.width
-        console.log('Desktop canvas size:', canvas.width, 'x', canvas.height)
         
         // Fill with white background
         ctx.fillStyle = 'white'
@@ -1055,34 +1025,28 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
           }
         }
       }
-      console.log('Stored', originalBlackPixelsRef.current.size, 'original black pixels for protection')
       
       // No watermark during coloring - only on save/print
     }
     
-    img.onerror = (e) => {
-      console.error('Image failed to load:', img.src, e)
+    img.onerror = () => {
       // PNG failed, try JPG
       if (img.src.endsWith('.png')) {
         const fileName = urlKey.replace(/-/g, '_')
         const jpgPath = `/coloring-images/${fileName}.jpg`
         const absoluteJpgPath = `${window.location.origin}${jpgPath}`
-        console.log('Trying JPG fallback:', absoluteJpgPath)
         img.src = absoluteJpgPath
         return
       }
       
-      console.log('Both PNG and JPG failed, trying SVG artwork')
       // Both PNG and JPG failed, try our professional high-quality SVG artwork
       const originalArt = getProfessionalColoringArt(urlKey)
       if (originalArt) {
-        console.log('Found SVG artwork for:', urlKey)
         // Render SVG to canvas
         const svgBlob = new Blob([originalArt], { type: 'image/svg+xml;charset=utf-8' })
         const url = URL.createObjectURL(svgBlob)
         const svgImg = new Image()
         svgImg.onload = () => {
-          console.log('SVG loaded successfully:', svgImg.width, 'x', svgImg.height)
           // Store the SVG image for later use
           originalImageRef.current = svgImg
           
@@ -1123,8 +1087,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
           URL.revokeObjectURL(url)
         }
         svgImg.src = url
-      } else {
-        console.log('No SVG artwork found for:', urlKey)
       }
       // Remove fallback drawing - if no artwork exists, canvas stays white
     }
@@ -1133,7 +1095,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const imagePath = getImagePath()
     // Force absolute URL with current origin to avoid cache issues
     const absolutePath = imagePath.startsWith('http') ? imagePath : `${window.location.origin}${imagePath}`
-    console.log('Loading image from:', absolutePath)
     img.src = absolutePath
     
   }, [imageUrl, urlKey, WATERMARK_TEXT])
@@ -1164,7 +1125,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
         // Don't preventDefault - let browser handle potential zoom gestures
         
         if (isProcessingRef.current) {
-          console.log('Already processing, please wait...')
           return
         }
 
@@ -1390,7 +1350,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     if (selectedTool === 'fill' || selectedTool === 'eraser') {
       // Prevent multiple simultaneous operations
       if (isProcessingRef.current) {
-        console.log('Already processing, please wait...')
         return
       }
 
@@ -1451,7 +1410,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     
     // Don't fill if clicking on original black lines (original artwork)
     if (isBlackLine(startX, startY, targetColor)) {
-      console.log('Cannot color over original black lines!')
       return
     }
     
@@ -1885,9 +1843,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
               
               <ColorGridScroll ref={colorScrollRef}>
             <ColorGrid>
-                  {colors.map((color, index) => {
-                    if (index === 0) console.log('🎨 Rendering', colors.length, 'colors')
-                    return (
+                  {colors.map((color, index) => (
                 <ColorButton
                   key={`${color.name}-${index}`}
                   color={color.value}
@@ -1901,8 +1857,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
                   }}
                   title={color.name}
                 />
-                    )
-                  })}
+                  ))}
             </ColorGrid>
               </ColorGridScroll>
               
@@ -2089,6 +2044,6 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
         </MobileToolbar>
     </Container>
   )
-}
+})
 
 export default InteractiveColoring
