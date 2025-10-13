@@ -23,9 +23,10 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     background: white;
-    padding-bottom: 500px !important;
+    padding-bottom: 250px !important;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 `
 
@@ -135,8 +136,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
   @media (max-width: 768px) {
     border: none;
     border-radius: 0;
-    margin: 0 0 500px 0;
-    padding: 0 0 50px 0;
+    margin: 0 0 250px 0;
+    padding: 0 0 100px 0;
     width: calc(100vw - 1rem);
     max-width: calc(100vw - 1rem);
     height: auto;
@@ -144,6 +145,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
     background: white;
     position: relative;
     overflow: visible;
+    min-height: auto;
     
     canvas {
       display: block;
@@ -151,7 +153,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
-      margin: 0 !important;
+      margin: 0 0 100px 0 !important;
       padding: 0 !important;
       touch-action: manipulation;
       object-fit: contain;
