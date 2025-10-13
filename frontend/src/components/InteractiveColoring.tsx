@@ -153,8 +153,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
-      max-height: 60vh !important; /* Reasonable size */
-      margin: 0 0 280px 0 !important; /* Large margin below canvas = clearance for fixed controls */
+      max-height: 55vh !important; /* Smaller to ensure it fits */
+      margin: 0 0 350px 0 !important; /* Extra large margin to prevent cropping by fixed controls */
       padding: 0 !important;
       touch-action: pan-x pan-y pinch-zoom; /* Allow zoom and panning */
       object-fit: contain;
