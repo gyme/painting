@@ -153,10 +153,10 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
-      max-height: 50vh !important; /* Limit canvas to half viewport to ensure it's always above controls */
-      margin: 0 !important;
+      max-height: calc(100vh - 450px) !important; /* Account for header + fixed controls */
+      margin: 0 0 200px 0 !important; /* Extra margin below canvas */
       padding: 0 !important;
-      touch-action: auto; /* Allow native browser zoom */
+      touch-action: pan-x pan-y pinch-zoom; /* Allow zoom and panning */
       object-fit: contain;
     }
   }
@@ -1144,12 +1144,11 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     if (!canvas) return
 
     const handleTouchStart = (e: TouchEvent) => {
-      // Allow native pinch-to-zoom - don't handle multi-touch
-      if (e.touches.length > 1) {
-        return // Let browser handle zoom
+      // With touch-action: pan-x pan-y pinch-zoom, browser handles multi-touch zoom
+      // We only get single-touch events for drawing
+      if (e.touches.length !== 1) {
+        return // Ignore if not exactly one touch
       }
-      
-      e.preventDefault() // Only prevent default for single-touch (drawing)
 
       const touch = e.touches[0]
 
@@ -1162,6 +1161,8 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
       const { x, y } = coords
 
       if (selectedTool === 'fill' || selectedTool === 'eraser') {
+        e.preventDefault() // Prevent scrolling only when actively using tools
+        
         if (isProcessingRef.current) {
           console.log('Already processing, please wait...')
           return
@@ -1180,6 +1181,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
         }
       } else {
         // Brush tool - draw immediately, then save to history
+        e.preventDefault() // Prevent scrolling during drawing
         isDrawingRef.current = true
         
         // Draw first for immediate feedback
@@ -1195,15 +1197,15 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     }
 
     const handleTouchMove = (e: TouchEvent) => {
-      // Allow native pinch-to-zoom - don't handle multi-touch
-      if (e.touches.length > 1) {
-        return // Let browser handle zoom
+      // With touch-action: pan-x pan-y pinch-zoom, browser handles zoom
+      if (e.touches.length !== 1) {
+        return // Ignore if not exactly one touch
       }
-      
-      e.preventDefault() // Only prevent default for single-touch (drawing)
       
       if (!isDrawingRef.current || selectedTool === 'fill' || selectedTool === 'eraser') return
 
+      e.preventDefault() // Prevent scrolling during brush drawing
+      
       const touch = e.touches[0]
       const coords = getCanvasCoordinates(touch as any)
       if (!coords) return
