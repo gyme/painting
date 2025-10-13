@@ -153,8 +153,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
-      max-height: 55vh !important; /* Smaller to ensure it fits */
-      margin: 0 0 350px 0 !important; /* Extra large margin to prevent cropping by fixed controls */
+      max-height: 50vh !important; /* Smaller canvas to ensure full visibility */
+      margin: 0 0 400px 0 !important; /* Very large margin - ensures clearance for fixed controls */
       padding: 0 !important;
       touch-action: pan-x pan-y pinch-zoom; /* Allow zoom and panning */
       object-fit: contain;
@@ -1289,14 +1289,37 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const clientX = e.clientX
     const clientY = e.clientY
     
-    // Calculate click position relative to canvas
-    // rect.left and rect.top already account for scroll position
+    // Calculate click position relative to canvas element
     const clickX = clientX - rect.left
     const clickY = clientY - rect.top
     
-    // Scale from display coordinates to canvas internal coordinates
-    const x = (clickX / rect.width) * canvas.width
-    const y = (clickY / rect.height) * canvas.height
+    // Account for object-fit: contain which may add letterboxing
+    // Calculate the actual displayed image size within the canvas element
+    const canvasRatio = canvas.width / canvas.height
+    const displayRatio = rect.width / rect.height
+    
+    let offsetX = 0
+    let offsetY = 0
+    let displayWidth = rect.width
+    let displayHeight = rect.height
+    
+    if (displayRatio > canvasRatio) {
+      // Letterboxing on sides
+      displayWidth = rect.height * canvasRatio
+      offsetX = (rect.width - displayWidth) / 2
+    } else {
+      // Letterboxing on top/bottom
+      displayHeight = rect.width / canvasRatio
+      offsetY = (rect.height - displayHeight) / 2
+    }
+    
+    // Adjust click coordinates for letterboxing
+    const adjustedX = clickX - offsetX
+    const adjustedY = clickY - offsetY
+    
+    // Scale to canvas internal coordinates
+    const x = (adjustedX / displayWidth) * canvas.width
+    const y = (adjustedY / displayHeight) * canvas.height
 
     return { x, y }
   }, [])
