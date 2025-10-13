@@ -154,7 +154,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       max-width: 100% !important;
       height: auto !important;
       margin: 0 0 100px 0 !important;
-      padding: 0 !important;
+      padding-bottom: 60px !important;
       touch-action: manipulation;
       object-fit: contain;
     }
@@ -1299,22 +1299,14 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
 
     const rect = canvas.getBoundingClientRect()
     
-    // For mouse events, use offsetX/offsetY for better precision
-    // For touch events, calculate from clientX/clientY
-    let clickX: number
-    let clickY: number
+    // Always use clientX/clientY for consistency across mouse and touch
+    // This is more reliable than offsetX/offsetY, especially with CSS transforms
+    const clientX = e.clientX
+    const clientY = e.clientY
     
-    if ('offsetX' in e && 'offsetY' in e && typeof e.offsetX === 'number' && typeof e.offsetY === 'number') {
-      // Mouse event - use offset coordinates directly (more accurate)
-      clickX = e.offsetX as number
-      clickY = e.offsetY as number
-    } else {
-      // Touch event - calculate from client coordinates
-      const clientX = e.clientX
-      const clientY = e.clientY
-      clickX = clientX - rect.left
-      clickY = clientY - rect.top
-    }
+    // Calculate click position relative to canvas
+    const clickX = clientX - rect.left
+    const clickY = clientY - rect.top
     
     // Scale from display coordinates to canvas internal coordinates
     const x = (clickX / rect.width) * canvas.width
