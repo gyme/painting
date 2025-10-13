@@ -153,6 +153,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
+      max-height: calc(100vh - 250px) !important; /* Ensure canvas never extends into fixed controls area */
       margin: 0 !important;
       padding: 0 !important;
       touch-action: manipulation;
