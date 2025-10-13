@@ -15,6 +15,7 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 const TermsOfServicePage = lazy(() => import('./pages/TermsOfServicePage'))
 const ContactUsPage = lazy(() => import('./pages/ContactUsPage'))
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'))
+const CopyrightPage = lazy(() => import('./pages/CopyrightPage'))
 
 // Collection/Listicle pages
 const TopAnimalsPage = lazy(() => import('./pages/TopAnimalsPage'))
@@ -22,6 +23,7 @@ const TopVehiclesPage = lazy(() => import('./pages/TopVehiclesPage'))
 const BestForToddlersPage = lazy(() => import('./pages/BestForToddlersPage'))
 const MostPopularPage = lazy(() => import('./pages/MostPopularPage'))
 const EasyColoringPage = lazy(() => import('./pages/EasyColoringPage'))
+const RandomPage = lazy(() => import('./pages/RandomPage'))
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -46,8 +48,10 @@ function App() {
         <Header />
         <ErrorBoundary>
           <Suspense fallback={<LoadingFallback>🎨 Loading... ✨</LoadingFallback>}>
+            <main id="main-content" role="main">
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/random" element={<RandomPage />} />
               <Route path="/painting/:urlKey" element={<PaintingPage />} />
               <Route path="/category/:category" element={<CategoryPage />} />
               <Route path="/blog" element={<BlogPage />} />
@@ -64,8 +68,10 @@ function App() {
               <Route path="/terms" element={<TermsOfServicePage />} />
               <Route path="/contact" element={<ContactUsPage />} />
               <Route path="/privacy" element={<PrivacyPolicyPage />} />
+              <Route path="/copyright" element={<CopyrightPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
+            </main>
           </Suspense>
         </ErrorBoundary>
         <Footer />

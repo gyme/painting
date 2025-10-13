@@ -23,7 +23,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     background: white;
-    padding-bottom: 450px !important;
+    padding-bottom: 500px !important;
     overflow-x: hidden;
     overflow-y: auto;
   }
@@ -135,8 +135,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
   @media (max-width: 768px) {
     border: none;
     border-radius: 0;
-    margin: 0 0 450px 0;
-    padding: 0 0 30px 0;
+    margin: 0 0 500px 0;
+    padding: 0 0 50px 0;
     width: calc(100vw - 1rem);
     max-width: calc(100vw - 1rem);
     height: auto;
