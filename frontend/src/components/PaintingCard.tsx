@@ -217,28 +217,22 @@ const PaintingCard = memo(function PaintingCard({ painting }: PaintingCardProps)
   return (
     <Card to={`/painting/${painting.urlKey}`}>
       <ImageContainer>
-        {/* Show WebP with PNG/JPG fallback for better performance */}
+        {/* Show PNG/JPG image directly - no SVG overlay */}
         {!imageError ? (
-          <picture>
-            <source 
-              srcSet={imagePath.replace(/\.(png|jpg)$/, '.webp')} 
-              type="image/webp" 
-            />
-            <CardImage 
-              src={imagePath}
-              alt={`${painting.title} coloring page outline for kids - ${painting.category} category`}
-              onError={(e) => {
-                const target = e.target as HTMLImageElement
-                // If PNG fails, try JPG
-                if (target.src.endsWith('.png')) {
-                  target.src = target.src.replace('.png', '.jpg')
-                } else {
-                  // Both PNG and JPG failed - show SVG fallback
-                  setImageError(true)
-                }
-              }}
-            />
-          </picture>
+          <CardImage 
+            src={imagePath}
+            alt={`${painting.title} coloring page outline for kids - ${painting.category} category`}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement
+              // If PNG fails, try JPG
+              if (target.src.endsWith('.png')) {
+                target.src = target.src.replace('.png', '.jpg')
+              } else {
+                // Both PNG and JPG failed - show SVG fallback
+                setImageError(true)
+              }
+            }}
+          />
         ) : (
           <SVGContainer 
             dangerouslySetInnerHTML={{ __html: getProfessionalColoringArt(painting.urlKey) || getMiniSVG(painting.urlKey) }} 
