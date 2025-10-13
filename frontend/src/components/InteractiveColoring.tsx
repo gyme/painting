@@ -156,7 +156,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       max-height: 50vh !important; /* Limit canvas to half viewport to ensure it's always above controls */
       margin: 0 !important;
       padding: 0 !important;
-      touch-action: manipulation;
+      touch-action: auto; /* Allow native browser zoom */
       object-fit: contain;
     }
   }
@@ -1143,26 +1143,13 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const isMobile = window.innerWidth <= 768
-
     const handleTouchStart = (e: TouchEvent) => {
-      e.preventDefault()
-      
-      // Handle pinch-to-zoom on mobile
-      if (isMobile && e.touches.length === 2) {
-        const touch1 = e.touches[0]
-        const touch2 = e.touches[1]
-        const distance = Math.hypot(
-          touch2.clientX - touch1.clientX,
-          touch2.clientY - touch1.clientY
-        )
-        lastTouchDistanceRef.current = distance
-        lastTouchCenterRef.current = {
-          x: (touch1.clientX + touch2.clientX) / 2,
-          y: (touch1.clientY + touch2.clientY) / 2
-        }
-        return
+      // Allow native pinch-to-zoom - don't handle multi-touch
+      if (e.touches.length > 1) {
+        return // Let browser handle zoom
       }
+      
+      e.preventDefault() // Only prevent default for single-touch (drawing)
 
       const touch = e.touches[0]
 
@@ -1208,26 +1195,12 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     }
 
     const handleTouchMove = (e: TouchEvent) => {
-      e.preventDefault()
-      
-      // Handle pinch-to-zoom on mobile
-      if (isMobile && e.touches.length === 2) {
-        const touch1 = e.touches[0]
-        const touch2 = e.touches[1]
-        const distance = Math.hypot(
-          touch2.clientX - touch1.clientX,
-          touch2.clientY - touch1.clientY
-        )
-        
-        if (lastTouchDistanceRef.current > 0) {
-          const scaleChange = distance / lastTouchDistanceRef.current
-          const newScale = Math.min(Math.max(scale * scaleChange, 1), 5)
-          setScale(newScale)
-        }
-        
-        lastTouchDistanceRef.current = distance
-        return
+      // Allow native pinch-to-zoom - don't handle multi-touch
+      if (e.touches.length > 1) {
+        return // Let browser handle zoom
       }
+      
+      e.preventDefault() // Only prevent default for single-touch (drawing)
       
       if (!isDrawingRef.current || selectedTool === 'fill' || selectedTool === 'eraser') return
 
@@ -1242,12 +1215,13 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
     }
 
     const handleTouchEnd = (e: TouchEvent) => {
-      e.preventDefault()
       if (e.touches.length === 0) {
+        e.preventDefault()
         isDrawingRef.current = false
         lastTouchDistanceRef.current = 0
         lastTouchCenterRef.current = null
       }
+      // Don't prevent default if touches remain (user may be zooming)
     }
 
     // Add listeners with { passive: false } to allow preventDefault
