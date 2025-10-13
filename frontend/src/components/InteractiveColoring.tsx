@@ -23,9 +23,9 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     background: white;
-    padding-bottom: 250px !important;
+    padding-bottom: 0 !important; /* No padding needed - spacer handles it */
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto; /* Changed to auto for better scrolling */
     -webkit-overflow-scrolling: touch;
   }
 `
@@ -167,9 +167,10 @@ const MobileCanvasSpacer = styled.div`
   
   @media (max-width: 768px) {
     display: block;
-    height: 200px; /* Clearance for fixed controls (color slider + toolbar) */
+    height: 250px; /* Large clearance to ensure canvas is fully above fixed controls */
     flex-shrink: 0;
-    background: transparent;
+    background: white; /* Match page background */
+    width: 100%;
   }
 `
 
