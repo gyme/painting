@@ -79,7 +79,7 @@ const CanvasSection = styled.div`
     align-items: center;
     justify-content: flex-start;
     background: white;
-    padding: 0rem 0.5rem 100px 0.5rem !important; /* Added bottom padding for additional clearance */
+    padding: 0rem 0.5rem 0 0.5rem !important;
     margin: 0 !important;
     position: relative;
     width: 100vw;
@@ -136,7 +136,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
   @media (max-width: 768px) {
     border: none;
     border-radius: 0;
-    margin: 0 0 200px 0; /* Space below wrapper for fixed controls */
+    margin: 0;
     padding: 0;
     width: calc(100vw - 1rem);
     max-width: calc(100vw - 1rem);
@@ -153,11 +153,23 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
-      margin: 0 0 250px 0 !important; /* Large margin below canvas to prevent cropping by fixed controls */
+      margin: 0 !important;
       padding: 0 !important;
       touch-action: manipulation;
       object-fit: contain;
     }
+  }
+`
+
+/* Mobile spacer to prevent canvas from being cropped by fixed controls */
+const MobileCanvasSpacer = styled.div`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: block;
+    height: 200px; /* Clearance for fixed controls (color slider + toolbar) */
+    flex-shrink: 0;
+    background: transparent;
   }
 `
 
@@ -1843,6 +1855,7 @@ function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: Interact
               onMouseLeave={handleCanvasMouseUp}
             />
           </CanvasWrapper>
+          <MobileCanvasSpacer />
         </CanvasSection>
 
         {/* Mobile Overlay */}
