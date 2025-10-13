@@ -46,6 +46,36 @@ html {
   100% { filter: hue-rotate(360deg); }
 }
 
+/* Accessibility: Skip to content link */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #667eea;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 0 0 8px 0;
+  font-weight: 600;
+  z-index: 1000;
+  transition: top 0.3s ease;
+}
+
+.skip-to-content:focus {
+  top: 0;
+  outline: 3px solid #ffd700;
+  outline-offset: 2px;
+}
+
+/* Enhanced keyboard focus states for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 0px;
@@ -63,4 +93,101 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.5);
+}
+
+/* Print-specific CSS for clean coloring page printing */
+@media print {
+  /* Hide navigation, header, footer, and non-essential elements */
+  header,
+  footer,
+  nav,
+  .no-print,
+  button:not(.print-button),
+  [role="navigation"],
+  [role="banner"],
+  [role="contentinfo"] {
+    display: none !important;
+  }
+
+  /* Reset body and page styles for printing */
+  body {
+    background: white !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Full-bleed printing - remove margins */
+  @page {
+    size: auto;
+    margin: 0;
+  }
+
+  /* Ensure coloring image prints full size */
+  canvas,
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Make sure black lines are bold and visible */
+  svg,
+  canvas {
+    stroke-width: 2px !important;
+    stroke: #000 !important;
+  }
+
+  /* Hide background colors and shadows on non-canvas elements */
+  body, header, footer, nav, div:not(.interactive-coloring):not(.coloring-area) {
+    background: white !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Ensure canvas/interactive coloring area takes full page */
+  #coloring-canvas,
+  .coloring-area,
+  .interactive-coloring {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  /* Hide breadcrumbs, metadata, and other non-coloring content */
+  .breadcrumbs,
+  .metadata,
+  .tags,
+  .description,
+  .related-section {
+    display: none !important;
+  }
+
+  /* Optimize for black and white printing */
+  * {
+    color: black !important;
+  }
+
+  /* Remove page breaks in the middle of content */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+
+  /* Print optimization for images */
+  img {
+    filter: contrast(1.2) brightness(1.1);
+  }
+
+  /* A4 and US Letter optimization */
+  @page {
+    size: A4;
+    margin: 5mm;
+  }
+
+  @page :first {
+    margin-top: 0;
+  }
 }

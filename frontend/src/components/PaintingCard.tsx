@@ -218,7 +218,7 @@ const PaintingCard = memo(function PaintingCard({ painting }: PaintingCardProps)
         {!imageError ? (
           <CardImage 
             src={imagePath}
-            alt={painting.title}
+            alt={`${painting.title} coloring page outline for kids - ${painting.category} category`}
             onError={(e) => {
               const target = e.target as HTMLImageElement
               // If PNG fails, try JPG
