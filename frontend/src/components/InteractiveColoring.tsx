@@ -19,13 +19,13 @@ const Container = styled.div`
     margin: 0;
     box-shadow: none;
     min-height: 100vh;
-    height: auto;
+    height: 100vh; /* Fixed height for proper scrolling */
     display: flex;
     flex-direction: column;
     background: white;
-    padding-bottom: 0 !important; /* No padding needed - spacer handles it */
+    padding-bottom: 200px !important; /* Bottom padding for fixed controls */
     overflow-x: hidden;
-    overflow-y: auto; /* Changed to auto for better scrolling */
+    overflow-y: scroll; /* Always show scroll to make space clear */
     -webkit-overflow-scrolling: touch;
   }
 `
@@ -79,7 +79,7 @@ const CanvasSection = styled.div`
     align-items: center;
     justify-content: flex-start;
     background: white;
-    padding: 0rem 0.5rem 0 0.5rem !important;
+    padding: 0rem 0.5rem 200px 0.5rem !important; /* Bottom padding for scroll space */
     margin: 0 !important;
     position: relative;
     width: 100vw;
@@ -136,7 +136,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
   @media (max-width: 768px) {
     border: none;
     border-radius: 0;
-    margin: 0;
+    margin: 0 0 300px 0; /* Large bottom margin to ensure canvas is above fixed controls */
     padding: 0;
     width: calc(100vw - 1rem);
     max-width: calc(100vw - 1rem);
@@ -153,7 +153,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
-      max-height: calc(100vh - 250px) !important; /* Ensure canvas never extends into fixed controls area */
+      max-height: 50vh !important; /* Limit canvas to half viewport to ensure it's always above controls */
       margin: 0 !important;
       padding: 0 !important;
       touch-action: manipulation;
@@ -167,11 +167,7 @@ const MobileCanvasSpacer = styled.div`
   display: none;
   
   @media (max-width: 768px) {
-    display: block;
-    height: 250px; /* Large clearance to ensure canvas is fully above fixed controls */
-    flex-shrink: 0;
-    background: white; /* Match page background */
-    width: 100%;
+    display: none; /* Disabled - using wrapper margin instead */
   }
 `
 
