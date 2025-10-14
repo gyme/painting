@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import ErrorBoundary from './components/ErrorBoundary'
+import LanguageRouteSync from './components/LanguageRouteSync'
 
 // Lazy load pages for better performance
 const HomePage = lazy(() => import('./pages/HomePage'))
@@ -41,15 +43,22 @@ const LoadingFallback = styled.div`
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 `
 
+function LoadingIndicator() {
+  const { t } = useTranslation()
+  return <LoadingFallback>🎨 {t('page.loading')} ✨</LoadingFallback>
+}
+
 function App() {
   return (
     <Router>
+      <LanguageRouteSync />
       <AppContainer>
         <Header />
         <ErrorBoundary>
-          <Suspense fallback={<LoadingFallback>🎨 Loading... ✨</LoadingFallback>}>
+          <Suspense fallback={<LoadingIndicator />}>
             <main id="main-content" role="main">
             <Routes>
+              {/* English routes (default) */}
               <Route path="/" element={<HomePage />} />
               <Route path="/random" element={<RandomPage />} />
               <Route path="/painting/:urlKey" element={<PaintingPage />} />
@@ -69,6 +78,29 @@ function App() {
               <Route path="/contact" element={<ContactUsPage />} />
               <Route path="/privacy" element={<PrivacyPolicyPage />} />
               <Route path="/copyright" element={<CopyrightPage />} />
+              
+              {/* Spanish routes (/es/ prefix) - Same components, different URLs for SEO */}
+              <Route path="/es" element={<HomePage />} />
+              <Route path="/es/random" element={<RandomPage />} />
+              <Route path="/es/painting/:urlKey" element={<PaintingPage />} />
+              <Route path="/es/category/:category" element={<CategoryPage />} />
+              <Route path="/es/blog" element={<BlogPage />} />
+              <Route path="/es/blog/:slug" element={<BlogPostPage />} />
+              
+              {/* Spanish Collection/Listicle Pages */}
+              <Route path="/es/top-animal-coloring-pages" element={<TopAnimalsPage />} />
+              <Route path="/es/top-vehicle-coloring-pages" element={<TopVehiclesPage />} />
+              <Route path="/es/best-coloring-pages-for-toddlers" element={<BestForToddlersPage />} />
+              <Route path="/es/most-popular-coloring-pages" element={<MostPopularPage />} />
+              <Route path="/es/easy-coloring-pages" element={<EasyColoringPage />} />
+              
+              {/* Spanish Static Pages */}
+              <Route path="/es/terms" element={<TermsOfServicePage />} />
+              <Route path="/es/contact" element={<ContactUsPage />} />
+              <Route path="/es/privacy" element={<PrivacyPolicyPage />} />
+              <Route path="/es/copyright" element={<CopyrightPage />} />
+              
+              {/* 404 - Must be last */}
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
             </main>

@@ -1,5 +1,7 @@
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
+import LocalizedLink from './LocalizedLink'
 
 const BreadcrumbContainer = styled.nav`
   display: flex;
@@ -21,7 +23,7 @@ const BreadcrumbContainer = styled.nav`
   }
 `
 
-const BreadcrumbLink = styled(Link)`
+const BreadcrumbLink = styled(LocalizedLink)`
   color: #667eea;
   text-decoration: none;
   font-weight: 500;
@@ -69,10 +71,47 @@ interface BreadcrumbsProps {
 
 function Breadcrumbs({ items }: BreadcrumbsProps) {
   const location = useLocation()
+  const { t } = useTranslation()
+
+  // Helper to translate labels
+  const translateLabel = (label: string): string => {
+    // Translate "Home"
+    if (label === 'Home') {
+      return t('nav.home')
+    }
+    
+    // Translate category names (Animals, Vehicles, Nature, etc.)
+    const knownCategories = ['Animals', 'Vehicles', 'Nature', 'Characters', 'Fantasy', 'Food', 'Holidays', 'Sports', 'Space', 'Ocean', 'Dinosaurs', 'Mandalas']
+    if (knownCategories.includes(label)) {
+      return t(`categories.${label.toLowerCase()}`)
+    }
+    
+    // Translate common routes
+    if (label === 'Blog') {
+      return t('nav.blog')
+    }
+    
+    if (label === 'Contact') {
+      return t('footer.contact')
+    }
+    
+    if (label === 'Privacy') {
+      return t('footer.privacy')
+    }
+    
+    if (label === 'Terms') {
+      return t('footer.terms')
+    }
+    
+    // Default: return as is
+    return label
+  }
 
   // Auto-generate breadcrumbs if not provided
   const generateBreadcrumbs = (): Breadcrumb[] => {
-    const paths = location.pathname.split('/').filter(Boolean)
+    // Remove /es/ prefix from path for breadcrumb generation
+    const cleanPath = location.pathname.replace(/^\/es/, '')
+    const paths = cleanPath.split('/').filter(Boolean)
     const breadcrumbs: Breadcrumb[] = [{ label: 'Home', path: '/' }]
 
     let currentPath = ''
@@ -108,9 +147,9 @@ function Breadcrumbs({ items }: BreadcrumbsProps) {
         <span key={index}>
           {index > 0 && <Separator>/</Separator>}
           {crumb.path ? (
-            <BreadcrumbLink to={crumb.path}>{crumb.label}</BreadcrumbLink>
+            <BreadcrumbLink to={crumb.path}>{translateLabel(crumb.label)}</BreadcrumbLink>
           ) : (
-            <BreadcrumbText>{crumb.label}</BreadcrumbText>
+            <BreadcrumbText>{translateLabel(crumb.label)}</BreadcrumbText>
           )}
         </span>
       ))}

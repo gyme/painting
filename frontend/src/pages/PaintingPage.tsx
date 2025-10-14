@@ -2,11 +2,13 @@ import { useParams, Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import styled from 'styled-components'
 import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { paintingsApi } from '../api/paintings'
 import InteractiveColoring from '../components/InteractiveColoring'
 import Breadcrumbs from '../components/Breadcrumbs'
 import PaintingCard from '../components/PaintingCard'
 import SEO from '../components/SEO'
+import { getLocalizedPainting } from '../utils/paintingTranslations'
 
 const Container = styled.div`
   max-width: 1200px;
@@ -299,6 +301,7 @@ const RelatedTitle = styled.h2`
 `
 
 function PaintingPage() {
+  const { t, i18n } = useTranslation()
   const { urlKey } = useParams<{ urlKey: string }>()
   const printFunctionRef = useRef<(() => void) | null>(null)
 
@@ -306,6 +309,10 @@ function PaintingPage() {
     ['painting', urlKey],
     () => paintingsApi.getPaintingByUrlKey(urlKey!)
   )
+  
+  // Get localized title and description (with fallback translation map)
+  const localized = painting ? getLocalizedPainting(painting, i18n.language) : null
+  const paintingTitle = localized?.title || painting?.title
 
   // Fetch suggestions for 404 page
   const { data: suggestions } = useQuery(
@@ -376,9 +383,13 @@ function PaintingPage() {
   }
 
   const getDifficultyText = (difficulty: number) => {
-    if (difficulty === 1) return 'Easy'
-    if (difficulty === 2) return 'Medium'
-    return 'Hard'
+    if (difficulty === 1) return t('difficulty.easy')
+    if (difficulty === 2) return t('difficulty.medium')
+    return t('difficulty.hard')
+  }
+
+  const getCategoryTranslationKey = (category: string): string => {
+    return `categories.${category.toLowerCase()}`
   }
 
   // Enhanced structured data for the painting with CreativeWork + ImageObject
@@ -456,13 +467,13 @@ function PaintingPage() {
         <Breadcrumbs items={[
           { label: 'Home', path: '/' },
           { label: painting.category, path: `/category/${painting.category}` },
-          { label: painting.title }
+          { label: paintingTitle || painting.title }
         ]} />
-        <BackButton to="/">← Back to Gallery</BackButton>
+        <BackButton to="/">← {t('page.backToGallery')}</BackButton>
         <Card>
         <Content>
           <InteractiveColoring 
-            title={painting.title}
+            title={paintingTitle || painting.title}
             imageUrl={painting.imageUrl}
             urlKey={painting.urlKey}
             onPrintReady={handlePrintReady}
@@ -472,9 +483,9 @@ function PaintingPage() {
           <div style={{ marginTop: '3rem' }}>
           <Header>
             <TitleSection>
-              <Title>{painting.title}</Title>
+              <Title>{paintingTitle}</Title>
               <Meta>
-                <Badge>{painting.category}</Badge>
+                <Badge>{t(getCategoryTranslationKey(painting.category))}</Badge>
                 <Badge color={
                   painting.difficulty === 1 ? '#2ecc71' :
                   painting.difficulty === 2 ? '#f39c12' :
@@ -486,7 +497,7 @@ function PaintingPage() {
             </TitleSection>
             <ActionsContainer>
               <PrintButton onClick={handlePrint} aria-label="Print coloring page">
-                🖨️ Print
+                🖨️ {t('coloring.tools.print')}
               </PrintButton>
             </ActionsContainer>
           </Header>
@@ -498,7 +509,7 @@ function PaintingPage() {
       {/* Related Pages Section */}
       {relatedPaintings && relatedPaintings.content.length > 0 && (
         <RelatedSection>
-          <RelatedTitle>More {painting.category} Pages</RelatedTitle>
+          <RelatedTitle>{t('common.more')} {t(`categories.${painting.category.toLowerCase()}`)} {t('home.pages')}</RelatedTitle>
           <PaintingsGrid>
             {relatedPaintings.content
               .filter(p => p.id !== painting.id)

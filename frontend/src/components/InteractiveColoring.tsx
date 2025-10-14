@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback, memo } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { getProfessionalColoringArt } from './ProfessionalColoringArt'
 
 const Container = styled.div`
@@ -668,65 +669,73 @@ interface InteractiveColoringProps {
   onPrintReady?: (printFn: () => void) => void
 }
 
-const colors = [
+const colorDefinitions = [
   // Row 1: Deep Dark Colors
-  { name: 'Black', value: '#000000' },
-  { name: 'Dark Brown', value: '#3E2723' },
-  { name: 'Dark Red', value: '#8B0000' },
-  { name: 'Forest Green', value: '#0B4D1B' },
-  { name: 'Navy Blue', value: '#001F3F' },
-  { name: 'Deep Purple', value: '#4A148C' },
-  { name: 'Charcoal', value: '#2C3539' },
+  { key: 'black', value: '#000000' },
+  { key: 'darkBrown', value: '#3E2723' },
+  { key: 'darkRed', value: '#8B0000' },
+  { key: 'forestGreen', value: '#0B4D1B' },
+  { key: 'navyBlue', value: '#001F3F' },
+  { key: 'deepPurple', value: '#4A148C' },
+  { key: 'charcoal', value: '#2C3539' },
   
   // Row 2: Rich Medium Colors
-  { name: 'Brown', value: '#8B4513' },
-  { name: 'Maroon', value: '#B03060' },
-  { name: 'Burnt Orange', value: '#A0522D' },
-  { name: 'Olive', value: '#6B8E23' },
-  { name: 'Teal', value: '#008B8B' },
-  { name: 'Royal Blue', value: '#2B5FD3' },
-  { name: 'Indigo', value: '#6A0DAD' },
+  { key: 'brown', value: '#8B4513' },
+  { key: 'maroon', value: '#B03060' },
+  { key: 'burntOrange', value: '#A0522D' },
+  { key: 'olive', value: '#6B8E23' },
+  { key: 'teal', value: '#008B8B' },
+  { key: 'royalBlue', value: '#2B5FD3' },
+  { key: 'indigo', value: '#6A0DAD' },
   
   // Row 3: Bold Vibrant Colors
-  { name: 'Bright Red', value: '#FF0000' },
-  { name: 'Tangerine', value: '#FF8C00' },
-  { name: 'Golden Yellow', value: '#FFD700' },
-  { name: 'Lime Green', value: '#32CD32' },
-  { name: 'Emerald', value: '#00C853' },
-  { name: 'Turquoise', value: '#40E0D0' },
-  { name: 'Bright Blue', value: '#0066FF' },
+  { key: 'brightRed', value: '#FF0000' },
+  { key: 'tangerine', value: '#FF8C00' },
+  { key: 'goldenYellow', value: '#FFD700' },
+  { key: 'limeGreen', value: '#32CD32' },
+  { key: 'emerald', value: '#00C853' },
+  { key: 'turquoise', value: '#40E0D0' },
+  { key: 'brightBlue', value: '#0066FF' },
   
   // Row 4: Electric Bright Colors
-  { name: 'Hot Pink', value: '#FF1493' },
-  { name: 'Deep Rose', value: '#C71585' },
-  { name: 'Neon Orange', value: '#FF6600' },
-  { name: 'Bright Yellow', value: '#FFFF00' },
-  { name: 'Kelly Green', value: '#00AA00' },
-  { name: 'Aqua', value: '#00FFFF' },
-  { name: 'Steel Blue', value: '#4682B4' },
+  { key: 'hotPink', value: '#FF1493' },
+  { key: 'deepRose', value: '#C71585' },
+  { key: 'neonOrange', value: '#FF6600' },
+  { key: 'brightYellow', value: '#FFFF00' },
+  { key: 'kellyGreen', value: '#00AA00' },
+  { key: 'aqua', value: '#00FFFF' },
+  { key: 'steelBlue', value: '#4682B4' },
   
   // Row 5: Soft Pastel Colors
-  { name: 'Baby Pink', value: '#FFC0CB' },
-  { name: 'Coral', value: '#FF7F7F' },
-  { name: 'Peach', value: '#FFCC99' },
-  { name: 'Magenta', value: '#a6ff00' },
-  { name: 'Mint', value: '#BAFFC9' },
-  { name: 'Sky Blue', value: '#BAE1FF' },
-  { name: 'Lavender', value: '#D7C3F1' },
+  { key: 'babyPink', value: '#FFC0CB' },
+  { key: 'coral', value: '#FF7F7F' },
+  { key: 'peach', value: '#FFCC99' },
+  { key: 'magenta', value: '#a6ff00' },
+  { key: 'mint', value: '#BAFFC9' },
+  { key: 'skyBlue', value: '#BAE1FF' },
+  { key: 'lavender', value: '#D7C3F1' },
   
   // Row 6: Light & Neutral Colors
-  { name: 'White', value: '#FFFFFF' },
-  { name: 'Salmon', value: '#FA8072' },
-  { name: 'Cream', value: '#FFF8DC' },
-  { name: 'Sand', value: '#F4E4C1' },
-  { name: 'Light Gray', value: '#D3D3D3' },
-  { name: 'Medium Gray', value: '#808080' },
-  { name: 'Steel Gray', value: '#4D4D4D' },
+  { key: 'white', value: '#FFFFFF' },
+  { key: 'salmon', value: '#FA8072' },
+  { key: 'cream', value: '#FFF8DC' },
+  { key: 'sand', value: '#F4E4C1' },
+  { key: 'lightGray', value: '#D3D3D3' },
+  { key: 'mediumGray', value: '#808080' },
+  { key: 'steelGray', value: '#4D4D4D' },
 ]
 
 const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey, title, onPrintReady }: InteractiveColoringProps) {
+  const { t } = useTranslation()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mainContentRef = useRef<HTMLDivElement>(null)
+  
+  // Generate colors with translated names
+  const colors = colorDefinitions.map(color => ({
+    name: t(`coloring.colors.${color.key}`),
+    value: color.value
+  }))
+  
   const [selectedColor, setSelectedColor] = useState(colors[0].value)
   const originalImageRef = useRef<HTMLImageElement | null>(null)
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
@@ -1825,7 +1834,7 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
           </CloseButton>
           
           <ColorPaletteContainer>
-            <PaletteTitle>🎨 Pick a Color</PaletteTitle>
+            <PaletteTitle>{t('coloring.paletteTitle')}</PaletteTitle>
             <ColorGridWrapper>
               <ScrollArrow 
                 $side="left" 
@@ -1882,19 +1891,19 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
               $isActive={selectedTool === 'fill'}
               onClick={() => setSelectedTool('fill')}
             >
-              🪣 Fill
+              🪣 {t('coloring.tools.fill')}
             </ToolButton>
             <ToolButton 
               $isActive={selectedTool === 'brush'}
               onClick={() => setSelectedTool('brush')}
             >
-              ✏️ Brush
+              ✏️ {t('coloring.tools.brush')}
             </ToolButton>
             <ToolButton 
               $isActive={selectedTool === 'eraser'}
               onClick={() => setSelectedTool('eraser')}
             >
-              🧹 Eraser
+              🧹 {t('coloring.tools.eraser')}
             </ToolButton>
             <ToolButton 
               onClick={() => {
@@ -1905,7 +1914,7 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
               }} 
               disabled={historyStep <= 0}
             >
-              ↶ Undo
+              ↶ {t('coloring.tools.undo')}
             </ToolButton>
             <ToolButton 
               onClick={() => {
@@ -1916,7 +1925,7 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
               }}
               disabled={historyStep >= history.length - 1}
             >
-              ↷ Redo
+              ↷ {t('coloring.tools.redo')}
             </ToolButton>
             <ToolButton onClick={() => {
               clearCanvas()
@@ -1924,7 +1933,7 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
                 setIsColorPickerOpen(false)
               }
             }}>
-              🗑️ Clear
+              🗑️ {t('coloring.tools.clear')}
             </ToolButton>
             <ToolButton onClick={() => {
               saveImage()
@@ -1932,7 +1941,7 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
                 setIsColorPickerOpen(false)
               }
             }}>
-              💾 Save
+              💾 {t('coloring.tools.save')}
             </ToolButton>
             <ToolButton onClick={() => {
               printImage()
@@ -1940,7 +1949,7 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
                 setIsColorPickerOpen(false)
               }
             }}>
-              🖨️ Print
+              🖨️ {t('coloring.tools.print')}
             </ToolButton>
           </ToolsContainer>
         </ColorSection>
@@ -2000,29 +2009,29 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
               onClick={() => setSelectedTool('fill')}
             >
               <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🪣</span>
-              <span>Fill</span>
+              <span>{t('coloring.tools.fill')}</span>
             </MobileToolButton>
             <MobileToolButton
               $isActive={selectedTool === 'brush'}
               onClick={() => setSelectedTool('brush')}
             >
               <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>✏️</span>
-              <span>Brush</span>
+              <span>{t('coloring.tools.brush')}</span>
             </MobileToolButton>
             <MobileToolButton
               $isActive={selectedTool === 'eraser'}
               onClick={() => setSelectedTool('eraser')}
             >
               <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🧹</span>
-              <span>Erase</span>
+              <span>{t('coloring.tools.erase')}</span>
             </MobileToolButton>
             <MobileToolButton onClick={clearCanvas}>
               <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🗑️</span>
-              <span>Clear</span>
+              <span>{t('coloring.tools.clear')}</span>
             </MobileToolButton>
             <MobileToolButton onClick={undo} disabled={historyStep <= 0}>
               <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>↶</span>
-              <span>Undo</span>
+              <span>{t('coloring.tools.undo')}</span>
             </MobileToolButton>
             {scale > 1 ? (
               <MobileToolButton 
@@ -2032,12 +2041,12 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
                 $isActive={true}
               >
                 <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🔍</span>
-                <span>Reset</span>
+                <span>{t('coloring.tools.reset')}</span>
               </MobileToolButton>
             ) : (
               <MobileToolButton onClick={printImage}>
                 <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>🖨️</span>
-                <span>Print</span>
+                <span>{t('coloring.tools.print')}</span>
               </MobileToolButton>
             )}
           </MobileButtonRow>

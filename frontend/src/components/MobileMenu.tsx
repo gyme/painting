@@ -1,55 +1,68 @@
-import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
+import LocalizedLink from './LocalizedLink'
 
 const HamburgerButton = styled.button`
   display: none;
   
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 45px;
     height: 45px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
     color: white;
     font-size: 1.5rem;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-    transition: all 0.3s ease;
-    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
     
     &:active {
-      transform: scale(0.95);
+      transform: translateY(0) scale(0.95);
     }
+  }
+  
+  @media (max-width: 768px) {
+    width: 42px;
+    height: 42px;
+    font-size: 1.3rem;
   }
 `
 
 const Overlay = styled.div<{ $isOpen: boolean }>`
   display: none;
   
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
     display: block;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 200;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 999;
     opacity: ${props => props.$isOpen ? '1' : '0'};
-    pointer-events: ${props => props.$isOpen ? 'auto' : 'none'};
-    transition: opacity 0.3s ease;
+    visibility: ${props => props.$isOpen ? 'visible' : 'hidden'};
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
   }
 `
 
 const MenuContainer = styled.div<{ $isOpen: boolean }>`
   display: none;
   
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -60,13 +73,15 @@ const MenuContainer = styled.div<{ $isOpen: boolean }>`
     width: 100%;
     height: 100vh;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    z-index: 300;
+    z-index: 1000;
     padding: 0;
     opacity: ${props => props.$isOpen ? '1' : '0'};
-    pointer-events: ${props => props.$isOpen ? 'auto' : 'none'};
+    visibility: ${props => props.$isOpen ? 'visible' : 'hidden'};
     transform: scale(${props => props.$isOpen ? '1' : '0.95'});
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
     overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 `
 
@@ -147,7 +162,7 @@ const MenuLinks = styled.div`
   gap: 0.75rem;
 `
 
-const MenuLink = styled(Link)<{ $isActive?: boolean }>`
+const MenuLink = styled(LocalizedLink)<{ $isActive?: boolean }>`
   color: white;
   text-decoration: none;
   font-weight: 600;
@@ -179,16 +194,52 @@ const MenuFooter = styled.div`
 `
 
 function MobileMenu() {
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
+
+  // Prevent body scrolling when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      // Save current scroll position
+      const scrollY = window.scrollY
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.width = '100%'
+      document.body.style.overflow = 'hidden'
+    } else {
+      // Restore scroll position
+      const scrollY = document.body.style.top
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      document.body.style.overflow = ''
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+      }
+    }
+    
+    return () => {
+      // Cleanup on unmount
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
+  // Close menu when location changes
+  useEffect(() => {
+    setIsOpen(false)
+  }, [location.pathname])
 
   const closeMenu = () => setIsOpen(false)
   
   const isActive = (path: string) => {
     if (path === '/') {
-      return location.pathname === '/'
+      return location.pathname === '/' || location.pathname === '/es'
     }
-    return location.pathname.startsWith(path)
+    return location.pathname.includes(path)
   }
 
   return (
@@ -200,16 +251,13 @@ function MobileMenu() {
         ☰
       </HamburgerButton>
 
-      <Overlay 
-        $isOpen={isOpen} 
-        onClick={closeMenu}
-      />
+      <Overlay $isOpen={isOpen} />
       
       <MenuContainer $isOpen={isOpen}>
         <MenuHeader>
           <MenuHeaderTop>
             <MenuLogo>
-              🎨 Kids Painting Fun!
+              🎨 mycolor.fun
             </MenuLogo>
             <CloseButton onClick={closeMenu} aria-label="Close menu">
               ×
@@ -219,69 +267,69 @@ function MobileMenu() {
         
         <MenuContent>
           <MenuSection>
-            <SectionTitle>Navigation</SectionTitle>
+            <SectionTitle>{t('menu.navigation')}</SectionTitle>
             <MenuLinks>
               <MenuLink 
                 to="/" 
                 onClick={closeMenu}
                 $isActive={isActive('/')}
               >
-                🏠 Home
+                🏠 {t('nav.home')}
               </MenuLink>
               <MenuLink 
                 to="/blog" 
                 onClick={closeMenu}
                 $isActive={isActive('/blog')}
               >
-                ✏️ Blog
+                ✏️ {t('nav.blog')}
               </MenuLink>
               <MenuLink 
                 to="/category/Animals" 
                 onClick={closeMenu}
                 $isActive={isActive('/category/Animals')}
               >
-                🐶 Animals
+                🐶 {t('categories.animals')}
               </MenuLink>
               <MenuLink 
                 to="/category/Nature" 
                 onClick={closeMenu}
                 $isActive={isActive('/category/Nature')}
               >
-                🌳 Nature
+                🌳 {t('categories.nature')}
               </MenuLink>
               <MenuLink 
                 to="/category/Vehicles" 
                 onClick={closeMenu}
                 $isActive={isActive('/category/Vehicles')}
               >
-                🚗 Vehicles
+                🚗 {t('categories.vehicles')}
               </MenuLink>
             </MenuLinks>
           </MenuSection>
 
           <MenuSection>
-            <SectionTitle>Information</SectionTitle>
+            <SectionTitle>{t('menu.information')}</SectionTitle>
             <MenuLinks>
               <MenuLink 
                 to="/contact" 
                 onClick={closeMenu}
                 $isActive={isActive('/contact')}
               >
-                📧 Contact Us
+                📧 {t('footer.contact')}
               </MenuLink>
               <MenuLink 
                 to="/terms" 
                 onClick={closeMenu}
                 $isActive={isActive('/terms')}
               >
-                📄 Terms of Service
+                📄 {t('footer.terms')}
               </MenuLink>
               <MenuLink 
                 to="/privacy" 
                 onClick={closeMenu}
                 $isActive={isActive('/privacy')}
               >
-                🔒 Privacy Policy
+                🔒 {t('footer.privacy')}
               </MenuLink>
             </MenuLinks>
           </MenuSection>
@@ -290,9 +338,9 @@ function MobileMenu() {
         <MenuFooter>
           © {new Date().getFullYear()} mycolor.fun
           <br />
-          Free coloring pages for kids! 🌈
+          {t('menu.freePages')} 🌈
           <br />
-          Print, Color, and Have Fun!
+          {t('menu.printAndFun')}
         </MenuFooter>
       </MenuContainer>
     </>

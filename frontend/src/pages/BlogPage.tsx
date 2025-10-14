@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
+import LocalizedLink from '../components/LocalizedLink'
 import SEO from '../components/SEO'
 
 const Container = styled.div`
@@ -62,7 +63,7 @@ const BlogGrid = styled.div`
   }
 `
 
-const BlogCard = styled(Link)`
+const BlogCard = styled(LocalizedLink)`
   background: white;
   border-radius: 15px;
   overflow: hidden;
@@ -132,27 +133,39 @@ const blogPosts = [
   {
     id: 'educational-benefits-coloring',
     title: 'The Educational Benefits of Coloring for Children',
+    titleEs: 'Los Beneficios Educativos de Colorear para Niños',
     excerpt: 'Discover how coloring pages boost cognitive development, fine motor skills, and creativity in children aged 2-10.',
+    excerptEs: 'Descubre cómo las páginas para colorear impulsan el desarrollo cognitivo, las habilidades motoras finas y la creatividad en niños de 2 a 10 años.',
     date: 'October 12, 2025',
+    dateEs: '12 de octubre, 2025',
     readTime: '5 min read',
+    readTimeEs: '5 min de lectura',
     emoji: '🎨',
     color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
   },
   {
     id: 'coloring-child-development',
     title: 'How Coloring Supports Child Development: A Complete Guide',
+    titleEs: 'Cómo Colorear Apoya el Desarrollo Infantil: Guía Completa',
     excerpt: 'Learn about the science behind coloring and its impact on emotional intelligence, concentration, and hand-eye coordination.',
+    excerptEs: 'Aprende sobre la ciencia detrás de colorear y su impacto en la inteligencia emocional, la concentración y la coordinación mano-ojo.',
     date: 'October 12, 2025',
+    dateEs: '12 de octubre, 2025',
     readTime: '7 min read',
+    readTimeEs: '7 min de lectura',
     emoji: '🧠',
     color: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
   },
   {
     id: 'coloring-stress-relief-kids',
     title: 'Coloring as Stress Relief: Why Kids Need It More Than Ever',
+    titleEs: 'Colorear como Alivio del Estrés: Por Qué los Niños lo Necesitan Más que Nunca',
     excerpt: 'In our digital age, coloring provides essential screen-free time and helps children manage anxiety and stress.',
+    excerptEs: 'En nuestra era digital, colorear proporciona tiempo esencial sin pantallas y ayuda a los niños a manejar la ansiedad y el estrés.',
     date: 'October 12, 2025',
+    dateEs: '12 de octubre, 2025',
     readTime: '6 min read',
+    readTimeEs: '6 min de lectura',
     emoji: '😌',
     color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
   },
@@ -240,6 +253,19 @@ const blogPosts = [
 ]
 
 function BlogPage() {
+  const { t, i18n } = useTranslation()
+  
+  // Helper function to get localized content
+  const getLocalizedContent = (post: any, field: string) => {
+    const isSpanish = i18n.language === 'es'
+    const spanishField = `${field}Es`
+    
+    if (isSpanish && post[spanishField]) {
+      return post[spanishField]
+    }
+    return post[field]
+  }
+  
   return (
     <>
       <SEO 
@@ -250,9 +276,9 @@ function BlogPage() {
       
       <Container>
         <Hero>
-          <Title>✏️ Coloring Pages Blog</Title>
+          <Title>✏️ {t('blog.title')}</Title>
           <Subtitle>
-            Expert insights on how coloring pages benefit child development, education, and creativity
+            {t('blog.subtitle')}
           </Subtitle>
         </Hero>
 
@@ -263,13 +289,13 @@ function BlogPage() {
                 {post.emoji}
               </BlogImage>
               <BlogContent>
-                <BlogTitle>{post.title}</BlogTitle>
+                <BlogTitle>{getLocalizedContent(post, 'title')}</BlogTitle>
                 <BlogMeta>
-                  <span>📅 {post.date}</span>
-                  <span>⏱️ {post.readTime}</span>
+                  <span>📅 {getLocalizedContent(post, 'date')}</span>
+                  <span>⏱️ {getLocalizedContent(post, 'readTime')}</span>
                 </BlogMeta>
-                <BlogExcerpt>{post.excerpt}</BlogExcerpt>
-                <ReadMore>Read full article</ReadMore>
+                <BlogExcerpt>{getLocalizedContent(post, 'excerpt')}</BlogExcerpt>
+                <ReadMore>{t('blog.readFullArticle')}</ReadMore>
               </BlogContent>
             </BlogCard>
           ))}

@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom'
 import { memo, useState } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { Painting } from '../api/paintings'
 import { getProfessionalColoringArt } from './ProfessionalColoringArt'
+import LocalizedLink from './LocalizedLink'
+import { getLocalizedPainting } from '../utils/paintingTranslations'
 
 // Mini SVG generator for cards (simplified versions - fallback only)
 const getMiniSVG = (urlKey: string) => {
@@ -47,7 +49,7 @@ const getMiniSVG = (urlKey: string) => {
   return svgs[urlKey] || `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="22" fill="none" stroke="black" stroke-width="2"/><circle cx="45" cy="45" r="3" fill="black"/><circle cx="55" cy="45" r="3" fill="black"/><path d="M 42 58 Q 50 62 58 58" fill="none" stroke="black" stroke-width="2"/></svg>`
 }
 
-const Card = styled(Link)`
+const Card = styled(LocalizedLink)`
   background: white;
   border-radius: 20px;
   overflow: hidden;
@@ -188,12 +190,22 @@ interface PaintingCardProps {
 }
 
 const PaintingCard = memo(function PaintingCard({ painting }: PaintingCardProps) {
+  const { t, i18n } = useTranslation()
   const [imageError, setImageError] = useState(false)
   
+  // Get localized title and description (with fallback translation map)
+  const localized = getLocalizedPainting(painting, i18n.language)
+  const title = localized.title
+  const description = localized.description
+  
   const getDifficultyText = (difficulty: number) => {
-    if (difficulty === 1) return '⭐ Easy'
-    if (difficulty === 2) return '⭐⭐ Medium'
-    return '⭐⭐⭐ Hard'
+    if (difficulty === 1) return `⭐ ${t('difficulty.easy')}`
+    if (difficulty === 2) return `⭐⭐ ${t('difficulty.medium')}`
+    return `⭐⭐⭐ ${t('difficulty.hard')}`
+  }
+  
+  const getCategoryTranslationKey = (category: string) => {
+    return `categories.${category.toLowerCase()}`
   }
 
   // Construct proper image path from urlKey
@@ -239,17 +251,17 @@ const PaintingCard = memo(function PaintingCard({ painting }: PaintingCardProps)
           />
         )}
         
-        {painting.featured && <FeaturedBadge>⭐ Featured!</FeaturedBadge>}
+        {painting.featured && <FeaturedBadge>⭐ {t('badge.featured')}</FeaturedBadge>}
         <Badge difficulty={painting.difficulty}>
           {getDifficultyText(painting.difficulty)}
         </Badge>
       </ImageContainer>
       <Content>
-        <Title>{painting.title}</Title>
-        <Description>{painting.description}</Description>
+        <Title>{title}</Title>
+        <Description>{description}</Description>
         <Footer>
-          <Category>{painting.category}</Category>
-          <Views>👁️ {painting.viewCount} views</Views>
+          <Category>{t(getCategoryTranslationKey(painting.category))}</Category>
+          <Views>👁️ {painting.viewCount} {painting.viewCount === 1 ? t('page.view') : t('page.views')}</Views>
         </Footer>
       </Content>
     </Card>

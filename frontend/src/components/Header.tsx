@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import SearchBar from './SearchBar'
 import MobileMenu from './MobileMenu'
+import LanguageSwitcher from './LanguageSwitcher'
+import LocalizedLink from './LocalizedLink'
 
 const HeaderContainer = styled.header`
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -13,7 +15,7 @@ const HeaderContainer = styled.header`
   z-index: 100;
 
   @media (max-width: 768px) {
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
   }
 `
 
@@ -37,9 +39,30 @@ const TopRow = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  gap: 1rem;
 
-  @media (min-width: 769px) {
-    width: auto;
+  @media (max-width: 768px) {
+    gap: 0.5rem;
+  }
+`
+
+const LeftSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    flex: 0 0 auto;
+  }
+`
+
+const RightSection = styled.div`
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  
+  @media (max-width: 1200px) {
+    display: flex;
   }
 `
 
@@ -48,12 +71,20 @@ const SearchWrapper = styled.div`
   max-width: 600px;
   
   @media (max-width: 768px) {
-    width: 100%;
-    max-width: 100%;
+    display: none; /* Hide on mobile in top row */
   }
 `
 
-const Logo = styled(Link)`
+const MobileSearchWrapper = styled.div`
+  display: none;
+  width: 100%;
+  
+  @media (max-width: 768px) {
+    display: block;
+  }
+`
+
+const Logo = styled(LocalizedLink)`
   font-size: 2rem;
   font-weight: 700;
   color: white;
@@ -78,13 +109,14 @@ const NavLinks = styled.div`
   gap: 0.5rem;
   align-items: center;
   flex-wrap: wrap;
+  margin-left: auto;
 
   @media (max-width: 1200px) {
     display: none;
   }
 `
 
-const NavButton = styled(Link)`
+const NavButton = styled(LocalizedLink)`
   padding: 0.6rem 1rem;
   background: rgba(255, 255, 255, 0.2);
   color: white;
@@ -122,27 +154,42 @@ const NavButton = styled(Link)`
 `
 
 function Header() {
+  const { t } = useTranslation()
+  
   return (
     <HeaderContainer>
       <Nav>
         <TopRow>
-          <Logo to="/">
-            🎨 mycolor.fun
-          </Logo>
-          <MobileMenu />
+          <LeftSection>
+            <Logo to="/">
+              🎨 mycolor.fun
+            </Logo>
+          </LeftSection>
+          
+          {/* Search bar in middle - desktop only */}
+          <SearchWrapper>
+            <SearchBar />
+          </SearchWrapper>
+          
+          {/* Desktop navigation with language switcher */}
+          <NavLinks>
+            <NavButton to="/">🏠 {t('nav.home')}</NavButton>
+            <NavButton to="/random" className="primary">🎲 {t('nav.random')}</NavButton>
+            <NavButton to="/blog">📝 {t('nav.blog')}</NavButton>
+            <LanguageSwitcher />
+          </NavLinks>
+          
+          {/* Mobile right section - language switcher + hamburger menu */}
+          <RightSection>
+            <LanguageSwitcher />
+            <MobileMenu />
+          </RightSection>
         </TopRow>
         
-        {/* Search bar visible on all screen sizes */}
-        <SearchWrapper>
+        {/* Search bar below on mobile */}
+        <MobileSearchWrapper>
           <SearchBar />
-        </SearchWrapper>
-        
-        {/* Desktop navigation */}
-        <NavLinks>
-          <NavButton to="/">🏠 Home</NavButton>
-          <NavButton to="/random" className="primary">🎲 Random</NavButton>
-          <NavButton to="/blog">📝 Blog</NavButton>
-        </NavLinks>
+        </MobileSearchWrapper>
       </Nav>
     </HeaderContainer>
   )

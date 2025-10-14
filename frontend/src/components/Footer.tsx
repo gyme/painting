@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
+import LocalizedLink from './LocalizedLink'
 
 const FooterContainer = styled.footer`
   background: rgba(255, 255, 255, 0.95);
@@ -38,7 +39,7 @@ const Links = styled.div`
   }
 `
 
-const FooterLink = styled(Link)`
+const FooterLink = styled(LocalizedLink)`
   color: #2d3436;
   text-decoration: none;
   font-weight: 600;
@@ -57,22 +58,24 @@ const Copyright = styled.div`
 `
 
 function Footer() {
+  const { t } = useTranslation()
+  
   return (
     <FooterContainer>
       <FooterContent>
         <Logo>🎨 mycolor.fun</Logo>
         
         <Links>
-          <FooterLink to="/">Home</FooterLink>
-          <FooterLink to="/contact">Contact Us</FooterLink>
-          <FooterLink to="/terms">Terms of Service</FooterLink>
-          <FooterLink to="/privacy">Privacy Policy</FooterLink>
+          <FooterLink to="/">{t('footer.home')}</FooterLink>
+          <FooterLink to="/contact">{t('footer.contact')}</FooterLink>
+          <FooterLink to="/terms">{t('footer.terms')}</FooterLink>
+          <FooterLink to="/privacy">{t('footer.privacy')}</FooterLink>
         </Links>
         
         <Copyright>
-          © {new Date().getFullYear()} mycolor.fun. All rights reserved.
+          {t('footer.copyright', { year: new Date().getFullYear() })}
           <br />
-          Free coloring pages for kids - Print, Color, and Have Fun! 🌈
+          {t('footer.tagline')} 🌈
         </Copyright>
       </FooterContent>
     </FooterContainer>

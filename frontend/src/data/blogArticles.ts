@@ -1,13 +1,19 @@
 export interface BlogArticle {
   id: string
   title: string
+  titleEs?: string
   excerpt: string
+  excerptEs?: string
   content: string
+  contentEs?: string
   date: string
+  dateEs?: string
   readTime: string
+  readTimeEs?: string
   emoji: string
   color: string
   keywords: string
+  keywordsEs?: string
 }
 
 export const blogArticles: { [key: string]: BlogArticle } = {
@@ -549,12 +555,17 @@ export const blogArticles: { [key: string]: BlogArticle } = {
   'coloring-stress-relief-kids': {
     id: 'coloring-stress-relief-kids',
     title: 'Coloring as Stress Relief: Why Kids Need It More Than Ever',
+    titleEs: 'Colorear como Alivio del Estrés: Por Qué los Niños lo Necesitan Más que Nunca',
     excerpt: 'In our digital age, coloring provides essential screen-free time and helps children manage anxiety and stress.',
+    excerptEs: 'En nuestra era digital, colorear proporciona tiempo esencial sin pantallas y ayuda a los niños a manejar la ansiedad y el estrés.',
     date: 'October 12, 2025',
+    dateEs: '12 de Octubre, 2025',
     readTime: '6 min read',
+    readTimeEs: '6 min de lectura',
     emoji: '😌',
     color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
     keywords: 'stress relief, child anxiety, mindfulness for kids, screen-free activities, mental health',
+    keywordsEs: 'alivio del estrés, ansiedad infantil, atención plena para niños, actividades sin pantallas, salud mental',
     content: `
       <p>Today's children face unprecedented levels of stress and anxiety. Between academic pressures, social media, overscheduling, and a fast-paced digital world, kids need healthy coping mechanisms more than ever. <strong>Coloring has emerged as a powerful, accessible tool for stress relief</strong> that parents and mental health professionals are increasingly recommending.</p>
 
@@ -913,6 +924,141 @@ export const blogArticles: { [key: string]: BlogArticle } = {
       <p>Start today. Print a coloring page, set out some crayons, and give your child the gift of calm, creative time. Their stressed-out brains (and yours!) will thank you.</p>
       
       <p><strong>Browse our stress-relief coloring collection</strong> featuring calming mandalas, peaceful nature scenes, and simple-to-complex designs perfect for helping children unwind and recharge.</p>
+    `,
+    contentEs: `
+      <p>Los niños de hoy enfrentan niveles sin precedentes de estrés y ansiedad. Entre las presiones académicas, las redes sociales, la sobrecarga de actividades y un mundo digital de ritmo acelerado, los niños necesitan mecanismos saludables de afrontamiento más que nunca. <strong>Colorear ha emergido como una herramienta poderosa y accesible para el alivio del estrés</strong> que padres y profesionales de la salud mental están recomendando cada vez más.</p>
+
+      <h2>La Creciente Crisis de Estrés en los Niños</h2>
+      
+      <p>Estudios recientes pintan un panorama preocupante:</p>
+      
+      <ul>
+        <li>1 de cada 5 niños de 3-17 años tiene un trastorno mental, emocional o conductual</li>
+        <li>La ansiedad en niños ha aumentado un 20% en la última década</li>
+        <li>Los niños pasan un promedio de más de 7 horas diarias en pantallas</li>
+        <li>El 70% de los padres reportan que sus hijos muestran signos de estrés</li>
+        <li>Los niños en edad escolar reportan niveles de estrés comparables a los adultos de los años 1950</li>
+      </ul>
+
+      <p><em>¿Las buenas noticias? Intervenciones simples como colorear pueden marcar una diferencia significativa.</em></p>
+
+      <h2>Cómo Colorear Reduce el Estrés: La Ciencia</h2>
+      
+      <h3>1. Activa la Respuesta de Relajación</h3>
+      
+      <p>Cuando los niños colorean, sus cuerpos entran en lo que los científicos llaman la <strong>"respuesta de relajación"</strong>—lo opuesto a la respuesta al estrés. Esto incluye:</p>
+      
+      <ul>
+        <li><strong>Frecuencia Cardíaca Más Baja:</strong> Los estudios muestran una disminución del 5-10% en la frecuencia cardíaca durante el coloreo</li>
+        <li><strong>Presión Arterial Reducida:</strong> El efecto calmante reduce la presión arterial</li>
+        <li><strong>Cortisol Disminuido:</strong> La hormona del estrés cortisol baja hasta un 25%</li>
+        <li><strong>Dopamina Aumentada:</strong> El neurotransmisor del "bienestar" aumenta</li>
+        <li><strong>Sistema Nervioso Parasimpático Activado:</strong> El sistema de "descanso y digestión" se activa</li>
+      </ul>
+
+      <h3>2. Proporciona Práctica de Atención Plena</h3>
+      
+      <p>Colorear es esencialmente <em>meditación de atención plena</em> para niños. Requiere:</p>
+      
+      <ul>
+        <li><strong>Enfoque en el Momento Presente:</strong> Los niños se concentran en el aquí y ahora</li>
+        <li><strong>Conciencia Sin Juicios:</strong> No hay una forma "incorrecta" de colorear</li>
+        <li><strong>Compromiso Sensorial:</strong> Enfoque en sensaciones físicas (textura del crayón, tacto del papel)</li>
+        <li><strong>Movimiento Rítmico:</strong> Los movimientos repetitivos crean un estado meditativo</li>
+      </ul>
+
+      <h3>3. Ofrece un Escape Creativo Seguro</h3>
+      
+      <p>Para los niños que luchan con la expresión verbal de sus emociones, colorear proporciona una <strong>salida no verbal</strong> para procesar sentimientos complejos.</p>
+
+      <h2>Beneficios Inmediatos y a Largo Plazo</h2>
+
+      <h3>Beneficios Inmediatos del Alivio del Estrés:</h3>
+      
+      <ul>
+        <li><strong>Estado de Ánimo Mejorado:</strong> Los niños reportan sentirse más felices después de 20 minutos de coloreo</li>
+        <li><strong>Ansiedad Reducida:</strong> Las evaluaciones de ansiedad disminuyen significativamente</li>
+        <li><strong>Mejor Enfoque:</strong> Los niños pueden concentrarse más efectivamente después de colorear</li>
+        <li><strong>Relajación Física:</strong> La tensión muscular disminuye notablemente</li>
+      </ul>
+
+      <h3>Beneficios a Largo Plazo:</h3>
+      
+      <ul>
+        <li><strong>Mejor Regulación Emocional:</strong> Los niños desarrollan habilidades de afrontamiento más saludables</li>
+        <li><strong>Mayor Resiliencia:</strong> La práctica regular desarrolla fuerza mental</li>
+        <li><strong>Hábitos de Autocuidado:</strong> Los niños aprenden a tomarse descansos calmantes</li>
+        <li><strong>Reducción de la Dependencia de Pantallas:</strong> Desarrollan alternativas satisfactorias a los dispositivos digitales</li>
+      </ul>
+
+      <h2>Consejos Prácticos para Padres</h2>
+
+      <h3>Crear un Espacio de Coloreo Tranquilo:</h3>
+      
+      <ul>
+        <li>Elige un área tranquila lejos de pantallas y ruido</li>
+        <li>Proporciona iluminación cómoda</li>
+        <li>Ten una variedad de herramientas para colorear disponibles</li>
+        <li>Crea una rutina regular de coloreo (quizás antes de dormir)</li>
+      </ul>
+
+      <h3>Las Mejores Páginas para Colorear para el Alivio del Estrés:</h3>
+      
+      <ul>
+        <li><strong>Mandalas:</strong> Patrones simétricos que promueven la calma</li>
+        <li><strong>Escenas de la Naturaleza:</strong> Imágenes tranquilas de paisajes y animales</li>
+        <li><strong>Patrones Repetitivos:</strong> Diseños que crean una experiencia meditativa</li>
+        <li><strong>Personajes Favoritos:</strong> Imágenes familiares que brindan comodidad</li>
+      </ul>
+
+      <h3>Cuándo Usar el Coloreo para el Alivio del Estrés:</h3>
+      
+      <ul>
+        <li>Después de la escuela para la transición del ajetreo</li>
+        <li>Antes de los exámenes para reducir la ansiedad de los exámenes</li>
+        <li>Durante eventos estresantes (mudanzas, cambios familiares)</li>
+        <li>Como parte de una rutina para dormir</li>
+        <li>Los fines de semana como práctica de atención plena familiar</li>
+      </ul>
+
+      <h2>Más Allá del Coloreo: Creando una Práctica Integral</h2>
+      
+      <p>Para maximizar los beneficios del alivio del estrés:</p>
+      
+      <ul>
+        <li><strong>Colorea junto a tu hijo:</strong> El modelado de la calma refuerza los beneficios</li>
+        <li><strong>Evita la presión del rendimiento:</strong> Enfócate en el proceso, no en la perfección</li>
+        <li><strong>Hazlo regular:</strong> Apunta a 15-30 minutos varias veces a la semana</li>
+        <li><strong>Combina con música calmante:</strong> La música suave mejora el efecto de relajación</li>
+        <li><strong>Habla sobre los sentimientos:</strong> Pregunta "¿Cómo te sentiste mientras coloreabas?"</li>
+      </ul>
+
+      <h2>Por Qué el Coloreo Funciona Cuando Otras Actividades No</h2>
+      
+      <p>A diferencia de muchas otras actividades infantiles, colorear es único porque:</p>
+
+      <ul>
+        <li>No hay respuestas incorrectas</li>
+        <li>No se requiere perfección</li>
+        <li>El proceso importa más que el producto</li>
+        <li>No están involucradas pantallas</li>
+        <li>Se fomenta la calma</li>
+        <li>La creatividad fluye libremente</li>
+      </ul>
+
+      <p>La investigación es clara: la práctica regular de coloreo puede <em>reducir significativamente el estrés</em>, mejorar el estado de ánimo, mejorar el enfoque y desarrollar resiliencia en los niños. Lo mejor de todo es que es:</p>
+      
+      <ul>
+        <li>✅ <strong>Gratis o económico</strong></li>
+        <li>✅ <strong>Accesible en cualquier lugar</strong></li>
+        <li>✅ <strong>No requiere habilidades especiales</strong></li>
+        <li>✅ <strong>Amado por los niños</strong></li>
+        <li>✅ <strong>Respaldado por la ciencia</strong></li>
+      </ul>
+
+      <p>Comienza hoy. Imprime una página para colorear, saca algunos crayones y dale a tu hijo el regalo de tiempo tranquilo y creativo. Sus cerebros estresados (¡y los tuyos!) te lo agradecerán.</p>
+      
+      <p><strong>Explora nuestra colección de coloreo para alivio del estrés</strong> con mandalas calmantes, escenas pacíficas de la naturaleza y diseños simples a complejos perfectos para ayudar a los niños a relajarse y recargarse.</p>
     `
   },
 

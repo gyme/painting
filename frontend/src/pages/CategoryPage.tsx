@@ -2,6 +2,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import styled from 'styled-components'
 import { useState, useMemo, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { paintingsApi } from '../api/paintings'
 import PaintingCard from '../components/PaintingCard'
 import Breadcrumbs from '../components/Breadcrumbs'
@@ -534,6 +535,7 @@ const EmptyText = styled.p`
 `
 
 function CategoryPage() {
+  const { t, i18n } = useTranslation()
   const { category } = useParams<{ category: string }>()
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -655,7 +657,7 @@ function CategoryPage() {
     holidays: 'Celebrate year-round with holiday coloring pages! Christmas, Halloween, Easter, and all your favorite special occasions.'
   }
   
-  const content = getCategoryContent(category)
+  const content = getCategoryContent(category, i18n.language)
 
   return (
     <>
@@ -670,7 +672,7 @@ function CategoryPage() {
           { label: category || 'Category' }
         ]} />
         <Header>
-          <Title>{getCategoryEmoji(category!)} {category} Coloring Pages</Title>
+          <Title>{getCategoryEmoji(category!)} {t(`categories.${category?.toLowerCase()}`)} {t('coloring.title')}</Title>
         </Header>
 
         {/* Filters - One Line Layout */}
@@ -682,7 +684,7 @@ function CategoryPage() {
               <SearchInput
                 id="search"
                 type="text"
-                placeholder="Search..."
+                placeholder={t('search.placeholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -692,16 +694,16 @@ function CategoryPage() {
 
             {/* Sort Dropdown */}
             <FilterGroup>
-              <FilterLabel htmlFor="sort">Sort:</FilterLabel>
+              <FilterLabel htmlFor="sort">{t('filters.sort')}</FilterLabel>
               <Select 
                 id="sort" 
                 value={sortBy} 
                 onChange={(e) => setSortBy(e.target.value)}
               >
-                <option value="newest">Newest</option>
-                <option value="popular">Popular</option>
-                <option value="easy-first">Easy First</option>
-                <option value="hard-first">Hard First</option>
+                <option value="newest">{t('filters.newest')}</option>
+                <option value="popular">{t('filters.popular')}</option>
+                <option value="easy-first">{t('difficulty.easy')} First</option>
+                <option value="hard-first">{t('difficulty.hard')} First</option>
                 <option value="alphabetical">A-Z</option>
               </Select>
             </FilterGroup>
@@ -710,8 +712,8 @@ function CategoryPage() {
 
             {/* Difficulty Checkboxes */}
             <FilterGroup>
-              <MobileLabel>Difficulty</MobileLabel>
-              <FilterLabel>Difficulty:</FilterLabel>
+              <MobileLabel>{t('filters.difficulty')}</MobileLabel>
+              <FilterLabel>{t('filters.difficulty')}</FilterLabel>
               <FilterCheckboxGroup>
                 <CheckboxLabel $isActive={difficultyFilter.includes(1)}>
                   <input 
@@ -719,7 +721,7 @@ function CategoryPage() {
                     checked={difficultyFilter.includes(1)}
                     onChange={() => toggleDifficultyFilter(1)}
                   />
-                  Easy
+                  {t('difficulty.easy')}
                 </CheckboxLabel>
                 <CheckboxLabel $isActive={difficultyFilter.includes(2)}>
                   <input 
@@ -727,7 +729,7 @@ function CategoryPage() {
                     checked={difficultyFilter.includes(2)}
                     onChange={() => toggleDifficultyFilter(2)}
                   />
-                  Medium
+                  {t('difficulty.medium')}
                 </CheckboxLabel>
                 <CheckboxLabel $isActive={difficultyFilter.includes(3)}>
                   <input 
@@ -735,7 +737,7 @@ function CategoryPage() {
                     checked={difficultyFilter.includes(3)}
                     onChange={() => toggleDifficultyFilter(3)}
                   />
-                  Hard
+                  {t('difficulty.hard')}
                 </CheckboxLabel>
               </FilterCheckboxGroup>
             </FilterGroup>
@@ -745,14 +747,14 @@ function CategoryPage() {
               {hasActiveFilters && (
                 <ActiveFilters>
                   <FilterBadge>{activeFilterCount}</FilterBadge>
-                  active filter{activeFilterCount !== 1 ? 's' : ''}
+                  {activeFilterCount === 1 ? t('filters.activeFilter') : t('filters.activeFilters')}
                 </ActiveFilters>
               )}
               <ClearButton 
                 onClick={clearAllFilters}
                 disabled={!hasActiveFilters}
               >
-                Clear All
+                {t('filters.clearAll')}
               </ClearButton>
             </FilterActions>
           </FiltersRow>
@@ -762,14 +764,14 @@ function CategoryPage() {
         {data && data.content.length > 0 && (
           <ResultsInfo>
             <ResultCount>
-              Showing <span>{filteredAndSortedPaintings.length}</span> of {data.content.length} coloring pages
+              {t('filters.showing')} <span>{filteredAndSortedPaintings.length}</span> {t('filters.of')} {data.content.length} {t('filters.coloringPages')}
             </ResultCount>
             {hasActiveFilters && (
               <ActiveFilters>
-                {searchQuery && <FilterBadge>Search: "{searchQuery}"</FilterBadge>}
-                {difficultyFilter.includes(1) && <FilterBadge>Easy</FilterBadge>}
-                {difficultyFilter.includes(2) && <FilterBadge>Medium</FilterBadge>}
-                {difficultyFilter.includes(3) && <FilterBadge>Hard</FilterBadge>}
+                {searchQuery && <FilterBadge>{t('filters.search')}: "{searchQuery}"</FilterBadge>}
+                {difficultyFilter.includes(1) && <FilterBadge>{t('difficulty.easy')}</FilterBadge>}
+                {difficultyFilter.includes(2) && <FilterBadge>{t('difficulty.medium')}</FilterBadge>}
+                {difficultyFilter.includes(3) && <FilterBadge>{t('difficulty.hard')}</FilterBadge>}
               </ActiveFilters>
             )}
           </ResultsInfo>
@@ -784,15 +786,15 @@ function CategoryPage() {
           </Grid>
         ) : data && data.content.length > 0 ? (
           <EmptyState>
-            <EmptyTitle>🔍 No matches found</EmptyTitle>
+            <EmptyTitle>🔍 {t('filters.noMatchesFound')}</EmptyTitle>
             <EmptyText>
               {searchQuery 
-                ? `No coloring pages match "${searchQuery}" with your current filters.`
-                : 'No coloring pages match your current filters.'
+                ? t('filters.noMatchesSearch', { query: searchQuery })
+                : t('filters.noMatchesFilters')
               }
             </EmptyText>
             <ClearButton onClick={clearAllFilters}>
-              Clear All Filters & Show All
+              {t('filters.clearAllShowAll')}
             </ClearButton>
           </EmptyState>
         ) : (
@@ -807,18 +809,18 @@ function CategoryPage() {
         
         {content && (
           <Description>
-            <h2>Why Choose Our {category} Coloring Pages?</h2>
+            <h2>{content.title}</h2>
             <p>{content.description}</p>
             
-            <h2>Educational Benefits</h2>
+            <h2>{t('category.educationalBenefits')}</h2>
             <ul>
               {content.benefits.map((benefit, index) => (
                 <li key={index}>{benefit}</li>
               ))}
             </ul>
             
-            <p><strong>Age Range:</strong> {content.ageRange}</p>
-            <p><strong>Learning Value:</strong> {content.learningValue}</p>
+            <p><strong>{t('category.ageRange')}</strong> {content.ageRange}</p>
+            <p><strong>{t('category.learningValue')}</strong> {content.learningValue}</p>
           </Description>
         )}
       </Container>

@@ -29,6 +29,13 @@ public class Painting {
     @Column(length = 2000)
     private String description;
 
+    // Spanish translations
+    @Column(name = "title_es")
+    private String titleEs;
+
+    @Column(name = "description_es", length = 2000)
+    private String descriptionEs;
+
     @NotBlank(message = "Category is required")
     private String category;
 

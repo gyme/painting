@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { paintingsApi } from '../api/paintings'
 
 const Loading = styled.div`
@@ -14,6 +15,8 @@ const Loading = styled.div`
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   flex-direction: column;
   gap: 1rem;
+  text-align: center;
+  padding: 2rem;
 `
 
 const Spinner = styled.div`
@@ -31,6 +34,7 @@ const Spinner = styled.div`
 
 function RandomPage() {
   const navigate = useNavigate()
+  const { t, i18n } = useTranslation()
   
   const { data, error } = useQuery(
     'randomPainting',
@@ -53,18 +57,19 @@ function RandomPage() {
 
   useEffect(() => {
     if (data) {
-      // Redirect to the random painting
-      navigate(`/painting/${data.urlKey}`, { replace: true })
+      // Redirect to the random painting with language prefix
+      const prefix = i18n.language === 'es' ? '/es' : ''
+      navigate(`${prefix}/painting/${data.urlKey}`, { replace: true })
     }
-  }, [data, navigate])
+  }, [data, navigate, i18n.language])
 
   if (error) {
     return (
       <Loading>
-        <div>😢 Oops! Something went wrong.</div>
+        <div>😢 {t('random.error')}</div>
         <div style={{ fontSize: '1.2rem', marginTop: '1rem' }}>
           <a href="/" style={{ color: 'white', textDecoration: 'underline' }}>
-            Go back to home
+            {t('random.goHome')}
           </a>
         </div>
       </Loading>
@@ -74,7 +79,7 @@ function RandomPage() {
   return (
     <Loading>
       <Spinner />
-      <div>🎲 Finding a random coloring page for you... ✨</div>
+      <div>🎲 {t('random.finding')} ✨</div>
     </Loading>
   )
 }

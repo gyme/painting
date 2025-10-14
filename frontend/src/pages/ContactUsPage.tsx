@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import LocalizedLink from '../components/LocalizedLink'
 import SEO from '../components/SEO'
 
 const Container = styled.div`
@@ -90,7 +91,7 @@ const Link2 = styled.a`
   }
 `
 
-const BackButton = styled(Link)`
+const BackButton = styled(LocalizedLink)`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -98,16 +99,24 @@ const BackButton = styled(Link)`
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   text-decoration: none;
-  border-radius: 25px;
+  border-radius: 50px;
+  font-size: 1.1rem;
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-  margin-top: 2rem;
-  display: inline-block;
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
   }
 `
 
@@ -116,25 +125,27 @@ const ButtonContainer = styled.div`
 `
 
 function ContactUsPage() {
+  const { t } = useTranslation()
+  
   return (
     <>
       <SEO
-        title="Contact Us"
-        description="Get in touch with mycolor.fun - We'd love to hear from you!"
+        title={t('contact.title')}
+        description={t('contact.subtitle')}
         keywords="contact us, contact, support, help, email, feedback"
       />
       <Container>
         <Card>
-          <Title>📧 Contact Us</Title>
-          <Subtitle>We'd love to hear from you!</Subtitle>
+          <Title>📧 {t('contact.title')}</Title>
+          <Subtitle>{t('contact.subtitle')}</Subtitle>
 
           <ContactSection>
             <SectionTitle>
               <Icon>💌</Icon>
-              Get in Touch
+              {t('contact.getInTouch')}
             </SectionTitle>
             <Text>
-              Have a question, suggestion, or just want to say hi? We're here to help! Feel free to reach out to us using any of the methods below.
+              {t('contact.getInTouchText')}
             </Text>
           </ContactSection>
 
@@ -142,7 +153,7 @@ function ContactUsPage() {
             <InfoItem>
               <Icon>📧</Icon>
               <div>
-                <strong>Email:</strong>{' '}
+                <strong>{t('contact.email')}:</strong>{' '}
                 <Link2 href="mailto:support@mycolor.fun">
                   support@mycolor.fun
                 </Link2>
@@ -151,7 +162,7 @@ function ContactUsPage() {
             <InfoItem>
               <Icon>⏰</Icon>
               <div>
-                <strong>Response Time:</strong> We typically respond within 24-48 hours
+                <strong>{t('contact.responseTime')}:</strong> {t('contact.responseTimeText')}
               </div>
             </InfoItem>
           </ContactInfo>
@@ -159,39 +170,39 @@ function ContactUsPage() {
           <ContactSection>
             <SectionTitle>
               <Icon>💡</Icon>
-              What We'd Love to Hear About
+              {t('contact.whatToHearAbout')}
             </SectionTitle>
             <Text>
-              • Suggestions for new coloring pages<br />
-              • Technical issues or bugs<br />
-              • Feedback on existing pages<br />
-              • Partnership or collaboration inquiries<br />
-              • General questions or comments<br />
+              • {t('contact.suggestions')}<br />
+              • {t('contact.technicalIssues')}<br />
+              • {t('contact.feedback')}<br />
+              • {t('contact.partnerships')}<br />
+              • {t('contact.generalQuestions')}<br />
             </Text>
           </ContactSection>
 
           <ContactSection>
             <SectionTitle>
               <Icon>🎨</Icon>
-              Request a Coloring Page
+              {t('contact.requestPage')}
             </SectionTitle>
             <Text>
-              Do you have a specific coloring page in mind that you'd like to see on our website? Let us know! We're always adding new designs and would love to hear your ideas.
+              {t('contact.requestPageText')}
             </Text>
           </ContactSection>
 
           <ContactSection>
             <SectionTitle>
               <Icon>⭐</Icon>
-              Follow Us
+              {t('contact.followUs')}
             </SectionTitle>
             <Text>
-              Stay updated with new coloring pages and announcements! (Add your social media links here when ready)
+              {t('contact.followUsText')}
             </Text>
           </ContactSection>
 
           <ButtonContainer>
-            <BackButton to="/">← Back to Gallery</BackButton>
+            <BackButton to="/">← {t('contact.backToGallery')}</BackButton>
           </ButtonContainer>
         </Card>
       </Container>

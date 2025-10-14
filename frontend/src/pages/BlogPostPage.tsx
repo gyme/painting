@@ -1,5 +1,7 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
+import LocalizedLink from '../components/LocalizedLink'
 import SEO from '../components/SEO'
 import { blogArticles } from '../data/blogArticles'
 
@@ -13,7 +15,7 @@ const Container = styled.div`
   }
 `
 
-const BackLink = styled(Link)`
+const BackLink = styled(LocalizedLink)`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -149,7 +151,7 @@ const RelatedGrid = styled.div`
   gap: 1.5rem;
 `
 
-const RelatedCard = styled(Link)`
+const RelatedCard = styled(LocalizedLink)`
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
   padding: 1.5rem;
   border-radius: 12px;
@@ -192,61 +194,80 @@ const NotFound = styled.div`
 `
 
 function BlogPostPage() {
+  const { t, i18n } = useTranslation()
   const { slug } = useParams<{ slug: string }>()
   const article = slug ? blogArticles[slug] : null
+  
+  // Helper function to get localized content
+  const getLocalizedContent = (article: any, field: string) => {
+    const isSpanish = i18n.language === 'es'
+    const spanishField = `${field}Es`
+    
+    if (isSpanish && article[spanishField]) {
+      return article[spanishField]
+    }
+    return article[field]
+  }
 
   if (!article) {
     return (
       <Container>
         <NotFound>
-          <h1>Article Not Found</h1>
-          <p>Sorry, we couldn't find the article you're looking for.</p>
-          <BackLink to="/blog">← Back to Blog</BackLink>
+          <h1>{t('blog.articleNotFound')}</h1>
+          <p>{t('blog.articleNotFoundDesc')}</p>
+          <BackLink to="/blog">← {t('blog.backToBlog')}</BackLink>
         </NotFound>
       </Container>
     )
   }
+  
+  const localizedTitle = getLocalizedContent(article, 'title')
+  const localizedExcerpt = getLocalizedContent(article, 'excerpt')
+  const localizedContent = getLocalizedContent(article, 'content')
+  const localizedDate = getLocalizedContent(article, 'date')
+  const localizedReadTime = getLocalizedContent(article, 'readTime')
+  const localizedKeywords = getLocalizedContent(article, 'keywords')
 
   return (
     <>
       <SEO 
-        title={`${article.title} | mycolor.fun Blog`}
-        description={article.excerpt}
-        keywords={article.keywords}
+        title={`${localizedTitle} | mycolor.fun Blog`}
+        description={localizedExcerpt}
+        keywords={localizedKeywords}
       />
       
       <Container>
-        <BackLink to="/blog">← Back to Blog</BackLink>
+        <BackLink to="/blog">← {t('blog.backToBlog')}</BackLink>
         
         <Article>
           <Hero $color={article.color}>
             {article.emoji}
           </Hero>
           
-          <Title>{article.title}</Title>
+          <Title>{localizedTitle}</Title>
           
           <Meta>
-            <span>📅 {article.date}</span>
-            <span>⏱️ {article.readTime}</span>
-            <span>✍️ By mycolor.fun Team</span>
+            <span>📅 {localizedDate}</span>
+            <span>⏱️ {localizedReadTime}</span>
+            <span>✍️ {t('common.by')} mycolor.fun Team</span>
           </Meta>
           
-          <Content dangerouslySetInnerHTML={{ __html: article.content }} />
+          <Content dangerouslySetInnerHTML={{ __html: localizedContent }} />
           
           <RelatedSection>
-            <RelatedTitle>🎨 Start Coloring Today</RelatedTitle>
+            <RelatedTitle>🎨 {t('blog.startColoringToday')}</RelatedTitle>
             <RelatedGrid>
               <RelatedCard to="/category/Animals">
-                <h4>🐶 Animal Coloring Pages</h4>
-                <p>Explore our collection of cute animals</p>
+                <h4>🐶 {t('blog.animalPages')}</h4>
+                <p>{t('blog.animalPagesDesc')}</p>
               </RelatedCard>
               <RelatedCard to="/category/Vehicles">
-                <h4>🚗 Vehicle Coloring Pages</h4>
-                <p>Cars, trucks, trains and more</p>
+                <h4>🚗 {t('blog.vehiclePages')}</h4>
+                <p>{t('blog.vehiclePagesDesc')}</p>
               </RelatedCard>
               <RelatedCard to="/">
-                <h4>🎨 All Coloring Pages</h4>
-                <p>Browse our complete collection</p>
+                <h4>🎨 {t('blog.allPages')}</h4>
+                <p>{t('blog.allPagesDesc')}</p>
               </RelatedCard>
             </RelatedGrid>
           </RelatedSection>

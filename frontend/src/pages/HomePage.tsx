@@ -1,9 +1,11 @@
 import { useQuery } from 'react-query'
-import { useSearchParams, Link } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { paintingsApi } from '../api/paintings'
 import PaintingCard from '../components/PaintingCard'
 import SEO from '../components/SEO'
+import LocalizedLink from '../components/LocalizedLink'
 
 const Container = styled.div`
   max-width: 1400px;
@@ -63,7 +65,7 @@ const CTAContainer = styled.div`
   }
 `
 
-const CTAButton = styled(Link)`
+const CTAButton = styled(LocalizedLink)`
   padding: 1.2rem 2.5rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -157,7 +159,7 @@ const CategoriesGrid = styled.div`
   }
 `
 
-const CategoryCard = styled(Link)`
+const CategoryCard = styled(LocalizedLink)`
   background: rgba(255, 255, 255, 0.95);
   padding: 2rem 1.5rem;
   border-radius: 20px;
@@ -202,6 +204,7 @@ const CategoryName = styled.h3`
 `
 
 function HomePage() {
+  const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const searchQuery = searchParams.get('search')
 
@@ -259,6 +262,10 @@ function HomePage() {
   const getCategoryIcon = (category: string): string => {
     return categoryIcons[category] || '🎨'
   }
+  
+  const getCategoryTranslationKey = (category: string): string => {
+    return `categories.${category.toLowerCase()}`
+  }
 
   if (searchQuery) {
     if (searchLoading) {
@@ -292,11 +299,11 @@ function HomePage() {
   }
 
   if (featuredLoading || popularLoading) {
-    return <Loading>🎨 Loading amazing paintings... ✨</Loading>
+    return <Loading>🎨 {t('home.loading')} ✨</Loading>
   }
 
   if (featuredError || popularError) {
-    return <Error>😢 Oops! Something went wrong. Please try again later.</Error>
+    return <Error>😢 {t('home.error')}</Error>
   }
 
   return (
@@ -308,11 +315,11 @@ function HomePage() {
       />
       <Container>
         <Hero>
-          <Title>🎨 Free Printable Coloring Pages</Title>
-          <Subtitle>Print & Color • 100% Free</Subtitle>
+          <Title>🎨 {t('home.title')}</Title>
+          <Subtitle>{t('home.subtitle')}</Subtitle>
           <CTAContainer>
             <CTAButton to="/random" className="primary">
-              🎲 Random Page
+              🎲 {t('home.randomPage')}
             </CTAButton>
           </CTAContainer>
         </Hero>
@@ -320,12 +327,12 @@ function HomePage() {
         {/* Categories Section */}
         {categories && categories.length > 0 && (
           <Section id="categories">
-            <SectionTitle>📂 Browse by Category</SectionTitle>
+            <SectionTitle>📂 {t('home.browseByCategory')}</SectionTitle>
             <CategoriesGrid>
               {categories.map((category) => (
                 <CategoryCard key={category} to={`/category/${category}`}>
                   <CategoryIcon>{getCategoryIcon(category)}</CategoryIcon>
-                  <CategoryName>{category}</CategoryName>
+                  <CategoryName>{t(getCategoryTranslationKey(category))}</CategoryName>
                 </CategoryCard>
               ))}
             </CategoriesGrid>
@@ -335,7 +342,7 @@ function HomePage() {
         {/* Featured Paintings */}
         {featuredData && featuredData.content.length > 0 && (
           <Section>
-            <SectionTitle>⭐ Featured Pages</SectionTitle>
+            <SectionTitle>⭐ {t('home.featuredPages')}</SectionTitle>
             <Grid>
               {featuredData.content.map((painting) => (
                 <PaintingCard key={painting.id} painting={painting} />
@@ -347,7 +354,7 @@ function HomePage() {
         {/* Popular Paintings */}
         {popularData && popularData.content.length > 0 && (
           <Section>
-            <SectionTitle>🔥 Most Popular</SectionTitle>
+            <SectionTitle>🔥 {t('home.popularPages')}</SectionTitle>
             <Grid>
               {popularData.content.map((painting) => (
                 <PaintingCard key={painting.id} painting={painting} />

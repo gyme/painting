@@ -7,6 +7,8 @@ export interface Painting {
   urlKey: string
   title: string
   description: string
+  titleEs?: string // Spanish title
+  descriptionEs?: string // Spanish description
   category: string
   tags: string
   imageUrl: string

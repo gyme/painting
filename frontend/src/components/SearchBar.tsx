@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { paintingsApi } from '../api/paintings'
 
 const SearchContainer = styled.div`
@@ -94,6 +95,7 @@ const NoResults = styled.div`
 `
 
 function SearchBar() {
+  const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState('')
   const [suggestions, setSuggestions] = useState<string[]>([])
   const [showSuggestions, setShowSuggestions] = useState(false)
@@ -159,7 +161,7 @@ function SearchBar() {
     <SearchContainer ref={searchRef}>
       <SearchInput
         type="text"
-        placeholder="Search paintings..."
+        placeholder={t('search.searchPaintings')}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         onKeyDown={handleKeyDown}

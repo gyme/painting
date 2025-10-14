@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import SEO from '../components/SEO'
 
 const Container = styled.div`
@@ -52,18 +53,6 @@ const Text = styled.p`
   margin-bottom: 1rem;
 `
 
-const List = styled.ul`
-  margin-left: 2rem;
-  margin-bottom: 1rem;
-`
-
-const ListItem = styled.li`
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #2d3436;
-  margin-bottom: 0.5rem;
-`
-
 const BackButton = styled(Link)`
   display: inline-flex;
   align-items: center;
@@ -85,99 +74,61 @@ const BackButton = styled(Link)`
 `
 
 function TermsOfServicePage() {
+  const { t } = useTranslation()
+  
   return (
     <>
       <SEO
-        title="Terms of Service"
-        description="Terms of Service for mycolor.fun - Free coloring pages for kids"
+        title={t('terms.title')}
+        description={t('terms.intro')}
         keywords="terms of service, terms and conditions, legal, coloring pages"
       />
       <Container>
         <Card>
-          <Title>Terms of Service</Title>
-          <UpdateDate>Last Updated: October 6, 2025</UpdateDate>
+          <Title>{t('terms.title')}</Title>
+          <UpdateDate>{t('terms.lastUpdated')}: October 6, 2025</UpdateDate>
 
           <Section>
-            <SectionTitle>1. Acceptance of Terms</SectionTitle>
-            <Text>
-              By accessing and using mycolor.fun ("the Website"), you accept and agree to be bound by the terms and provision of this agreement.
-            </Text>
+            <SectionTitle>1. {t('terms.intro')}</SectionTitle>
+            <Text>{t('terms.intro')}</Text>
           </Section>
 
           <Section>
-            <SectionTitle>2. Use License</SectionTitle>
-            <Text>
-              Permission is granted to temporarily download and print the coloring pages on mycolor.fun for personal, non-commercial use only. This is the grant of a license, not a transfer of title, and under this license you may not:
-            </Text>
-            <List>
-              <ListItem>Modify or copy the materials</ListItem>
-              <ListItem>Use the materials for any commercial purpose</ListItem>
-              <ListItem>Attempt to decompile or reverse engineer any software contained on the Website</ListItem>
-              <ListItem>Remove any copyright or other proprietary notations from the materials</ListItem>
-            </List>
+            <SectionTitle>2. {t('terms.useOfService')}</SectionTitle>
+            <Text>{t('terms.useOfServiceText')}</Text>
           </Section>
 
           <Section>
-            <SectionTitle>3. Free Content</SectionTitle>
-            <Text>
-              All coloring pages provided on this website are free for personal use. You may:
-            </Text>
-            <List>
-              <ListItem>Print coloring pages for yourself, your family, or classroom use</ListItem>
-              <ListItem>Color and share your creations on social media</ListItem>
-              <ListItem>Use coloring pages for educational purposes</ListItem>
-            </List>
+            <SectionTitle>3. {t('terms.allowed')}</SectionTitle>
+            <Text>{t('terms.allowedList')}</Text>
           </Section>
 
           <Section>
-            <SectionTitle>4. Prohibited Uses</SectionTitle>
-            <Text>
-              You may not use the Website:
-            </Text>
-            <List>
-              <ListItem>For any unlawful purpose</ListItem>
-              <ListItem>To solicit others to perform or participate in any unlawful acts</ListItem>
-              <ListItem>To violate any international, federal, provincial or state regulations, rules, laws, or local ordinances</ListItem>
-              <ListItem>To infringe upon or violate our intellectual property rights or the intellectual property rights of others</ListItem>
-            </List>
+            <SectionTitle>4. {t('terms.notAllowed')}</SectionTitle>
+            <Text>{t('terms.notAllowedList')}</Text>
           </Section>
 
           <Section>
-            <SectionTitle>5. Intellectual Property</SectionTitle>
-            <Text>
-              All content on this website, including but not limited to images, text, graphics, logos, and software, is the property of mycolor.fun and is protected by copyright laws.
-            </Text>
+            <SectionTitle>5. {t('terms.intellectual')}</SectionTitle>
+            <Text>{t('terms.intellectualText')}</Text>
           </Section>
 
           <Section>
-            <SectionTitle>6. Disclaimer</SectionTitle>
-            <Text>
-              The materials on mycolor.fun are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
-            </Text>
+            <SectionTitle>6. {t('terms.disclaimer')}</SectionTitle>
+            <Text>{t('terms.disclaimerText')}</Text>
           </Section>
 
           <Section>
-            <SectionTitle>7. Limitations</SectionTitle>
-            <Text>
-              In no event shall mycolor.fun or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on mycolor.fun.
-            </Text>
+            <SectionTitle>7. {t('terms.changes')}</SectionTitle>
+            <Text>{t('terms.changesText')}</Text>
           </Section>
 
           <Section>
-            <SectionTitle>8. Changes to Terms</SectionTitle>
-            <Text>
-              We reserve the right to revise these terms of service at any time without notice. By using this website you are agreeing to be bound by the then current version of these terms of service.
-            </Text>
+            <SectionTitle>8. {t('terms.contactUs')}</SectionTitle>
+            <Text>{t('terms.contactUsText')}</Text>
           </Section>
 
-          <Section>
-            <SectionTitle>9. Contact Information</SectionTitle>
-            <Text>
-              If you have any questions about these Terms of Service, please contact us through our Contact Us page.
-            </Text>
-          </Section>
-
-          <BackButton to="/">←</BackButton>
+          <BackButton to="/">← {t('contact.backToGallery')}</BackButton>
         </Card>
       </Container>
     </>
