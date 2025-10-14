@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 /**
- * Split Sitemap Generator for Kids Painting Website
+ * Bilingual Split Sitemap Generator for Kids Painting Website
  * 
- * Generates 3 files:
- * 1. sitemap.xml - Regular pages (home, categories, static pages)
- * 2. image-sitemap.xml - All painting pages with image data
+ * Generates 3 files with FULL bilingual support (English + Spanish):
+ * 1. sitemap.xml - Regular pages with hreflang (home, categories, static pages)
+ * 2. image-sitemap.xml - All painting pages with image data and hreflang
  * 3. sitemap-index.xml - Index file pointing to both sitemaps
  * 
  * Usage: node generate-sitemaps-split.js
@@ -22,7 +22,8 @@ const REGULAR_SITEMAP = path.join(OUTPUT_DIR, 'sitemap.xml');
 const IMAGE_SITEMAP = path.join(OUTPUT_DIR, 'image-sitemap.xml');
 const INDEX_SITEMAP = path.join(OUTPUT_DIR, 'sitemap-index.xml');
 
-console.log('🗺️  Generating split sitemaps for:', SITE_URL);
+console.log('🗺️  Generating bilingual split sitemaps for:', SITE_URL);
+console.log('🌍 Languages: English (en) + Spanish (es)');
 console.log('📁 Using local data from coloringImages.ts');
 
 // Read coloringImages.ts to extract painting keys
@@ -70,9 +71,9 @@ function extractCategories() {
   return categories;
 }
 
-// Format date to W3C format (YYYY-MM-DD)
+// Format date to W3C format with timezone (ISO 8601)
 function formatDate(date) {
-  return date.toISOString().split('T')[0];
+  return date.toISOString();
 }
 
 // Helper function to escape XML special characters
@@ -85,10 +86,11 @@ function escapeXml(text) {
     .replace(/'/g, '&apos;');
 }
 
-// Generate regular sitemap (home, categories, static pages - NO images)
+// Generate regular sitemap with bilingual support
 function generateRegularSitemap(urls) {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n';
+  xml += '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
   
   urls.forEach(url => {
     xml += '  <url>\n';
@@ -96,6 +98,14 @@ function generateRegularSitemap(urls) {
     xml += `    <lastmod>${url.lastmod}</lastmod>\n`;
     xml += `    <changefreq>${url.changefreq}</changefreq>\n`;
     xml += `    <priority>${url.priority}</priority>\n`;
+    
+    // Add hreflang links for bilingual pages
+    if (url.hreflang) {
+      Object.entries(url.hreflang).forEach(([lang, href]) => {
+        xml += `    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>\n`;
+      });
+    }
+    
     xml += '  </url>\n';
   });
   
@@ -104,11 +114,12 @@ function generateRegularSitemap(urls) {
   return xml;
 }
 
-// Generate image sitemap (painting pages with image data)
+// Generate image sitemap with bilingual support
 function generateImageSitemap(urls) {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n';
-  xml += '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n';
+  xml += '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"\n';
+  xml += '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
   
   urls.forEach(url => {
     xml += '  <url>\n';
@@ -116,6 +127,13 @@ function generateImageSitemap(urls) {
     xml += `    <lastmod>${url.lastmod}</lastmod>\n`;
     xml += `    <changefreq>${url.changefreq}</changefreq>\n`;
     xml += `    <priority>${url.priority}</priority>\n`;
+    
+    // Add hreflang links for bilingual pages
+    if (url.hreflang) {
+      Object.entries(url.hreflang).forEach(([lang, href]) => {
+        xml += `    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>\n`;
+      });
+    }
     
     // Add image tags
     if (url.images && url.images.length > 0) {
@@ -164,15 +182,31 @@ function generateSitemaps() {
     const regularUrls = [];
     const imageUrls = [];
     
-    // 1. Home page
+    // 1. Home page (English + Spanish)
     regularUrls.push({
-      loc: SITE_URL,
+      loc: SITE_URL + '/',
       lastmod: today,
       changefreq: 'daily',
-      priority: '1.0'
+      priority: '1.0',
+      hreflang: {
+        'en': SITE_URL + '/',
+        'es': SITE_URL + '/es',
+        'x-default': SITE_URL + '/'
+      }
+    });
+    regularUrls.push({
+      loc: SITE_URL + '/es',
+      lastmod: today,
+      changefreq: 'daily',
+      priority: '1.0',
+      hreflang: {
+        'en': SITE_URL + '/',
+        'es': SITE_URL + '/es',
+        'x-default': SITE_URL + '/'
+      }
     });
     
-    // 2. Get all paintings and add to image sitemap
+    // 2. Get all paintings and add to image sitemap (English + Spanish)
     console.log('\n🎨 Reading local painting data...');
     const paintings = extractPaintingsFromLocalData();
     console.log(`✅ Found ${paintings.length} paintings in local data`);
@@ -182,11 +216,17 @@ function generateSitemaps() {
       const imagePath = `/coloring-images/${painting.urlKey.replace(/-/g, '_')}.png`;
       const imageUrl = `${SITE_URL}${imagePath}`;
       
+      // English version
       imageUrls.push({
         loc: `${SITE_URL}/painting/${painting.urlKey}`,
         lastmod: today,
         changefreq: 'weekly',
         priority: '0.8',
+        hreflang: {
+          'en': `${SITE_URL}/painting/${painting.urlKey}`,
+          'es': `${SITE_URL}/es/painting/${painting.urlKey}`,
+          'x-default': `${SITE_URL}/painting/${painting.urlKey}`
+        },
         images: [
           {
             loc: imageUrl,
@@ -195,23 +235,62 @@ function generateSitemaps() {
           }
         ]
       });
+      
+      // Spanish version
+      imageUrls.push({
+        loc: `${SITE_URL}/es/painting/${painting.urlKey}`,
+        lastmod: today,
+        changefreq: 'weekly',
+        priority: '0.8',
+        hreflang: {
+          'en': `${SITE_URL}/painting/${painting.urlKey}`,
+          'es': `${SITE_URL}/es/painting/${painting.urlKey}`,
+          'x-default': `${SITE_URL}/painting/${painting.urlKey}`
+        },
+        images: [
+          {
+            loc: imageUrl,
+            title: `${painting.title} - Página para Colorear Gratis`,
+            caption: `Imprime y colorea esta página para colorear de ${painting.title.toLowerCase()}. Hoja para colorear imprimible gratuita para niños.`
+          }
+        ]
+      });
     });
     
-    // 3. Add all category pages to regular sitemap
+    // 3. Add all category pages to regular sitemap (English + Spanish)
     console.log('\n📂 Adding categories...');
     const categories = extractCategories();
     console.log(`✅ Found ${categories.length} categories`);
     
     categories.forEach(category => {
+      // English version
       regularUrls.push({
         loc: `${SITE_URL}/category/${encodeURIComponent(category)}`,
         lastmod: today,
         changefreq: 'weekly',
-        priority: '0.7'
+        priority: '0.8',
+        hreflang: {
+          'en': `${SITE_URL}/category/${encodeURIComponent(category)}`,
+          'es': `${SITE_URL}/es/category/${encodeURIComponent(category)}`,
+          'x-default': `${SITE_URL}/category/${encodeURIComponent(category)}`
+        }
+      });
+      
+      // Spanish version
+      regularUrls.push({
+        loc: `${SITE_URL}/es/category/${encodeURIComponent(category)}`,
+        lastmod: today,
+        changefreq: 'weekly',
+        priority: '0.8',
+        hreflang: {
+          'en': `${SITE_URL}/category/${encodeURIComponent(category)}`,
+          'es': `${SITE_URL}/es/category/${encodeURIComponent(category)}`,
+          'x-default': `${SITE_URL}/category/${encodeURIComponent(category)}`
+        }
       });
     });
     
-    // 4. Add blog pages to regular sitemap
+    // 4. Add blog pages to regular sitemap (English + Spanish)
     const blogPages = [
       { path: '/blog', priority: '0.8', changefreq: 'weekly' },
       { path: '/blog/educational-benefits-coloring', priority: '0.7', changefreq: 'monthly' },
@@ -230,16 +309,35 @@ function generateSitemaps() {
     
     console.log('\n📝 Adding blog pages...');
     blogPages.forEach(page => {
+      // English version
       regularUrls.push({
         loc: `${SITE_URL}${page.path}`,
         lastmod: today,
         changefreq: page.changefreq,
-        priority: page.priority
+        priority: page.priority,
+        hreflang: {
+          'en': `${SITE_URL}${page.path}`,
+          'es': `${SITE_URL}/es${page.path}`,
+          'x-default': `${SITE_URL}${page.path}`
+        }
+      });
+      
+      // Spanish version
+      regularUrls.push({
+        loc: `${SITE_URL}/es${page.path}`,
+        lastmod: today,
+        changefreq: page.changefreq,
+        priority: page.priority,
+        hreflang: {
+          'en': `${SITE_URL}${page.path}`,
+          'es': `${SITE_URL}/es${page.path}`,
+          'x-default': `${SITE_URL}${page.path}`
+        }
       });
     });
-    console.log(`✅ Added ${blogPages.length} blog pages`);
+    console.log(`✅ Added ${blogPages.length * 2} blog pages (EN + ES)`);
     
-    // 4b. Add collection/listicle pages to regular sitemap
+    // 4b. Add collection/listicle pages to regular sitemap (English + Spanish)
     const collectionPages = [
       { path: '/top-animal-coloring-pages', priority: '0.8', changefreq: 'monthly' },
       { path: '/top-vehicle-coloring-pages', priority: '0.8', changefreq: 'monthly' },
@@ -250,16 +348,35 @@ function generateSitemaps() {
     
     console.log('\n📄 Adding collection pages...');
     collectionPages.forEach(page => {
+      // English version
       regularUrls.push({
         loc: `${SITE_URL}${page.path}`,
         lastmod: today,
         changefreq: page.changefreq,
-        priority: page.priority
+        priority: page.priority,
+        hreflang: {
+          'en': `${SITE_URL}${page.path}`,
+          'es': `${SITE_URL}/es${page.path}`,
+          'x-default': `${SITE_URL}${page.path}`
+        }
+      });
+      
+      // Spanish version
+      regularUrls.push({
+        loc: `${SITE_URL}/es${page.path}`,
+        lastmod: today,
+        changefreq: page.changefreq,
+        priority: page.priority,
+        hreflang: {
+          'en': `${SITE_URL}${page.path}`,
+          'es': `${SITE_URL}/es${page.path}`,
+          'x-default': `${SITE_URL}${page.path}`
+        }
       });
     });
-    console.log(`✅ Added ${collectionPages.length} collection pages`);
+    console.log(`✅ Added ${collectionPages.length * 2} collection pages (EN + ES)`);
     
-    // 5. Add static pages to regular sitemap
+    // 5. Add static pages to regular sitemap (English + Spanish)
     const staticPages = [
       { path: '/terms', priority: '0.3', changefreq: 'monthly' },
       { path: '/privacy', priority: '0.3', changefreq: 'monthly' },
@@ -267,11 +384,30 @@ function generateSitemaps() {
     ];
     
     staticPages.forEach(page => {
+      // English version
       regularUrls.push({
         loc: `${SITE_URL}${page.path}`,
         lastmod: today,
         changefreq: page.changefreq,
-        priority: page.priority
+        priority: page.priority,
+        hreflang: {
+          'en': `${SITE_URL}${page.path}`,
+          'es': `${SITE_URL}/es${page.path}`,
+          'x-default': `${SITE_URL}${page.path}`
+        }
+      });
+      
+      // Spanish version
+      regularUrls.push({
+        loc: `${SITE_URL}/es${page.path}`,
+        lastmod: today,
+        changefreq: page.changefreq,
+        priority: page.priority,
+        hreflang: {
+          'en': `${SITE_URL}${page.path}`,
+          'es': `${SITE_URL}/es${page.path}`,
+          'x-default': `${SITE_URL}${page.path}`
+        }
       });
     });
     
@@ -308,21 +444,26 @@ function generateSitemaps() {
     console.log(`✅ Sitemap index: ${INDEX_SITEMAP}`);
     
     // 10. Summary
+    const enUrls = regularUrls.filter(u => !u.loc.includes('/es')).length;
+    const esUrls = regularUrls.filter(u => u.loc.includes('/es')).length;
+    const enPaintings = imageUrls.filter(u => !u.loc.includes('/es')).length;
+    const esPaintings = imageUrls.filter(u => u.loc.includes('/es')).length;
+    
     console.log(`\n✅ All sitemaps generated successfully!`);
     console.log(`\n📊 Summary:`);
-    console.log(`   📄 Regular sitemap: ${regularUrls.length} URLs`);
-    console.log(`      - Home: 1`);
-    console.log(`      - Categories: ${categories.length}`);
-    console.log(`      - Blog pages: ${blogPages.length}`);
-    console.log(`      - Static pages: ${staticPages.length}`);
-    console.log(`   🖼️  Image sitemap: ${imageUrls.length} URLs (with images)`);
-    console.log(`      - Paintings: ${paintings.length}`);
+    console.log(`   📄 Regular sitemap: ${regularUrls.length} URLs total`);
+    console.log(`      - English URLs: ${enUrls}`);
+    console.log(`      - Spanish URLs: ${esUrls}`);
+    console.log(`   🖼️  Image sitemap: ${imageUrls.length} URLs total (with images)`);
+    console.log(`      - English paintings: ${enPaintings}`);
+    console.log(`      - Spanish paintings: ${esPaintings}`);
     console.log(`   📇 Sitemap index: 2 sitemaps`);
     console.log(`\n🔗 Submit to Google Search Console:`);
     console.log(`   ${SITE_URL}/sitemap-index.xml`);
     console.log(`\n💡 Individual sitemaps:`);
     console.log(`   ${SITE_URL}/sitemap.xml (regular pages)`);
     console.log(`   ${SITE_URL}/image-sitemap.xml (images)`);
+    console.log(`\n🌍 All pages include hreflang tags for bilingual SEO!`);
     
   } catch (error) {
     console.error('\n❌ Error generating sitemaps:', error);
@@ -332,4 +473,3 @@ function generateSitemaps() {
 
 // Run the script
 generateSitemaps();
-
