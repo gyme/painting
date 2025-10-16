@@ -1,13 +1,22 @@
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom'
 import LocalizedLink from './LocalizedLink'
 
-const FooterContainer = styled.footer`
+const FooterContainer = styled.footer<{ $isColoringPage: boolean }>`
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   padding: 2rem;
   margin-top: 4rem;
   border-top: 2px solid rgba(102, 126, 234, 0.2);
+  
+  @media (max-width: 768px) {
+    padding: ${props => props.$isColoringPage 
+      ? '1.5rem 1rem calc(1.5rem + 200px) 1rem' /* Extra padding for fixed coloring toolbars */
+      : '1.5rem 1rem'
+    };
+    margin-top: 1rem;
+  }
 `
 
 const FooterContent = styled.div`
@@ -59,9 +68,13 @@ const Copyright = styled.div`
 
 function Footer() {
   const { t } = useTranslation()
+  const location = useLocation()
+  
+  // Check if we're on a coloring/painting page (needs extra padding for mobile toolbars)
+  const isColoringPage = location.pathname.includes('/painting/')
   
   return (
-    <FooterContainer>
+    <FooterContainer $isColoringPage={isColoringPage}>
       <FooterContent>
         <Logo>🎨 mycolor.fun</Logo>
         

@@ -19,15 +19,13 @@ const Container = styled.div`
     max-width: 100%;
     margin: 0;
     box-shadow: none;
-    min-height: 100vh;
-    height: 100vh; /* Fixed height for proper scrolling */
+    min-height: auto;
+    height: auto; /* Auto height - fit content */
     display: flex;
     flex-direction: column;
     background: white;
-    padding-bottom: 0 !important; /* No padding - canvas margin handles it */
-    overflow-x: hidden;
-    overflow-y: scroll; /* Always show scroll to make space clear */
-    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0 !important;
+    overflow: visible; /* Allow natural flow */
   }
 `
 
@@ -50,8 +48,7 @@ const MainContent = styled.div`
     min-height: 0;
     height: auto;
     overflow: visible;
-    display: flex;
-    flex-direction: column;
+    display: block; /* Block layout for simpler flow */
     padding: 0 !important;
     margin: 0 !important;
     gap: 0 !important;
@@ -65,25 +62,23 @@ const CanvasSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   
   @media (max-width: 1024px) {
     width: 100%;
   }
   
   @media (max-width: 768px) {
-    flex: 1;
-    min-height: 0;
-    height: auto;
-    overflow: visible;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    flex: 0 0 auto;
+    min-height: 300px; /* Minimum height for canvas */
+    height: auto; /* Auto height - let canvas dictate size */
+    overflow: visible; /* No scrolling on canvas section itself */
+    display: block;
     background: white;
-    padding: 0rem 0.5rem 100px 0.5rem !important; /* Some bottom padding */
+    padding: 0.5rem 0.5rem 20px 0.5rem !important; /* Minimal bottom padding */
     margin: 0 !important;
     position: relative;
-    width: 100vw;
+    width: 100%;
     max-width: 100vw;
   }
 `
@@ -125,28 +120,30 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
   justify-content: center;
   margin: 0 auto;
   max-width: 100%;
-  max-height: 85vh;
+  max-height: calc(100vh - 4rem); /* Full height minus container padding */
   
   canvas {
     display: block;
     width: 100%;
     height: auto;
-    max-height: 60vh;
+    max-height: calc(100vh - 8rem); /* Maximum height for desktop */
+    max-width: 100%;
+    object-fit: contain;
   }
   
   @media (max-width: 768px) {
     border: none;
     border-radius: 0;
-    margin: 0;
+    margin: 0 auto 0 auto; /* No bottom margin - handled by section padding */
     padding: 0;
-    width: calc(100vw - 1rem);
-    max-width: calc(100vw - 1rem);
-    height: auto;
-    display: block;
-    background: white;
+    width: 100%; /* Full width of parent */
+    max-width: 100%;
+    height: auto; /* Auto height - let canvas be its natural size */
+    max-height: none; /* No max height - allow full image */
+    display: block; /* Block to avoid flexbox issues */
+    background: transparent;
     position: relative;
     overflow: visible;
-    min-height: auto;
     
     canvas {
       display: block;
@@ -154,8 +151,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
-      max-height: 45vh !important; /* Even smaller to ensure no cropping */
-      margin: 0 0 450px 0 !important; /* Extra large margin for fixed controls clearance */
+      max-height: none !important; /* No max height - show full image */
+      margin: 0 auto 0 auto !important; /* No margin - spacing handled by spacer */
       padding: 0 !important;
       touch-action: auto; /* Allow native browser touch handling including zoom */
       object-fit: contain;
@@ -168,7 +165,11 @@ const MobileCanvasSpacer = styled.div`
   display: none;
   
   @media (max-width: 768px) {
-    display: none; /* Disabled - using wrapper margin instead */
+    display: block;
+    width: 100%;
+    height: 150px; /* Larger spacer to push "More Pages" below the fold */
+    flex-shrink: 0;
+    background: white;
   }
 `
 
@@ -770,48 +771,10 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
     historyStepRef.current = historyStep
   }, [historyStep])
   
-  // Remove gap on mobile - use MutationObserver to catch ANY style changes
+  // No need to force remove gaps - layout is now handled by CSS natural flow
+  // Keeping ref for potential future use
   useEffect(() => {
-    if (window.innerWidth <= 768 && mainContentRef.current) {
-      const element = mainContentRef.current
-      
-      const forceRemoveGap = () => {
-        element.style.setProperty('padding', '0', 'important')
-        element.style.setProperty('padding-top', '0', 'important')
-        element.style.setProperty('margin', '0', 'important')
-        element.style.setProperty('gap', '0', 'important')
-        
-        // Also remove the attribute entirely if it exists
-        if (element.getAttribute('style')?.includes('padding-top')) {
-          element.setAttribute('style', element.getAttribute('style')!.replace(/padding-top:\s*[^;]+;?/gi, ''))
-        }
-      }
-      
-      // Initial removal
-      forceRemoveGap()
-      
-      // Watch for any style attribute changes
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-            forceRemoveGap()
-          }
-        })
-      })
-      
-      observer.observe(element, {
-        attributes: true,
-        attributeFilter: ['style']
-      })
-      
-      // Also run periodically as backup
-      const interval = setInterval(forceRemoveGap, 100)
-      
-      return () => {
-        observer.disconnect()
-        clearInterval(interval)
-      }
-    }
+    // Layout is handled by styled components - no manual intervention needed
   }, [])
 
   // Handle scroll arrows visibility on mobile color palette
@@ -912,17 +875,17 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
     }
   }, [])
 
-  // Prevent scrolling on mobile - canvas fits viewport
+  // Allow natural page scrolling on mobile - no need to prevent it
+  // The page scrolls normally and fixed toolbars stay at bottom
   useEffect(() => {
-    if (window.innerWidth <= 768) {
-      document.body.style.overflow = 'hidden'
-      document.body.style.position = 'fixed'
-      document.body.style.width = '100%'
-      
-      return () => {
+    // No body scroll prevention needed - page scrolls naturally
+    return () => {
+      // Cleanup any existing overrides just in case
+      if (window.innerWidth <= 768) {
         document.body.style.overflow = ''
         document.body.style.position = ''
         document.body.style.width = ''
+        document.body.style.height = ''
       }
     }
   }, [])
@@ -963,15 +926,15 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
       // Set canvas size AFTER image loads
       const isMobile = window.innerWidth <= 768
       if (isMobile) {
-        // On mobile: canvas width is full screen, height based on image aspect ratio
-        const availableWidth = window.innerWidth
+        // On mobile: calculate dimensions to fit the scrollable area
+        const availableWidth = window.innerWidth - 16 // Account for padding (0.5rem * 2)
         
         // Calculate image aspect ratio
         const imageAspect = img.width / img.height
         
-        // Set canvas to full width, height based on image aspect ratio
-        canvas.width = availableWidth
-        canvas.height = availableWidth / imageAspect
+        // Set canvas to full available width, height based on image aspect ratio
+        canvas.width = availableWidth * 2 // Higher resolution for better quality
+        canvas.height = (availableWidth * 2) / imageAspect
         
         // Fill entire canvas with white
         ctx.fillStyle = 'white'
@@ -981,7 +944,7 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
       } else {
         // Desktop: fixed width, height based on aspect ratio
-        canvas.width = 600
+        canvas.width = 800
         canvas.height = (img.height / img.width) * canvas.width
         
         // Fill with white background
@@ -1062,15 +1025,15 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
           // Set canvas size AFTER SVG loads
           const isMobile = window.innerWidth <= 768
           if (isMobile) {
-            // On mobile: canvas width is full screen, height based on image aspect ratio
-            const availableWidth = window.innerWidth
+            // On mobile: calculate dimensions to fit the scrollable area
+            const availableWidth = window.innerWidth - 16 // Account for padding (0.5rem * 2)
             
             // Calculate image aspect ratio
             const imageAspect = svgImg.width / svgImg.height
             
-            // Set canvas to full width, height based on image aspect ratio
-            canvas.width = availableWidth
-            canvas.height = availableWidth / imageAspect
+            // Set canvas to full available width, height based on image aspect ratio
+            canvas.width = availableWidth * 2 // Higher resolution for better quality
+            canvas.height = (availableWidth * 2) / imageAspect
             
             // Fill entire canvas with white
             ctx.fillStyle = 'white'
@@ -1080,7 +1043,7 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
             ctx.drawImage(svgImg, 0, 0, canvas.width, canvas.height)
           } else {
             // Desktop: fixed width, height based on aspect ratio
-            canvas.width = 600
+            canvas.width = 800
             canvas.height = (svgImg.height / svgImg.width) * canvas.width
             
             // Fill with white background

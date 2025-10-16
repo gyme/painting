@@ -6,10 +6,12 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import ErrorBoundary from './components/ErrorBoundary'
 import LanguageRouteSync from './components/LanguageRouteSync'
+import ScrollToTop from './components/ScrollToTop'
 
 // Lazy load pages for better performance
 const HomePage = lazy(() => import('./pages/HomePage'))
 const PaintingPage = lazy(() => import('./pages/PaintingPage'))
+const CategoriesPage = lazy(() => import('./pages/CategoriesPage'))
 const CategoryPage = lazy(() => import('./pages/CategoryPage'))
 const BlogPage = lazy(() => import('./pages/BlogPage'))
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'))
@@ -51,6 +53,7 @@ function LoadingIndicator() {
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <LanguageRouteSync />
       <AppContainer>
         <Header />
@@ -61,6 +64,7 @@ function App() {
               {/* English routes (default) */}
               <Route path="/" element={<HomePage />} />
               <Route path="/random" element={<RandomPage />} />
+              <Route path="/categories" element={<CategoriesPage />} />
               <Route path="/painting/:urlKey" element={<PaintingPage />} />
               <Route path="/category/:category" element={<CategoryPage />} />
               <Route path="/blog" element={<BlogPage />} />
@@ -82,6 +86,7 @@ function App() {
               {/* Spanish routes (/es/ prefix) - Same components, different URLs for SEO */}
               <Route path="/es" element={<HomePage />} />
               <Route path="/es/random" element={<RandomPage />} />
+              <Route path="/es/categories" element={<CategoriesPage />} />
               <Route path="/es/painting/:urlKey" element={<PaintingPage />} />
               <Route path="/es/category/:category" element={<CategoryPage />} />
               <Route path="/es/blog" element={<BlogPage />} />

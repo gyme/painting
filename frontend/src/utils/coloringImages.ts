@@ -14,6 +14,15 @@ export const coloringImages: { [key: string]: string } = {
   'rhino': '/coloring-images/rhino.png',
   'tiger': '/coloring-images/tiger.png',
   'cute-pig': '/coloring-images/cute_pig.jpg',
+  'crokodile': '/coloring-images/crokodile.png',
+  'cute-hamster': '/coloring-images/cute_hamster.png',
+  'lion-cub': '/coloring-images/lion_cub.png',
+  'cute-bat': '/coloring-images/cute_bat.png',
+  'cute-bear': '/coloring-images/cute_bear.png',
+  'cute-elephant': '/coloring-images/cute_elephant.png',
+  'flying-kuala': '/coloring-images/flying_kuala.png',
+  'koala-love': '/coloring-images/koala_love.png',
+  'squirrel': '/coloring-images/squirrel.png',
   
   // Vehicles
   'bus': '/coloring-images/bus.png',
@@ -24,6 +33,12 @@ export const coloringImages: { [key: string]: string } = {
   'taxi': '/coloring-images/taxi.png',
   'train': '/coloring-images/train.png',
   'truck': '/coloring-images/truck.png',
+  
+  // Sports
+  'surfer': '/coloring-images/surfer.png',
+  'basketball-player': '/coloring-images/basketball_player.png',
+  'karate': '/coloring-images/karate.png',
+  'drummer': '/coloring-images/drummer.png',
   
   // Characters
   'pikachu': '/coloring-images/pikachu.png',
@@ -36,15 +51,53 @@ export const coloringImages: { [key: string]: string } = {
   'soccer-player': '/coloring-images/soccer_player.png',
   'witch': '/coloring-images/witch.png',
   'witch-cat': '/coloring-images/witch_cat.png',
+  'clown': '/coloring-images/clown.png',
+  'girl-playing-guitar': '/coloring-images/girl_playing_guitar.png',
+  'princess-in-the-wood': '/coloring-images/princess_in_the_wood.png',
+  'queen': '/coloring-images/queen.png',
+  'little-princess': '/coloring-images/little_princess.png',
+  'astronaut': '/coloring-images/astronaut.png',
+  'cute-scarecrow': '/coloring-images/cute_scarecrow.png',
+  'student': '/coloring-images/student.png',
+  'toy-builder': '/coloring-images/toy_builder.png',
+  'wizzard': '/coloring-images/wizzard.png',
+  'witch-hat': '/coloring-images/witch_hat.png',
+  'taylor-swift': '/coloring-images/taylor_swift.jpg',
+  'spider-man': '/coloring-images/spider_man.png',
+  'friendly-icecream': '/coloring-images/friendly_icecream.png',
   
   // Holiday/Seasonal
   'spooky-christmas': '/coloring-images/spooky_christmas.png',
+  'hanuka-menorah': '/coloring-images/hanuka_menorah.png',
+  'christmas-socks': '/coloring-images/christmas_socks.png',
+  'rudolph-the-reindeer': '/coloring-images/rudolph.png',
+  'santa-claus': '/coloring-images/santa_clause.png',
+  'christmas-tree': '/coloring-images/christmas_tree.png',
+  'little-easter-bunny': '/coloring-images/little_easter_bunny.png',
+  'animal-holiday-gift': '/coloring-images/animal_holiday_gift.png',
+  
+  // Fantasy
+  'unicorn': '/coloring-images/unicorn.png',
+  'fairy': '/coloring-images/fairy.png',
+  'fairy-butterfly': '/coloring-images/fairy_butterfly.png',
+  'fairy-on-a-flower': '/coloring-images/fairy_on_a_flower.png',
+  'super-dino': '/coloring-images/super_dino.png',
+  'mushroom-house': '/coloring-images/mushroom_house.png',
+  
+  // Mandalas
+  'bird-mandala': '/coloring-images/bird_mandala.png',
+  'elephant-mandala': '/coloring-images/elephant_mandala.png',
+  'lion-mandala': '/coloring-images/lion_mandala.png',
+  'tiger-mandala': '/coloring-images/tiger_mandala.png',
+  'owl-mandala': '/coloring-images/owl_mandala.png',
+  'meduza-mandala': '/coloring-images/meduza_mandala.png',
   
   // Nature/Scenery
   'beach': '/coloring-images/beach.png',
   'river': '/coloring-images/river.png',
   'sun-flower': '/coloring-images/sun_flower.png',
   'tree': '/coloring-images/tree.png',
+  'bonsai': '/coloring-images/bonsai.png',
   
   // Disney Characters (if you add them later)
   'stitch': '/coloring-images/stitch.png',

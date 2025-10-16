@@ -118,6 +118,28 @@ const SectionTitle = styled.h2`
   }
 `
 
+const SectionTitleLink = styled(LocalizedLink)`
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #ffd700;
+    transform: translateX(5px);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+`
+
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -257,6 +279,7 @@ function HomePage() {
     'Fantasy': '🦄',
     'Dinosaurs': '🦕',
     'Mandalas': '🔯',
+    'Italian Brainrot': '🇮🇹',
   }
 
   const getCategoryIcon = (category: string): string => {
@@ -327,7 +350,9 @@ function HomePage() {
         {/* Categories Section */}
         {categories && categories.length > 0 && (
           <Section id="categories">
-            <SectionTitle>📂 {t('home.browseByCategory')}</SectionTitle>
+            <SectionTitleLink to="/categories">
+              📂 {t('home.browseByCategory')} →
+            </SectionTitleLink>
             <CategoriesGrid>
               {categories.map((category) => (
                 <CategoryCard key={category} to={`/category/${category}`}>

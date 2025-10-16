@@ -270,8 +270,10 @@ const PaintingsGrid = styled.div`
   margin-bottom: 2rem;
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 0;
+    padding: 0 0.5rem;
   }
 `
 
@@ -282,8 +284,13 @@ const RelatedSection = styled.div`
   border-radius: 30px;
 
   @media (max-width: 768px) {
-    padding: 2rem 1rem;
-    margin-top: 2rem;
+    padding: 1.5rem 0.5rem 1rem 0.5rem;
+    margin-top: 0;
+    margin-bottom: 0; /* No bottom margin - footer handles spacing */
+    background: white;
+    border-radius: 0;
+    width: 100vw;
+    max-width: 100vw;
   }
 `
 
@@ -296,7 +303,11 @@ const RelatedTitle = styled.h2`
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    color: #2d3748;
+    text-shadow: none;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
   }
 `
 

@@ -64,6 +64,16 @@ const Card = styled(LocalizedLink)`
     transform: translateY(-10px) scale(1.02);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
   }
+  
+  @media (max-width: 768px) {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+  }
 `
 
 const ImageContainer = styled.div`
@@ -122,6 +132,14 @@ const Badge = styled.div<{ difficulty: number }>`
   font-weight: 700;
   font-size: 0.9rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  
+  @media (max-width: 768px) {
+    top: 6px;
+    right: 6px;
+    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.65rem;
+  }
 `
 
 const FeaturedBadge = styled.div`
@@ -144,6 +162,11 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+    gap: 0.35rem;
+  }
 `
 
 const Title = styled.h3`
@@ -151,6 +174,11 @@ const Title = styled.h3`
   font-weight: 700;
   color: #2d3436;
   margin: 0;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    line-height: 1.3;
+  }
 `
 
 const Description = styled.p`
@@ -159,6 +187,15 @@ const Description = styled.p`
   margin: 0;
   line-height: 1.5;
   flex: 1;
+  
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 `
 
 const Footer = styled.div`
@@ -168,6 +205,12 @@ const Footer = styled.div`
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 2px solid #f0f0f0;
+  
+  @media (max-width: 768px) {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #f0f0f0;
+  }
 `
 
 const Category = styled.span`
@@ -177,12 +220,22 @@ const Category = styled.span`
   border-radius: 15px;
   font-size: 0.9rem;
   font-weight: 600;
+  
+  @media (max-width: 768px) {
+    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.65rem;
+  }
 `
 
 const Views = styled.span`
   color: #b2bec3;
   font-size: 0.9rem;
   font-weight: 600;
+  
+  @media (max-width: 768px) {
+    font-size: 0.65rem;
+  }
 `
 
 interface PaintingCardProps {
