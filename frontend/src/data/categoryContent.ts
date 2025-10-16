@@ -210,6 +210,56 @@ export const categoryContent: { [key: string]: CategoryContent } = {
     ageRangeEs: 'Diversión para todas las edades 2-10, todo el año',
     learningValue: 'Holiday coloring teaches about cultural traditions, calendar awareness, and provides opportunities for creating meaningful gifts and decorations.',
     learningValueEs: 'Colorear festividades enseña sobre tradiciones culturales, conciencia del calendario y proporciona oportunidades para crear regalos y decoraciones significativas.'
+  },
+  
+  dinosaurs: {
+    title: 'Why Choose Our Dinosaur Coloring Pages?',
+    titleEs: '¿Por Qué Elegir Nuestras Páginas para Colorear de Dinosaurios?',
+    description: 'Journey back to prehistoric times with our exciting dinosaur coloring pages! From fierce T-Rex and mighty Triceratops to flying Pteranodon and armored Ankylosaurus, these pages bring ancient creatures to life. Perfect for young paleontologists and dinosaur enthusiasts!',
+    descriptionEs: '¡Viaja a tiempos prehistóricos con nuestras emocionantes páginas para colorear de dinosaurios! Desde el feroz T-Rex y el poderoso Triceratops hasta el volador Pteranodon y el acorazado Anquilosaurio, estas páginas dan vida a criaturas antiguas. ¡Perfecto para jóvenes paleontólogos y entusiastas de los dinosaurios!',
+    benefits: [
+      'Learn about different dinosaur species and periods',
+      'Develop interest in paleontology and prehistoric life',
+      'Practice scientific names and terminology',
+      'Explore realistic and creative color schemes',
+      'Encourage curiosity about natural history'
+    ],
+    benefitsEs: [
+      'Aprender sobre diferentes especies de dinosaurios y períodos',
+      'Desarrollar interés en paleontología y vida prehistórica',
+      'Practicar nombres científicos y terminología',
+      'Explorar esquemas de colores realistas y creativos',
+      'Fomentar curiosidad sobre historia natural'
+    ],
+    ageRange: 'Perfect for ages 4-10, especially for dinosaur fans',
+    ageRangeEs: 'Perfecto para edades 4-10, especialmente para fanáticos de dinosaurios',
+    learningValue: 'Dinosaur coloring supports science education, teaching children about evolution, extinction, fossils, and geological time periods while sparking imagination.',
+    learningValueEs: 'Colorear dinosaurios apoya la educación científica, enseñando a los niños sobre evolución, extinción, fósiles y períodos geológicos mientras estimula la imaginación.'
+  },
+  
+  'fairy tales': {
+    title: 'Why Choose Our Fairy Tale Coloring Pages?',
+    titleEs: '¿Por Qué Elegir Nuestras Páginas para Colorear de Cuentos de Hadas?',
+    description: 'Enter the magical world of beloved fairy tales with our enchanting coloring pages! From Little Red Riding Hood and Goldilocks to Rapunzel and the Gingerbread Man, these classic stories come to life through art. Perfect for children who love timeless tales and magical adventures!',
+    descriptionEs: '¡Entra al mundo mágico de los cuentos de hadas queridos con nuestras encantadoras páginas para colorear! Desde Caperucita Roja y Ricitos de Oro hasta Rapunzel y el Hombre de Jengibre, estas historias clásicas cobran vida a través del arte. ¡Perfecto para niños que aman cuentos atemporales y aventuras mágicas!',
+    benefits: [
+      'Connect with classic stories and beloved characters',
+      'Learn moral lessons through fairy tale themes',
+      'Develop storytelling and narrative skills',
+      'Practice detailed character and scene coloring',
+      'Build cultural literacy with traditional tales'
+    ],
+    benefitsEs: [
+      'Conectar con historias clásicas y personajes queridos',
+      'Aprender lecciones morales a través de temas de cuentos de hadas',
+      'Desarrollar habilidades narrativas y de contar historias',
+      'Practicar colorear personajes y escenas detalladas',
+      'Construir alfabetización cultural con cuentos tradicionales'
+    ],
+    ageRange: 'Ideal for ages 3-10, perfect for story time',
+    ageRangeEs: 'Ideal para edades 3-10, perfecto para la hora del cuento',
+    learningValue: 'Fairy tale coloring combines literacy with art, helping children remember classic stories, understand character development, and explore moral lessons through creative expression.',
+    learningValueEs: 'Colorear cuentos de hadas combina alfabetización con arte, ayudando a los niños a recordar historias clásicas, entender desarrollo de personajes y explorar lecciones morales a través de expresión creativa.'
   }
 }
 

@@ -84,6 +84,29 @@ export const coloringImages: { [key: string]: string } = {
   'super-dino': '/coloring-images/super_dino.png',
   'mushroom-house': '/coloring-images/mushroom_house.png',
   
+  // Dinosaurs
+  't-rex': '/coloring-images/t_rex.png',
+  'triceratops': '/coloring-images/triceratops.png',
+  'stegosaurus': '/coloring-images/stegosaurus.png',
+  'velociraptor': '/coloring-images/velociraptor.png',
+  'brachiosaurus': '/coloring-images/brachiosaurus.png',
+  'spinosaurus': '/coloring-images/spinosaurus.png',
+  'pteranodon': '/coloring-images/pteranodon.png',
+  'ankylosaurus': '/coloring-images/ankylosaurus.png',
+  'parasaurolophus': '/coloring-images/parasaurolophus.png',
+  
+  // Fairy Tales
+  'red-riding-hood': '/coloring-images/red_riding_hood.png',
+  'puss-in-boots': '/coloring-images/puss_in_boots.png',
+  'goldilocks-and-the-three-bears': '/coloring-images/goldilocks_and_the_three_bears.png',
+  'pinocchio': '/coloring-images/pinocchio.png',
+  'alice-in-wonderland': '/coloring-images/alice_in_wonderland.png',
+  'three-little-pigs': '/coloring-images/three_little_pigs_wolf_huff_and_puff.png',
+  'rapunzel': '/coloring-images/rapunzel.png',
+  'princess-and-the-frog': '/coloring-images/princess_and_the_frog.png',
+  'hansel-and-gretel': '/coloring-images/hansel_and_gretel.png',
+  'the-gingerbread-man': '/coloring-images/the_gingerbread_man.png',
+  
   // Mandalas
   'bird-mandala': '/coloring-images/bird_mandala.png',
   'elephant-mandala': '/coloring-images/elephant_mandala.png',

@@ -81,7 +81,7 @@ function Breadcrumbs({ items }: BreadcrumbsProps) {
     }
     
     // Translate category names (Animals, Vehicles, Nature, etc.)
-    const knownCategories = ['Animals', 'Vehicles', 'Nature', 'Characters', 'Fantasy', 'Food', 'Holidays', 'Sports', 'Space', 'Ocean', 'Dinosaurs', 'Mandalas']
+    const knownCategories = ['Animals', 'Vehicles', 'Nature', 'Characters', 'Fantasy', 'Food', 'Holidays', 'Sports', 'Space', 'Ocean', 'Dinosaurs', 'Fairy Tales', 'Mandalas']
     if (knownCategories.includes(label)) {
       return t(`categories.${label.toLowerCase()}`)
     }

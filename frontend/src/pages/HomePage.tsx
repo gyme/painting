@@ -278,6 +278,7 @@ function HomePage() {
     'Ocean': '🌊',
     'Fantasy': '🦄',
     'Dinosaurs': '🦕',
+    'Fairy Tales': '📚',
     'Mandalas': '🔯',
     'Italian Brainrot': '🇮🇹',
   }

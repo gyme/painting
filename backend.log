@@ -34,146 +34,102 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.3)
 
-2025-10-15T23:14:47.168+03:00  INFO 22109 --- [kids-painting-api] [           main] com.painting.server.Application          : Starting Application using Java 17.0.15 with PID 22109 (/Users/guym/Documents/d/paiting/backend/target/classes started by guym in /Users/guym/Documents/d/paiting/backend)
-2025-10-15T23:14:47.170+03:00 DEBUG 22109 --- [kids-painting-api] [           main] com.painting.server.Application          : Running with Spring Boot v3.2.3, Spring v6.1.4
-2025-10-15T23:14:47.170+03:00  INFO 22109 --- [kids-painting-api] [           main] com.painting.server.Application          : No active profile set, falling back to 1 default profile: "default"
-2025-10-15T23:14:47.547+03:00  INFO 22109 --- [kids-painting-api] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-10-15T23:14:47.573+03:00  INFO 22109 --- [kids-painting-api] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 1 JPA repository interface.
-2025-10-15T23:14:47.866+03:00  INFO 22109 --- [kids-painting-api] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2025-10-15T23:14:47.875+03:00  INFO 22109 --- [kids-painting-api] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2025-10-15T23:14:47.875+03:00  INFO 22109 --- [kids-painting-api] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
-2025-10-15T23:14:47.918+03:00  INFO 22109 --- [kids-painting-api] [           main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
-2025-10-15T23:14:47.919+03:00  INFO 22109 --- [kids-painting-api] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 724 ms
-2025-10-15T23:14:47.923+03:00  INFO 22109 --- [kids-painting-api] [           main] c.painting.server.config.DatabaseConfig  : DATABASE_URL environment variable: NOT SET
-2025-10-15T23:14:47.923+03:00  INFO 22109 --- [kids-painting-api] [           main] c.painting.server.config.DatabaseConfig  : Using H2 file-based database for local development
-2025-10-15T23:14:47.931+03:00  INFO 22109 --- [kids-painting-api] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-10-15T23:14:48.086+03:00  INFO 22109 --- [kids-painting-api] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./painting user=SA
-2025-10-15T23:14:48.087+03:00  INFO 22109 --- [kids-painting-api] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-10-15T23:14:48.092+03:00  INFO 22109 --- [kids-painting-api] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./painting'
-2025-10-15T23:14:48.169+03:00  INFO 22109 --- [kids-painting-api] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-10-15T23:14:48.210+03:00  INFO 22109 --- [kids-painting-api] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
-2025-10-15T23:14:48.235+03:00  INFO 22109 --- [kids-painting-api] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-10-15T23:14:48.379+03:00  INFO 22109 --- [kids-painting-api] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-10-15T23:14:49.317+03:00  INFO 22109 --- [kids-painting-api] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-10-15T23:14:49.342+03:00  INFO 22109 --- [kids-painting-api] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-10-15T23:14:49.497+03:00  INFO 22109 --- [kids-painting-api] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-10-15T23:14:50.179+03:00  INFO 22109 --- [kids-painting-api] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/api'
-2025-10-15T23:14:50.186+03:00  INFO 22109 --- [kids-painting-api] [           main] com.painting.server.Application          : Started Application in 3.22 seconds (process running for 3.375)
-2025-10-15T23:14:50.188+03:00  INFO 22109 --- [kids-painting-api] [           main] c.p.server.config.DataInitializer        : Local H2 database detected - initializing with sample data
-2025-10-15T23:14:50.193+03:00  INFO 22109 --- [kids-painting-api] [           main] c.p.server.config.DataInitializer        : Table already contains data - skipping initialization
-2025-10-15T23:14:50.804+03:00  INFO 22109 --- [kids-painting-api] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-10-15T23:14:50.804+03:00  INFO 22109 --- [kids-painting-api] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2025-10-15T23:14:50.805+03:00  INFO 22109 --- [kids-painting-api] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2025-10-15T23:14:50.819+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-1] c.p.server.service.PaintingService       : Fetching all categories (cache miss)
-2025-10-15T23:19:30.869+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Fetching painting with urlKey: udin-din-din-dun (cache miss)
-2025-10-15T23:19:30.877+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Fetching painting with urlKey: udin-din-din-dun (cache miss)
-2025-10-15T23:19:30.885+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Incremented view count for painting: udin-din-din-dun
-2025-10-15T23:19:31.509+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m43s298ms).
-2025-10-15T23:19:37.580+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Fetching painting with urlKey: udin-din-din-dun (cache miss)
-2025-10-15T23:19:37.581+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Incremented view count for painting: udin-din-din-dun
-2025-10-15T23:20:41.100+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-3] c.p.server.service.PaintingService       : Fetching painting with urlKey: brr-brr-patapim (cache miss)
-2025-10-15T23:20:41.102+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-3] c.p.server.service.PaintingService       : Fetching painting with urlKey: brr-brr-patapim (cache miss)
-2025-10-15T23:20:41.104+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-3] c.p.server.service.PaintingService       : Incremented view count for painting: brr-brr-patapim
-2025-10-15T23:20:54.696+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Fetching painting with urlKey: cappuccino-assassino (cache miss)
-2025-10-15T23:20:54.698+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Fetching painting with urlKey: cappuccino-assassino (cache miss)
-2025-10-15T23:20:54.700+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Incremented view count for painting: cappuccino-assassino
-2025-10-15T23:21:50.750+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-7] c.p.server.service.PaintingService       : Fetching painting with urlKey: cappuccino-assassino (cache miss)
-2025-10-15T23:21:50.756+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-7] c.p.server.service.PaintingService       : Incremented view count for painting: cappuccino-assassino
-2025-10-15T23:21:52.062+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-9] c.p.server.service.PaintingService       : Fetching painting with urlKey: cappuccino-assassino (cache miss)
-2025-10-15T23:21:52.063+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-9] c.p.server.service.PaintingService       : Incremented view count for painting: cappuccino-assassino
-2025-10-15T23:22:44.476+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Fetching painting with urlKey: chimpanzini-bananini (cache miss)
-2025-10-15T23:22:44.478+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Fetching painting with urlKey: chimpanzini-bananini (cache miss)
-2025-10-15T23:22:44.479+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Incremented view count for painting: chimpanzini-bananini
-2025-10-15T23:23:13.431+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-4] c.p.server.service.PaintingService       : Fetching featured paintings page 0 size 6 (cache miss)
-2025-10-15T23:23:13.431+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-6] c.p.server.service.PaintingService       : Fetching popular paintings page 0 size 12 (cache miss)
-2025-10-15T23:23:23.862+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Fetching painting with urlKey: udin-din-din-dun (cache miss)
-2025-10-15T23:23:23.864+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Incremented view count for painting: udin-din-din-dun
-2025-10-15T23:25:20.850+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Fetching painting with urlKey: tralalero-tralala (cache miss)
-2025-10-15T23:25:20.862+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Fetching painting with urlKey: tralalero-tralala (cache miss)
-2025-10-15T23:25:20.863+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Incremented view count for painting: tralalero-tralala
-2025-10-15T23:25:28.155+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Fetching painting with urlKey: thung-thung-thung-sahur (cache miss)
-2025-10-15T23:25:28.156+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Fetching painting with urlKey: thung-thung-thung-sahur (cache miss)
-2025-10-15T23:25:28.157+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Incremented view count for painting: thung-thung-thung-sahur
-2025-10-15T23:25:36.384+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Fetching painting with urlKey: capuchina-ballerina (cache miss)
-2025-10-15T23:25:36.386+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Fetching painting with urlKey: capuchina-ballerina (cache miss)
-2025-10-15T23:25:36.387+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Incremented view count for painting: capuchina-ballerina
-2025-10-15T23:25:42.350+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-6] c.p.server.service.PaintingService       : Fetching painting with urlKey: chimpanzini-bananini (cache miss)
-2025-10-15T23:25:42.354+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-6] c.p.server.service.PaintingService       : Incremented view count for painting: chimpanzini-bananini
-2025-10-15T23:27:44.627+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Fetching painting with urlKey: tralalero-tralala (cache miss)
-2025-10-15T23:27:44.634+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Incremented view count for painting: tralalero-tralala
-2025-10-15T23:29:43.303+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Fetching painting with urlKey: tralalero-tralala (cache miss)
-2025-10-15T23:29:43.316+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Incremented view count for painting: tralalero-tralala
-2025-10-15T23:29:49.761+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-3] c.p.server.service.PaintingService       : Fetching painting with urlKey: udin-din-din-dun (cache miss)
-2025-10-15T23:29:49.762+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-3] c.p.server.service.PaintingService       : Incremented view count for painting: udin-din-din-dun
-2025-10-15T23:30:04.132+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-4] c.p.server.service.PaintingService       : Fetching painting with urlKey: tralalero-tralala (cache miss)
-2025-10-15T23:30:04.134+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-4] c.p.server.service.PaintingService       : Incremented view count for painting: tralalero-tralala
-2025-10-15T23:30:09.585+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Fetching painting with urlKey: thung-thung-thung-sahur (cache miss)
-2025-10-15T23:30:09.586+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Incremented view count for painting: thung-thung-thung-sahur
-2025-10-15T23:30:14.464+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Fetching painting with urlKey: udin-din-din-dun (cache miss)
-2025-10-15T23:30:14.466+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Incremented view count for painting: udin-din-din-dun
-2025-10-15T23:30:19.141+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Fetching painting with urlKey: capuchina-ballerina (cache miss)
-2025-10-15T23:30:19.144+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Incremented view count for painting: capuchina-ballerina
-2025-10-15T23:31:31.589+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Fetching painting with urlKey: capuchina-ballerina (cache miss)
-2025-10-15T23:31:31.615+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Incremented view count for painting: capuchina-ballerina
-2025-10-15T23:31:47.197+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-7] c.p.server.service.PaintingService       : Fetching painting with urlKey: tralalero-tralala (cache miss)
-2025-10-15T23:31:47.199+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-7] c.p.server.service.PaintingService       : Incremented view count for painting: tralalero-tralala
-2025-10-15T23:32:25.074+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-9] c.p.server.service.PaintingService       : Fetching painting with urlKey: tralalero-tralala (cache miss)
-2025-10-15T23:32:25.084+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-9] c.p.server.service.PaintingService       : Incremented view count for painting: tralalero-tralala
-2025-10-15T23:32:32.558+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Fetching painting with urlKey: chimpanzini-bananini (cache miss)
-2025-10-15T23:32:32.560+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Incremented view count for painting: chimpanzini-bananini
-2025-10-15T23:40:34.825+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-7] c.p.server.service.PaintingService       : Fetching painting with urlKey: chimpanzini-bananini (cache miss)
-2025-10-15T23:40:34.827+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-7] c.p.server.service.PaintingService       : Incremented view count for painting: chimpanzini-bananini
-2025-10-15T23:41:30.902+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Fetching painting with urlKey: thung-thung-thung-sahur (cache miss)
-2025-10-15T23:41:30.905+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Incremented view count for painting: thung-thung-thung-sahur
-2025-10-15T23:43:18.677+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Fetching painting with urlKey: tralalero-tralala (cache miss)
-2025-10-15T23:43:18.684+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Incremented view count for painting: tralalero-tralala
-2025-10-15T23:45:43.078+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Fetching painting with urlKey: thung-thung-thung-sahur (cache miss)
-2025-10-15T23:45:43.083+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Incremented view count for painting: thung-thung-thung-sahur
-2025-10-15T23:45:57.535+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-7] c.p.server.service.PaintingService       : Fetching painting with urlKey: capuchina-ballerina (cache miss)
-2025-10-15T23:45:57.538+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-7] c.p.server.service.PaintingService       : Incremented view count for painting: capuchina-ballerina
-2025-10-15T23:46:58.480+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-9] c.p.server.service.PaintingService       : Fetching painting with urlKey: cappuccino-assassino (cache miss)
-2025-10-15T23:46:58.491+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-9] c.p.server.service.PaintingService       : Incremented view count for painting: cappuccino-assassino
-2025-10-15T23:47:03.617+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-1] c.p.server.service.PaintingService       : Fetching painting with urlKey: chimpanzini-bananini (cache miss)
-2025-10-15T23:47:03.619+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-1] c.p.server.service.PaintingService       : Incremented view count for painting: chimpanzini-bananini
-2025-10-15T23:47:10.247+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-3] c.p.server.service.PaintingService       : Fetching painting with urlKey: udin-din-din-dun (cache miss)
-2025-10-15T23:47:10.248+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-3] c.p.server.service.PaintingService       : Incremented view count for painting: udin-din-din-dun
-2025-10-15T23:50:48.245+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-6] c.p.server.service.PaintingService       : Fetching painting with urlKey: chimpanzini-bananini (cache miss)
-2025-10-15T23:50:48.247+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-6] c.p.server.service.PaintingService       : Incremented view count for painting: chimpanzini-bananini
-2025-10-15T23:50:53.648+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Fetching painting with urlKey: cappuccino-assassino (cache miss)
-2025-10-15T23:50:53.649+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Incremented view count for painting: cappuccino-assassino
-2025-10-15T23:51:06.993+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Fetching painting with urlKey: capuchina-ballerina (cache miss)
-2025-10-15T23:51:06.995+03:00 DEBUG 22109 --- [kids-painting-api] [io-8080-exec-10] c.p.server.service.PaintingService       : Incremented view count for painting: capuchina-ballerina
-2025-10-16T00:28:57.247+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m24s467ms).
-2025-10-16T01:24:21.113+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=55m23s865ms).
-2025-10-16T02:22:51.776+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=58m30s664ms).
-2025-10-16T02:28:54.259+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m32s507ms).
-2025-10-16T02:52:08.706+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=23m14s453ms).
-2025-10-16T03:24:31.935+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=32m23s229ms).
-2025-10-16T03:29:15.818+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m43s882ms).
-2025-10-16T04:28:59.698+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=59m43s881ms).
-2025-10-16T05:24:05.541+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=54m35s850ms).
-2025-10-16T06:21:54.521+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=57m48s980ms).
-2025-10-16T06:24:15.569+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m21s48ms).
-2025-10-16T06:28:56.134+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m40s565ms).
-2025-10-16T07:05:38.004+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=36m41s869ms).
-2025-10-16T07:24:05.352+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m27s286ms).
-2025-10-16T07:27:27.371+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m22s22ms).
-2025-10-16T07:44:25.455+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-7] c.p.server.service.PaintingService       : Fetching painting with urlKey: tralalero-tralala (cache miss)
-2025-10-16T07:44:25.458+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-7] c.p.server.service.PaintingService       : Incremented view count for painting: tralalero-tralala
-2025-10-16T08:33:38.317+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m10s401ms).
-2025-10-16T08:43:17.057+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-1] c.p.server.service.PaintingService       : Fetching painting with urlKey: chimpanzini-bananini (cache miss)
-2025-10-16T08:43:17.078+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-1] c.p.server.service.PaintingService       : Incremented view count for painting: chimpanzini-bananini
-2025-10-16T08:44:50.298+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Fetching painting with urlKey: brr-brr-patapim (cache miss)
-2025-10-16T08:44:50.304+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Incremented view count for painting: brr-brr-patapim
-2025-10-16T09:03:54.825+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m46s401ms).
-2025-10-16T09:24:11.523+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=46s472ms).
-2025-10-16T09:44:29.879+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=19m48s326ms).
-2025-10-16T09:45:39.857+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Fetching painting with urlKey: tralalero-tralala (cache miss)
-2025-10-16T09:45:39.861+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-8] c.p.server.service.PaintingService       : Incremented view count for painting: tralalero-tralala
-2025-10-16T09:51:11.759+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-6] c.p.server.service.PaintingService       : Fetching painting with urlKey: tralalero-tralala (cache miss)
-2025-10-16T09:51:11.768+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-6] c.p.server.service.PaintingService       : Incremented view count for painting: tralalero-tralala
-2025-10-16T09:57:39.265+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m39s268ms).
-2025-10-16T15:02:18.793+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-1] c.p.server.service.PaintingService       : Fetching painting with urlKey: student (cache miss)
-2025-10-16T15:02:18.850+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-1] c.p.server.service.PaintingService       : Fetching painting with urlKey: student (cache miss)
-2025-10-16T15:02:18.854+03:00 DEBUG 22109 --- [kids-painting-api] [nio-8080-exec-1] c.p.server.service.PaintingService       : Incremented view count for painting: student
-2025-10-16T15:45:11.698+03:00  WARN 22109 --- [kids-painting-api] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m28s854ms).
+2025-10-17T00:06:20.931+03:00  INFO 23987 --- [kids-painting-api] [           main] com.painting.server.Application          : Starting Application using Java 17.0.15 with PID 23987 (/Users/guym/Documents/d/paiting/backend/target/classes started by guym in /Users/guym/Documents/d/paiting/backend)
+2025-10-17T00:06:20.933+03:00 DEBUG 23987 --- [kids-painting-api] [           main] com.painting.server.Application          : Running with Spring Boot v3.2.3, Spring v6.1.4
+2025-10-17T00:06:20.933+03:00  INFO 23987 --- [kids-painting-api] [           main] com.painting.server.Application          : No active profile set, falling back to 1 default profile: "default"
+2025-10-17T00:06:21.318+03:00  INFO 23987 --- [kids-painting-api] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-17T00:06:21.346+03:00  INFO 23987 --- [kids-painting-api] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 1 JPA repository interface.
+2025-10-17T00:06:21.639+03:00  INFO 23987 --- [kids-painting-api] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-17T00:06:21.647+03:00  INFO 23987 --- [kids-painting-api] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-17T00:06:21.648+03:00  INFO 23987 --- [kids-painting-api] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-10-17T00:06:21.688+03:00  INFO 23987 --- [kids-painting-api] [           main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-10-17T00:06:21.689+03:00  INFO 23987 --- [kids-painting-api] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 733 ms
+2025-10-17T00:06:21.693+03:00  INFO 23987 --- [kids-painting-api] [           main] c.painting.server.config.DatabaseConfig  : DATABASE_URL environment variable: NOT SET
+2025-10-17T00:06:21.693+03:00  INFO 23987 --- [kids-painting-api] [           main] c.painting.server.config.DatabaseConfig  : Using H2 file-based database for local development
+2025-10-17T00:06:21.700+03:00  INFO 23987 --- [kids-painting-api] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-17T00:06:21.843+03:00  INFO 23987 --- [kids-painting-api] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./painting user=SA
+2025-10-17T00:06:21.844+03:00  INFO 23987 --- [kids-painting-api] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-17T00:06:21.850+03:00  INFO 23987 --- [kids-painting-api] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./painting'
+2025-10-17T00:06:21.914+03:00  INFO 23987 --- [kids-painting-api] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-17T00:06:21.954+03:00  INFO 23987 --- [kids-painting-api] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2025-10-17T00:06:21.975+03:00  INFO 23987 --- [kids-painting-api] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-17T00:06:22.103+03:00  INFO 23987 --- [kids-painting-api] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-17T00:06:22.599+03:00  INFO 23987 --- [kids-painting-api] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-17T00:06:22.624+03:00  INFO 23987 --- [kids-painting-api] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-17T00:06:22.791+03:00  INFO 23987 --- [kids-painting-api] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-17T00:06:23.354+03:00  INFO 23987 --- [kids-painting-api] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/api'
+2025-10-17T00:06:23.360+03:00  INFO 23987 --- [kids-painting-api] [           main] com.painting.server.Application          : Started Application in 2.642 seconds (process running for 2.822)
+2025-10-17T00:06:23.361+03:00  INFO 23987 --- [kids-painting-api] [           main] c.p.server.config.DataInitializer        : Local H2 database detected - initializing with sample data
+2025-10-17T00:06:23.366+03:00  INFO 23987 --- [kids-painting-api] [           main] c.p.server.config.DataInitializer        : Table already contains data - skipping initialization
+2025-10-17T00:06:28.540+03:00  INFO 23987 --- [kids-painting-api] [nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-17T00:06:28.541+03:00  INFO 23987 --- [kids-painting-api] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-10-17T00:06:28.542+03:00  INFO 23987 --- [kids-painting-api] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-10-17T00:06:28.565+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-1] c.p.server.service.PaintingService       : Fetching all categories (cache miss)
+2025-10-17T00:06:28.566+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-3] c.p.server.service.PaintingService       : Fetching featured paintings page 0 size 6 (cache miss)
+2025-10-17T00:06:28.566+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Fetching popular paintings page 0 size 12 (cache miss)
+2025-10-17T00:06:37.830+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-4] c.p.server.service.PaintingService       : Autocomplete search for: go
+2025-10-17T00:06:38.322+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-5] c.p.server.service.PaintingService       : Autocomplete search for: gold
+2025-10-17T00:06:41.577+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-9] c.p.server.service.PaintingService       : Fetching painting with urlKey: goldilocks-and-the-three-bears (cache miss)
+2025-10-17T00:06:41.580+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-9] c.p.server.service.PaintingService       : Fetching painting with urlKey: goldilocks-and-the-three-bears (cache miss)
+2025-10-17T00:06:41.587+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-9] c.p.server.service.PaintingService       : Incremented view count for painting: goldilocks-and-the-three-bears
+2025-10-17T00:06:46.666+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Fetching painting with urlKey: alice-in-wonderland (cache miss)
+2025-10-17T00:06:46.668+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Fetching painting with urlKey: alice-in-wonderland (cache miss)
+2025-10-17T00:06:46.669+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-2] c.p.server.service.PaintingService       : Incremented view count for painting: alice-in-wonderland
+2025-10-17T00:07:24.017+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-4] c.p.server.service.PaintingService       : Fetching painting with urlKey: three-little-pigs (cache miss)
+2025-10-17T00:07:24.035+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-4] c.p.server.service.PaintingService       : Fetching painting with urlKey: three-little-pigs (cache miss)
+2025-10-17T00:07:24.038+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-4] c.p.server.service.PaintingService       : Incremented view count for painting: three-little-pigs
+2025-10-17T00:07:42.862+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-6] c.p.server.service.PaintingService       : Fetching painting with urlKey: hansel-and-gretel (cache miss)
+2025-10-17T00:07:42.865+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-6] c.p.server.service.PaintingService       : Fetching painting with urlKey: hansel-and-gretel (cache miss)
+2025-10-17T00:07:42.866+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-6] c.p.server.service.PaintingService       : Incremented view count for painting: hansel-and-gretel
+2025-10-17T00:08:47.588+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-9] c.p.server.service.PaintingService       : Fetching painting with urlKey: red-riding-hood (cache miss)
+2025-10-17T00:08:47.589+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-9] c.p.server.service.PaintingService       : Fetching painting with urlKey: red-riding-hood (cache miss)
+2025-10-17T00:08:47.591+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-9] c.p.server.service.PaintingService       : Incremented view count for painting: red-riding-hood
+2025-10-17T00:11:31.022+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-1] c.p.server.service.PaintingService       : Fetching painting with urlKey: pinocchio (cache miss)
+2025-10-17T00:11:31.044+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-1] c.p.server.service.PaintingService       : Fetching painting with urlKey: pinocchio (cache miss)
+2025-10-17T00:11:31.046+03:00 DEBUG 23987 --- [kids-painting-api] [nio-8080-exec-1] c.p.server.service.PaintingService       : Incremented view count for painting: pinocchio
+2025-10-17T00:32:27.616+03:00 ERROR 23987 --- [kids-painting-api] [nio-8080-exec-5] c.p.s.exception.GlobalExceptionHandler   : Unexpected error: 
+
+org.springframework.web.servlet.resource.NoResourceFoundException: No static resource admin/cache/clear/categories.
+	at org.springframework.web.servlet.resource.ResourceHttpRequestHandler.handleRequest(ResourceHttpRequestHandler.java:585) ~[spring-webmvc-6.1.4.jar:6.1.4]
+	at org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter.handle(HttpRequestHandlerAdapter.java:52) ~[spring-webmvc-6.1.4.jar:6.1.4]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.4.jar:6.1.4]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.4.jar:6.1.4]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.4.jar:6.1.4]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.4.jar:6.1.4]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.19.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.4.jar:6.1.4]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.19.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.19.jar:10.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.4.jar:6.1.4]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.4.jar:6.1.4]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.4.jar:6.1.4]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.4.jar:6.1.4]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.4.jar:6.1.4]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.4.jar:6.1.4]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.19.jar:10.1.19]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+

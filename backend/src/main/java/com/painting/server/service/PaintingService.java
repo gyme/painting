@@ -95,6 +95,8 @@ public class PaintingService {
         
         painting.setTitle(paintingDetails.getTitle());
         painting.setDescription(paintingDetails.getDescription());
+        painting.setTitleEs(paintingDetails.getTitleEs());
+        painting.setDescriptionEs(paintingDetails.getDescriptionEs());
         painting.setCategory(paintingDetails.getCategory());
         painting.setTags(paintingDetails.getTags());
         painting.setImageUrl(paintingDetails.getImageUrl());
