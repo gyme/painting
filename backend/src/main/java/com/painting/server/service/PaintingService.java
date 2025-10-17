@@ -82,12 +82,14 @@ public class PaintingService {
         return paintingRepository.findAllCategories();
     }
 
+    @CacheEvict(value = "categories", allEntries = true)
     @Transactional
     public Painting createPainting(Painting painting) {
         log.info("Creating new painting: {}", painting.getTitle());
         return paintingRepository.save(painting);
     }
 
+    @CacheEvict(value = "categories", allEntries = true)
     @Transactional
     public Painting updatePainting(Long id, Painting paintingDetails) {
         Painting painting = paintingRepository.findById(id)
@@ -109,6 +111,7 @@ public class PaintingService {
         return paintingRepository.save(painting);
     }
 
+    @CacheEvict(value = "categories", allEntries = true)
     @Transactional
     public void deletePainting(Long id) {
         if (!paintingRepository.existsById(id)) {
