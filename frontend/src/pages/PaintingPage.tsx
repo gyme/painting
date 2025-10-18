@@ -348,7 +348,7 @@ function PaintingPage() {
   }
 
   if (isLoading) {
-    return <Loading>🎨 Loading your painting... ✨</Loading>
+    return <Loading>🎨 {t('page.loadingPainting')} ✨</Loading>
   }
 
   if (error || !painting) {
@@ -358,17 +358,16 @@ function PaintingPage() {
       <NotFoundContainer>
         <NotFoundCard>
           <NotFoundEmoji>🎨❌</NotFoundEmoji>
-          <NotFoundTitle>Painting Not Found</NotFoundTitle>
+          <NotFoundTitle>{t('page.paintingNotFound')}</NotFoundTitle>
           <NotFoundMessage>
-            Oops! We couldn't find a coloring page called "{urlKey}".<br />
-            Don't worry, we have plenty of other amazing pictures to color!
+            {t('page.paintingNotFoundMessage', { urlKey })}
           </NotFoundMessage>
-          <BackButton to="/">🏠 Back to Gallery</BackButton>
+          <BackButton to="/">🏠 {t('page.backToGallery')}</BackButton>
         </NotFoundCard>
         
         {randomPaintings.length > 0 && (
           <SuggestionsSection>
-            <SuggestionsTitle>✨ Try These Instead!</SuggestionsTitle>
+            <SuggestionsTitle>✨ {t('page.tryTheseInstead')}</SuggestionsTitle>
             <PaintingsGrid>
               {randomPaintings.map((suggestion: any) => (
                 <PaintingCard key={suggestion.id} painting={suggestion} />

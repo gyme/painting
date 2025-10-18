@@ -260,7 +260,6 @@ function HomePage() {
     'categories',
     () => paintingsApi.getAllCategories(),
     {
-      enabled: !searchQuery,
       staleTime: 30 * 60 * 1000, // 30 minutes - categories rarely change
     }
   )
@@ -274,13 +273,18 @@ function HomePage() {
     'Food': '🍕',
     'Sports': '⚽',
     'Holidays': '🎄',
+    'Halloween': '🎃',
     'Space': '🚀',
     'Ocean': '🌊',
     'Fantasy': '🦄',
     'Dinosaurs': '🦕',
     'Fairy Tales': '📚',
     'Mandalas': '🔯',
+    'Occupations': '👨‍💼',
     'Italian Brainrot': '🇮🇹',
+    'Basketball Players': '🏀',
+    'K Pop Demon Hunters': '⚔️',
+    'Numbers': '🔢',
   }
 
   const getCategoryIcon = (category: string): string => {
@@ -300,23 +304,51 @@ function HomePage() {
       return <Error>😢 Oops! Something went wrong. Please try again later.</Error>
     }
 
+    // Filter categories that match search query
+    const matchingCategories = categories?.filter(cat => 
+      cat.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t(getCategoryTranslationKey(cat)).toLowerCase().includes(searchQuery.toLowerCase())
+    ) || []
+
+    const totalResults = (searchData?.totalElements || 0) + matchingCategories.length
+
     return (
       <Container>
         <Hero>
           <Title>🔍 Search Results for "{searchQuery}"</Title>
-          <Subtitle>{searchData?.totalElements || 0} paintings found</Subtitle>
+          <Subtitle>{totalResults} result{totalResults !== 1 ? 's' : ''} found</Subtitle>
         </Hero>
 
-        {searchData && searchData.content.length > 0 ? (
+        {/* Show matching categories first */}
+        {matchingCategories.length > 0 && (
           <Section>
+            <SectionTitle>📂 Categories ({matchingCategories.length})</SectionTitle>
+            <CategoriesGrid>
+              {matchingCategories.map((category) => (
+                <CategoryCard key={category} to={`/category/${category.replace(/ /g, '_')}`}>
+                  <CategoryIcon>📂 {getCategoryIcon(category)}</CategoryIcon>
+                  <CategoryName>{t(getCategoryTranslationKey(category))}</CategoryName>
+                </CategoryCard>
+              ))}
+            </CategoriesGrid>
+          </Section>
+        )}
+
+        {/* Show painting results */}
+        {searchData && searchData.content.length > 0 && (
+          <Section>
+            <SectionTitle>🎨 Paintings ({searchData.totalElements})</SectionTitle>
             <Grid>
               {searchData.content.map((painting) => (
                 <PaintingCard key={painting.id} painting={painting} />
               ))}
             </Grid>
           </Section>
-        ) : (
-          <Error>No paintings found matching "{searchQuery}". Try a different search!</Error>
+        )}
+
+        {/* No results message */}
+        {totalResults === 0 && (
+          <Error>No results found matching "{searchQuery}". Try a different search!</Error>
         )}
       </Container>
     )
@@ -356,7 +388,7 @@ function HomePage() {
             </SectionTitleLink>
             <CategoriesGrid>
               {categories.map((category) => (
-                <CategoryCard key={category} to={`/category/${category}`}>
+                <CategoryCard key={category} to={`/category/${category.replace(/ /g, '_')}`}>
                   <CategoryIcon>{getCategoryIcon(category)}</CategoryIcon>
                   <CategoryName>{t(getCategoryTranslationKey(category))}</CategoryName>
                 </CategoryCard>

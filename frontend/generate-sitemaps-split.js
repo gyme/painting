@@ -65,7 +65,13 @@ function extractCategories() {
     'Fantasy',
     'Mandalas',
     'Sports',
-    'Holidays'
+    'Holidays',
+    'Dinosaurs',
+    'Fairy Tales',
+    'Food',
+    'Space',
+    'Ocean',
+    'Italian Brainrot'
   ];
   
   return categories;
@@ -263,29 +269,32 @@ function generateSitemaps() {
     console.log(`✅ Found ${categories.length} categories`);
     
     categories.forEach(category => {
+      // Replace spaces with underscores for URLs
+      const categoryUrl = category.replace(/ /g, '_');
+      
       // English version
       regularUrls.push({
-        loc: `${SITE_URL}/category/${encodeURIComponent(category)}`,
+        loc: `${SITE_URL}/category/${categoryUrl}`,
         lastmod: today,
         changefreq: 'weekly',
         priority: '0.8',
         hreflang: {
-          'en': `${SITE_URL}/category/${encodeURIComponent(category)}`,
-          'es': `${SITE_URL}/es/category/${encodeURIComponent(category)}`,
-          'x-default': `${SITE_URL}/category/${encodeURIComponent(category)}`
+          'en': `${SITE_URL}/category/${categoryUrl}`,
+          'es': `${SITE_URL}/es/category/${categoryUrl}`,
+          'x-default': `${SITE_URL}/category/${categoryUrl}`
         }
       });
       
       // Spanish version
       regularUrls.push({
-        loc: `${SITE_URL}/es/category/${encodeURIComponent(category)}`,
+        loc: `${SITE_URL}/es/category/${categoryUrl}`,
         lastmod: today,
         changefreq: 'weekly',
         priority: '0.8',
         hreflang: {
-          'en': `${SITE_URL}/category/${encodeURIComponent(category)}`,
-          'es': `${SITE_URL}/es/category/${encodeURIComponent(category)}`,
-          'x-default': `${SITE_URL}/category/${encodeURIComponent(category)}`
+          'en': `${SITE_URL}/category/${categoryUrl}`,
+          'es': `${SITE_URL}/es/category/${categoryUrl}`,
+          'x-default': `${SITE_URL}/category/${categoryUrl}`
         }
       });
     });

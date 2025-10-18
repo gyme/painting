@@ -3,6 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { paintingsApi } from '../api/paintings'
+import { useQuery } from 'react-query'
+
+interface SearchResult {
+  type: 'category' | 'painting'
+  value: string
+  displayName: string
+}
 
 const SearchContainer = styled.div`
   position: relative;
@@ -97,11 +104,24 @@ const NoResults = styled.div`
 function SearchBar() {
   const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState('')
-  const [suggestions, setSuggestions] = useState<string[]>([])
+  const [suggestions, setSuggestions] = useState<SearchResult[]>([])
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const searchRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
+
+  // Fetch all categories
+  const { data: categories } = useQuery(
+    'categories',
+    () => paintingsApi.getAllCategories(),
+    {
+      staleTime: 30 * 60 * 1000,
+    }
+  )
+
+  const getCategoryTranslationKey = (category: string): string => {
+    return `categories.${category.toLowerCase()}`
+  }
 
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -112,8 +132,29 @@ function SearchBar() {
 
       setIsLoading(true)
       try {
-        const results = await paintingsApi.autocompletePaintings(searchTerm, 8)
-        setSuggestions(results)
+        // Fetch painting suggestions
+        const paintingResults = await paintingsApi.autocompletePaintings(searchTerm, 5)
+        
+        // Filter matching categories
+        const matchingCategories = categories?.filter(cat => 
+          cat.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          t(getCategoryTranslationKey(cat)).toLowerCase().includes(searchTerm.toLowerCase())
+        ) || []
+
+        // Combine results: categories first, then paintings
+        const categoryResults: SearchResult[] = matchingCategories.slice(0, 3).map(cat => ({
+          type: 'category' as const,
+          value: cat,
+          displayName: t(getCategoryTranslationKey(cat))
+        }))
+
+        const paintingResultsFormatted: SearchResult[] = paintingResults.map(title => ({
+          type: 'painting' as const,
+          value: title,
+          displayName: title
+        }))
+
+        setSuggestions([...categoryResults, ...paintingResultsFormatted])
         setShowSuggestions(true)
       } catch (error) {
         console.error('Error fetching suggestions:', error)
@@ -125,7 +166,7 @@ function SearchBar() {
 
     const debounceTimer = setTimeout(fetchSuggestions, 300)
     return () => clearTimeout(debounceTimer)
-  }, [searchTerm])
+  }, [searchTerm, categories, t])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -153,8 +194,17 @@ function SearchBar() {
     }
   }
 
-  const handleSuggestionClick = (suggestion: string) => {
-    handleSearch(suggestion)
+  const handleSuggestionClick = (result: SearchResult) => {
+    setShowSuggestions(false)
+    setSearchTerm('')
+    
+    if (result.type === 'category') {
+      // Navigate directly to category page
+      navigate(`/category/${result.value.replace(/ /g, '_')}`)
+    } else {
+      // Navigate to search results
+      handleSearch(result.value)
+    }
   }
 
   return (
@@ -172,13 +222,13 @@ function SearchBar() {
           {isLoading ? (
             <NoResults>Searching...</NoResults>
           ) : suggestions.length > 0 ? (
-            suggestions.map((suggestion, index) => (
-              <Suggestion key={index} onClick={() => handleSuggestionClick(suggestion)}>
-                🎨 {suggestion}
+            suggestions.map((result, index) => (
+              <Suggestion key={index} onClick={() => handleSuggestionClick(result)}>
+                {result.type === 'category' ? '📂' : '🎨'} {result.displayName}
               </Suggestion>
             ))
           ) : searchTerm.length >= 2 ? (
-            <NoResults>No paintings found</NoResults>
+            <NoResults>No results found</NoResults>
           ) : null}
         </SuggestionsDropdown>
       )}

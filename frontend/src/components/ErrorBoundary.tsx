@@ -1,6 +1,7 @@
 import React, { Component, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { withTranslation, WithTranslation } from 'react-i18next'
 
 const Container = styled.div`
   min-height: calc(100vh - 80px);
@@ -84,7 +85,7 @@ const Button = styled(Link)`
   }
 `
 
-interface Props {
+interface Props extends WithTranslation {
   children: ReactNode
 }
 
@@ -108,21 +109,22 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   render() {
+    const { t } = this.props
+    
     if (this.state.hasError) {
       return (
         <Container>
           <Content>
             <ErrorEmoji>😢</ErrorEmoji>
             
-            <Title>Oops! Something Went Wrong</Title>
+            <Title>{t('errorBoundary.title')}</Title>
             
             <Message>
-              Don't worry! This happens sometimes.<br />
-              Let's get you back to coloring! 🎨
+              {t('errorBoundary.message')}
             </Message>
             
             <Button to="/" onClick={() => window.location.reload()}>
-              🏠 Back to Home
+              🏠 {t('errorBoundary.backToHome')}
             </Button>
           </Content>
         </Container>
@@ -133,4 +135,4 @@ class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-export default ErrorBoundary
+export default withTranslation()(ErrorBoundary)

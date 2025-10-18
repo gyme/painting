@@ -278,26 +278,36 @@ const PaintingCard = memo(function PaintingCard({ painting }: PaintingCardProps)
   }
 
   const imagePath = getImagePath()
+  // Add version parameter to bust cache (v3 for WebP support)
+  const imagePathWithVersion = `${imagePath}?v=3`
+  // WebP version (90% smaller, same quality!)
+  const webpPath = imagePath.replace('.png', '.webp').replace('.jpg', '.webp') + '?v=3'
   
   return (
     <Card to={`/painting/${painting.urlKey}`}>
       <ImageContainer>
-        {/* Show PNG/JPG image directly - no SVG overlay */}
+        {/* Show WebP with PNG fallback - no SVG overlay */}
         {!imageError ? (
-          <CardImage 
-            src={imagePath}
-            alt={`${painting.title} coloring page outline for kids - ${painting.category} category`}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement
-              // If PNG fails, try JPG
-              if (target.src.endsWith('.png')) {
-                target.src = target.src.replace('.png', '.jpg')
-              } else {
-                // Both PNG and JPG failed - show SVG fallback
-                setImageError(true)
-              }
-            }}
-          />
+          <picture>
+            {/* Modern browsers: serve WebP (90% smaller!) */}
+            <source srcSet={webpPath} type="image/webp" />
+            {/* Fallback: serve PNG for old browsers */}
+            <CardImage 
+              src={imagePathWithVersion}
+              alt={`${painting.title} coloring page outline for kids - ${painting.category} category`}
+              loading="lazy"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement
+                // If PNG fails, try JPG
+                if (target.src.includes('.png')) {
+                  target.src = target.src.replace('.png', '.jpg')
+                } else {
+                  // Both PNG and JPG failed - show SVG fallback
+                  setImageError(true)
+                }
+              }}
+            />
+          </picture>
         ) : (
           <SVGContainer 
             dangerouslySetInnerHTML={{ __html: getProfessionalColoringArt(painting.urlKey) || getMiniSVG(painting.urlKey) }} 

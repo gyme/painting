@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/((?!sitemap|robots\\.txt|coloring-images|favicon).*)",
+      "source": "/((?!sitemap.*\\.xml|robots\\.txt|coloring-images|favicon).*)",
       "destination": "/index.html"
     }
   ],

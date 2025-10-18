@@ -539,6 +539,9 @@ function CategoryPage() {
   const { category } = useParams<{ category: string }>()
   const [searchParams, setSearchParams] = useSearchParams()
 
+  // Convert underscores back to spaces for API call
+  const categoryName = category?.replace(/_/g, ' ')
+
   // Initialize state from URL parameters
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '')
   const [sortBy, setSortBy] = useState(searchParams.get('sort') || 'newest')
@@ -548,8 +551,8 @@ function CategoryPage() {
   })
 
   const { data, isLoading, error } = useQuery(
-    ['categoryPaintings', category],
-    () => paintingsApi.getPaintingsByCategory(category!, 0, 100), // Fetch more for better filtering
+    ['categoryPaintings', categoryName],
+    () => paintingsApi.getPaintingsByCategory(categoryName!, 0, 100), // Fetch more for better filtering
     {
       staleTime: 5 * 60 * 1000,
     }
@@ -629,7 +632,7 @@ function CategoryPage() {
   const activeFilterCount = (searchQuery ? 1 : 0) + difficultyFilter.length + (sortBy !== 'newest' ? 1 : 0)
 
   if (isLoading) {
-    return <Loading>🎨 Loading {category} paintings... ✨</Loading>
+    return <Loading>🎨 Loading {categoryName} paintings... ✨</Loading>
   }
 
   if (error) {
@@ -662,17 +665,17 @@ function CategoryPage() {
   return (
     <>
       <SEO
-        title={`${category} Coloring Pages - Free Printable for Kids`}
-        description={content?.description || categoryDescriptions[category?.toLowerCase() || ''] || `Browse our collection of ${category} coloring pages for kids. Free printable coloring sheets perfect for children of all ages!`}
-        keywords={`${category} coloring pages, ${category} coloring sheets, kids ${category}, printable ${category}, free ${category} coloring, ${category} activities for kids`}
+        title={`${categoryName} Coloring Pages - Free Printable for Kids`}
+        description={content?.description || categoryDescriptions[categoryName?.toLowerCase() || ''] || `Browse our collection of ${categoryName} coloring pages for kids. Free printable coloring sheets perfect for children of all ages!`}
+        keywords={`${categoryName} coloring pages, ${categoryName} coloring sheets, kids ${categoryName}, printable ${categoryName}, free ${categoryName} coloring, ${categoryName} activities for kids`}
       />
       <Container>
         <Breadcrumbs items={[
           { label: 'Home', path: '/' },
-          { label: category || 'Category' }
+          { label: categoryName || 'Category' }
         ]} />
         <Header>
-          <Title>{getCategoryEmoji(category!)} {t(`categories.${category?.toLowerCase()}`)} {t('coloring.title')}</Title>
+          <Title>{getCategoryEmoji(categoryName!)} {t(`categories.${categoryName?.toLowerCase()}`)} {t('coloring.title')}</Title>
         </Header>
 
         {/* Filters - One Line Layout */}
@@ -801,7 +804,7 @@ function CategoryPage() {
           <EmptyState>
             <EmptyTitle>🎨 Coming Soon!</EmptyTitle>
             <EmptyText>
-              We're working on adding more {category} coloring pages.
+              We're working on adding more {categoryName} coloring pages.
               Check back soon!
             </EmptyText>
           </EmptyState>

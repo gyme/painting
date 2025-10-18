@@ -80,6 +80,7 @@ function Footer() {
         
         <Links>
           <FooterLink to="/">{t('footer.home')}</FooterLink>
+          <FooterLink to="/sitemap">Sitemap</FooterLink>
           <FooterLink to="/contact">{t('footer.contact')}</FooterLink>
           <FooterLink to="/terms">{t('footer.terms')}</FooterLink>
           <FooterLink to="/privacy">{t('footer.privacy')}</FooterLink>

@@ -108,9 +108,9 @@ const ColorSection = styled.div<{ $isOpen?: boolean }>`
   }
 `
 
-const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $translateX?: number; $translateY?: number }>`
+const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $translateX?: number; $translateY?: number; $isLoading?: boolean }>`
   position: relative;
-  border: 4px solid #333;
+  border: ${props => props.$isLoading ? 'none' : '4px solid #333'};
   border-radius: 15px;
   overflow: hidden;
   background: white;
@@ -121,6 +121,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
   margin: 0 auto;
   max-width: 100%;
   max-height: calc(100vh - 4rem); /* Full height minus container padding */
+  transition: border 0.3s ease-in-out;
   
   canvas {
     display: block;
@@ -129,6 +130,8 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
     max-height: calc(100vh - 8rem); /* Maximum height for desktop */
     max-width: 100%;
     object-fit: contain;
+    opacity: ${props => props.$isLoading ? '0' : '1'};
+    transition: opacity 0.4s ease-in-out;
   }
   
   @media (max-width: 768px) {
@@ -156,6 +159,44 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       padding: 0 !important;
       touch-action: auto; /* Allow native browser touch handling including zoom */
       object-fit: contain;
+    }
+  }
+`
+
+const LoadingSkeleton = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
+const LoadingContent = styled.div`
+  position: relative;
+  z-index: 1;
+  
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #667eea;
+    border-right: 4px solid #764ba2;
+    border-radius: 50%;
+    animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 `
@@ -548,22 +589,47 @@ const MobileToolbar = styled.div`
 `
 
 const MobileButtonRow = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  display: flex;
   gap: 0.5rem;
   width: 100%;
-  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 0.2rem;
   margin: 0 auto;
-  justify-items: center;
+  justify-content: flex-start;
+  scroll-behavior: smooth;
+  
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
+  /* Add slight padding indicator on right if content overflows */
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.9), transparent);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
   
   @media (max-width: 350px) {
-    grid-template-columns: repeat(3, 1fr);
     gap: 0.4rem;
   }
 `
 
 const MobileToolButton = styled.button<{ color?: string; $isActive?: boolean }>`
   padding: 0.7rem 0.5rem;
+  min-width: 70px;
+  flex-shrink: 0;
   background: ${props => props.color || (props.$isActive ? 'rgba(102, 126, 234, 0.15)' : 'rgba(102, 126, 234, 0.08)')};
   color: ${props => props.$isActive ? '#667eea' : '#7c8ff0'};
   border: 2px solid ${props => props.$isActive ? 'rgba(102, 126, 234, 0.3)' : 'rgba(102, 126, 234, 0.15)'};
@@ -659,6 +725,131 @@ const CloseButton = styled.button`
     &:active {
       transform: scale(0.9);
     }
+  }
+`
+
+const ShareMenuOverlay = styled.div<{ $isOpen: boolean }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: ${props => props.$isOpen ? 'flex' : 'none'};
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(5px);
+  animation: ${props => props.$isOpen ? 'fadeIn' : 'fadeOut'} 0.3s ease;
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+`
+
+const ShareMenuCard = styled.div`
+  background: white;
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  width: 400px;
+  animation: slideUp 0.3s ease;
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    width: 85%;
+    padding: 1.5rem;
+  }
+`
+
+const ShareMenuTitle = styled.h3`
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  font-weight: 700;
+  
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+`
+
+const ShareButtonsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+`
+
+const SharePlatformButton = styled.button<{ $bgColor: string }>`
+  padding: 1.5rem 1rem;
+  background: ${props => props.$bgColor};
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(-2px);
+  }
+  
+  span:first-child {
+    font-size: 2.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.2rem 0.8rem;
+    font-size: 0.9rem;
+    
+    span:first-child {
+      font-size: 2rem;
+    }
+  }
+`
+
+const ShareCancelButton = styled.button`
+  width: 100%;
+  padding: 1rem;
+  background: #f0f0f0;
+  color: #666;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: #e0e0e0;
+  }
+  
+  &:active {
+    transform: scale(0.98);
   }
 `
 
@@ -765,6 +956,12 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
   const [scale, setScale] = useState(1)
   const lastTouchDistanceRef = useRef<number>(0)
   const lastTouchCenterRef = useRef<{ x: number, y: number } | null>(null)
+  
+  // Share menu state
+  const [showShareMenu, setShowShareMenu] = useState(false)
+  
+  // Image loading state
+  const [isImageLoading, setIsImageLoading] = useState(true)
   
   // Keep historyStepRef in sync with historyStep state
   useEffect(() => {
@@ -900,21 +1097,24 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
     const ctx = canvas.getContext('2d', { willReadFrequently: true })
     if (!ctx) return
 
+    // Show loading skeleton
+    setIsImageLoading(true)
+
     // Try to load real coloring image first
     const img = new Image()
     img.crossOrigin = 'anonymous'
     
-    // Construct proper image path
+    // Construct proper image path - try WebP first for faster loading
     const getImagePath = () => {
       // Check if imageUrl is valid
       if (imageUrl && !imageUrl.includes('placeholder') && !imageUrl.includes('example.com')) {
-        // Always use PNG, not JPG
-        const pngUrl = imageUrl.replace('.jpg', '.png')
-        return pngUrl
+        // Try WebP first, fallback handled in onerror
+        const webpUrl = imageUrl.replace('.jpg', '.webp').replace('.png', '.webp')
+        return webpUrl
       }
-      // Fallback: construct from urlKey
+      // Fallback: construct from urlKey - use WebP for faster loading
       const fileName = urlKey.replace(/-/g, '_')
-      const path = `/coloring-images/${fileName}.png`
+      const path = `/coloring-images/${fileName}.webp`
       return path
     }
     
@@ -922,6 +1122,9 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
     img.onload = () => {
       // Store the image for later use (clear, etc.)
       originalImageRef.current = img
+      
+      // Hide loading skeleton
+      setIsImageLoading(false)
       
       // Set canvas size AFTER image loads
       const isMobile = window.innerWidth <= 768
@@ -1002,8 +1205,16 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
     }
     
     img.onerror = () => {
+      // WebP failed, try PNG
+      if (img.src.includes('.webp')) {
+        const fileName = urlKey.replace(/-/g, '_')
+        const pngPath = `/coloring-images/${fileName}.png`
+        const absolutePngPath = `${window.location.origin}${pngPath}`
+        img.src = absolutePngPath
+        return
+      }
       // PNG failed, try JPG
-      if (img.src.endsWith('.png')) {
+      if (img.src.includes('.png')) {
         const fileName = urlKey.replace(/-/g, '_')
         const jpgPath = `/coloring-images/${fileName}.jpg`
         const absoluteJpgPath = `${window.location.origin}${jpgPath}`
@@ -1021,6 +1232,9 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
         svgImg.onload = () => {
           // Store the SVG image for later use
           originalImageRef.current = svgImg
+          
+          // Hide loading skeleton
+          setIsImageLoading(false)
           
           // Set canvas size AFTER SVG loads
           const isMobile = window.innerWidth <= 768
@@ -1751,6 +1965,87 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
     printWindow.document.close()
   }, [title, WATERMARK_TEXT])
   
+  const shareImage = useCallback(() => {
+    // Just show the custom share menu
+    setShowShareMenu(true)
+  }, [])
+  
+  const shareToWhatsApp = useCallback(async () => {
+    try {
+      const pageUrl = window.location.href
+      const shareText = `🎨 Check out my coloring!\n\n"${title}"\n\n🖍️ Color it yourself here:\n${pageUrl}\n\n✨ Free coloring pages for kids!`
+      
+      // Try Web Share API first (works on mobile!)
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: title,
+            text: shareText,
+            url: pageUrl
+          })
+          setShowShareMenu(false)
+          return
+        } catch (err) {
+          if (err instanceof Error && err.name === 'AbortError') {
+            // User cancelled, just close menu
+            setShowShareMenu(false)
+            return
+          }
+          // If Web Share fails, continue to fallback
+          console.log('Web Share failed, using WhatsApp URL:', err)
+        }
+      }
+      
+      // Fallback: Open WhatsApp with text directly
+      const whatsappText = encodeURIComponent(shareText)
+      const whatsappUrl = `https://wa.me/?text=${whatsappText}`
+      window.open(whatsappUrl, '_blank')
+      setShowShareMenu(false)
+      
+    } catch (error) {
+      console.error('Error sharing to WhatsApp:', error)
+      alert('Could not share to WhatsApp.')
+    }
+  }, [title])
+  
+  const shareToFacebook = useCallback(async () => {
+    try {
+      const pageUrl = window.location.href
+      const shareText = `🎨 Check out my coloring!\n\n"${title}"\n\n🖍️ Color it yourself here:\n${pageUrl}\n\n✨ Free coloring pages for kids!`
+      
+      // Try Web Share API first (works on mobile!)
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: title,
+            text: shareText,
+            url: pageUrl
+          })
+          setShowShareMenu(false)
+          return
+        } catch (err) {
+          if (err instanceof Error && err.name === 'AbortError') {
+            // User cancelled, just close menu
+            setShowShareMenu(false)
+            return
+          }
+          // If Web Share fails, continue to fallback
+          console.log('Web Share failed, using Facebook URL:', err)
+        }
+      }
+      
+      // Fallback: Open Facebook share dialog with URL
+      const encodedUrl = encodeURIComponent(pageUrl)
+      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`
+      window.open(facebookUrl, '_blank', 'width=600,height=400')
+      setShowShareMenu(false)
+      
+    } catch (error) {
+      console.error('Error sharing to Facebook:', error)
+      alert('Could not share to Facebook.')
+    }
+  }, [title])
+  
   // Expose print function to parent component
   useEffect(() => {
     if (onPrintReady) {
@@ -1773,7 +2068,15 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
           <CanvasWrapper 
             $cursorType={getCursorType()} 
             $scale={scale}
+            $isLoading={isImageLoading}
           >
+            {isImageLoading && (
+              <LoadingSkeleton>
+                <LoadingContent>
+                  <div className="spinner"></div>
+                </LoadingContent>
+              </LoadingSkeleton>
+            )}
             <canvas
               ref={canvasRef}
               onMouseDown={handleCanvasMouseDown}
@@ -1906,14 +2209,6 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
             }}>
               💾 {t('coloring.tools.save')}
             </ToolButton>
-            <ToolButton onClick={() => {
-              printImage()
-              if (window.innerWidth <= 768) {
-                setIsColorPickerOpen(false)
-              }
-            }}>
-              🖨️ {t('coloring.tools.print')}
-            </ToolButton>
           </ToolsContainer>
         </ColorSection>
       </MainContent>
@@ -1996,6 +2291,10 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
               <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>↶</span>
               <span>{t('coloring.tools.undo')}</span>
             </MobileToolButton>
+            <MobileToolButton onClick={shareImage}>
+              <span style={{ fontSize: '1.8rem', lineHeight: '1' }}>📤</span>
+              <span>{t('coloring.tools.share')}</span>
+            </MobileToolButton>
             {scale > 1 ? (
               <MobileToolButton 
                 onClick={() => {
@@ -2014,6 +2313,32 @@ const InteractiveColoring = memo(function InteractiveColoring({ imageUrl, urlKey
             )}
           </MobileButtonRow>
         </MobileToolbar>
+        
+        {/* Share Menu Modal */}
+        <ShareMenuOverlay $isOpen={showShareMenu} onClick={() => setShowShareMenu(false)}>
+          <ShareMenuCard onClick={(e) => e.stopPropagation()}>
+            <ShareMenuTitle>{t('coloring.tools.share')}</ShareMenuTitle>
+            <ShareButtonsGrid>
+              <SharePlatformButton 
+                $bgColor="#25D366"
+                onClick={shareToWhatsApp}
+              >
+                <span>💬</span>
+                <span>WhatsApp</span>
+              </SharePlatformButton>
+              <SharePlatformButton 
+                $bgColor="#1877F2"
+                onClick={shareToFacebook}
+              >
+                <span>📘</span>
+                <span>Facebook</span>
+              </SharePlatformButton>
+            </ShareButtonsGrid>
+            <ShareCancelButton onClick={() => setShowShareMenu(false)}>
+              {t('common.cancel', 'Cancel')}
+            </ShareCancelButton>
+          </ShareMenuCard>
+        </ShareMenuOverlay>
     </Container>
   )
 })

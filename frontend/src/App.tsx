@@ -28,6 +28,8 @@ const BestForToddlersPage = lazy(() => import('./pages/BestForToddlersPage'))
 const MostPopularPage = lazy(() => import('./pages/MostPopularPage'))
 const EasyColoringPage = lazy(() => import('./pages/EasyColoringPage'))
 const RandomPage = lazy(() => import('./pages/RandomPage'))
+const SitemapPage = lazy(() => import('./pages/SitemapPage'))
+const LetterSitemapPage = lazy(() => import('./pages/LetterSitemapPage'))
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -78,6 +80,8 @@ function App() {
               <Route path="/easy-coloring-pages" element={<EasyColoringPage />} />
               
               {/* Static Pages */}
+              <Route path="/sitemap" element={<SitemapPage />} />
+              <Route path="/sitemap/:letter" element={<LetterSitemapPage />} />
               <Route path="/terms" element={<TermsOfServicePage />} />
               <Route path="/contact" element={<ContactUsPage />} />
               <Route path="/privacy" element={<PrivacyPolicyPage />} />
@@ -100,6 +104,8 @@ function App() {
               <Route path="/es/easy-coloring-pages" element={<EasyColoringPage />} />
               
               {/* Spanish Static Pages */}
+              <Route path="/es/sitemap" element={<SitemapPage />} />
+              <Route path="/es/sitemap/:letter" element={<LetterSitemapPage />} />
               <Route path="/es/terms" element={<TermsOfServicePage />} />
               <Route path="/es/contact" element={<ContactUsPage />} />
               <Route path="/es/privacy" element={<PrivacyPolicyPage />} />
