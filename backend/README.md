@@ -42,3 +42,4 @@ Edit `src/main/resources/application.yml`:
 - Server port
 - CORS settings
 - File storage path
+# Trigger redeploy
