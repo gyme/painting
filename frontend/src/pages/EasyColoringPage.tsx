@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import SEO from '../components/SEO'
 import Breadcrumbs from '../components/Breadcrumbs'
 
@@ -89,6 +90,8 @@ const CTAButton = styled(Link)`
 `
 
 function EasyColoringPage() {
+  const { t } = useTranslation()
+  
   return (
     <>
       <SEO
@@ -104,7 +107,7 @@ function EasyColoringPage() {
         ]} />
         
         <Hero>
-          <Title>✨ Easy Coloring Pages for Beginners</Title>
+          <Title>✨ {t('collections.easy.pageTitle')}</Title>
           <Subtitle>
             Simple, confidence-building designs perfect for kids learning to color!
           </Subtitle>

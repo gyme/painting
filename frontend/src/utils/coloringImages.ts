@@ -24,6 +24,10 @@ export const coloringImages: { [key: string]: string } = {
   'flying-kuala': '/coloring-images/flying_kuala.png',
   'koala-love': '/coloring-images/koala_love.png',
   'squirrel': '/coloring-images/squirrel.png',
+  'cute-little-cat': '/coloring-images/cute_little_cat.png',
+  'cute-little-puppy': '/coloring-images/cute_little_puppy.png',
+  'baby-animal-zoo': '/coloring-images/baby_animal_zoo.png',
+  'life-under-the-sea': '/coloring-images/life_under_the_sea.png',
   
   // Vehicles
   'bus': '/coloring-images/bus.png',
@@ -43,12 +47,24 @@ export const coloringImages: { [key: string]: string } = {
   'beetle': '/coloring-images/beetle.png',
   'muscle-car': '/coloring-images/muscle_car.png',
   'mercedes-gull-wing-coupe': '/coloring-images/mercedes_gull_wing_coupe.png',
+  'tractor': '/coloring-images/tractor.png',
+  'monster-truck': '/coloring-images/monster_truck.png',
   
   // Sports
   'surfer': '/coloring-images/surfer.png',
   'basketball-player': '/coloring-images/basketball_player.png',
   'karate': '/coloring-images/karate.png',
   'drummer': '/coloring-images/drummer.png',
+  'judo-match': '/coloring-images/judo_match.png',
+  'table-tennis': '/coloring-images/table_tennis.png',
+  'hokey': '/coloring-images/hokey.png',
+  'baseball': '/coloring-images/baseball.png',
+  'swimmer': '/coloring-images/swimmer.png',
+  'volleyball-game': '/coloring-images/volleyball_game.png',
+  'tennis-player': '/coloring-images/tennis_player.png',
+  'american-football-player': '/coloring-images/american_football_player.png',
+  'golf-player': '/coloring-images/golf_player.png',
+  'kid-playing-soccer': '/coloring-images/kid_playing_soccer.png',
   
   // Basketball Players
   'giannis-antetokounmpo': '/coloring-images/giannis_antetokounmpo.png',
@@ -79,6 +95,7 @@ export const coloringImages: { [key: string]: string } = {
   'taylor-swift': '/coloring-images/taylor_swift.jpg',
   'spider-man': '/coloring-images/spider_man.png',
   'friendly-icecream': '/coloring-images/friendly_icecream.png',
+  'friendly-robot': '/coloring-images/friendly_robot.png',
   
   // Occupations
   'police-officer': '/coloring-images/police_officer.png',
@@ -112,6 +129,10 @@ export const coloringImages: { [key: string]: string } = {
   'fairy-on-a-flower': '/coloring-images/fairy_on_a_flower.png',
   'super-dino': '/coloring-images/super_dino.png',
   'mushroom-house': '/coloring-images/mushroom_house.png',
+  'friendly-dragon': '/coloring-images/friendly_dragon.png',
+  'rainbow-unicorn': '/coloring-images/rainbow_unicorn.png',
+  'castle': '/coloring-images/castle.png',
+  'baby-unicorn': '/coloring-images/baby_unicorn.png',
   
   // K Pop Demon Hunters
   'k-pop-demon-hunters': '/coloring-images/k_pop_demon_hunters.png',
@@ -130,6 +151,8 @@ export const coloringImages: { [key: string]: string } = {
   'pteranodon': '/coloring-images/pteranodon.png',
   'ankylosaurus': '/coloring-images/ankylosaurus.png',
   'parasaurolophus': '/coloring-images/parasaurolophus.png',
+  'happy-dinosaur': '/coloring-images/happy_dinosaur.png',
+  'baby-dinosaur': '/coloring-images/baby_dinosaur.png',
   
   // Fairy Tales
   'red-riding-hood': '/coloring-images/red_riding_hood.png',
@@ -155,12 +178,43 @@ export const coloringImages: { [key: string]: string } = {
   'tiger-mandala': '/coloring-images/tiger_mandala.png',
   'owl-mandala': '/coloring-images/owl_mandala.png',
   'meduza-mandala': '/coloring-images/meduza_mandala.png',
+  'dragon-mandala': '/coloring-images/dragon_mandala.png',
   'flower-mandala': '/coloring-images/flower_mandala.png',
   'star-mandala': '/coloring-images/star_mandala.png',
   'heart-with-cover-mandala': '/coloring-images/heart_with_cover_mandala.png',
   'sun-mandala': '/coloring-images/sun_mandala.png',
   'dolphin-mandala': '/coloring-images/dolphine_mandala.png',
   'heart-mandala': '/coloring-images/heart_mandala.png',
+  'bear-mandala': '/coloring-images/bear_mandala.png',
+  
+  // ABC / Letters
+  'abc': '/coloring-images/abc.png',
+  'the-letter-a': '/coloring-images/the_letter_a.png',
+  'the-letter-b': '/coloring-images/the_letter_b.png',
+  'the-letter-c': '/coloring-images/the_letter_c.png',
+  'the-letter-d': '/coloring-images/the_letter_d.png',
+  'the-letter-e': '/coloring-images/the_letter_e.png',
+  'the-letter-f': '/coloring-images/the_letter_f.png',
+  'the-letter-g': '/coloring-images/the_letter_g.png',
+  'the-letter-h': '/coloring-images/the_letter_h.png',
+  'the-letter-i': '/coloring-images/the_letter_i.png',
+  'the-letter-j': '/coloring-images/the_letter_j.png',
+  'the-letter-k': '/coloring-images/the_letter_k.png',
+  'the-letter-l': '/coloring-images/the_letter_l.png',
+  'the-letter-m': '/coloring-images/the_letter_m.png',
+  'the-letter-n': '/coloring-images/the_letter_n.png',
+  'the-letter-o': '/coloring-images/the_letter_o.png',
+  'the-letter-p': '/coloring-images/the_letter_p.png',
+  'the-letter-q': '/coloring-images/the_letter_q.png',
+  'the-letter-r': '/coloring-images/the_letter_r.png',
+  'the-letter-s': '/coloring-images/the_letter_s.png',
+  'the-letter-t': '/coloring-images/the_letter_t.png',
+  'the-letter-u': '/coloring-images/the_letter_u.png',
+  'the-letter-v': '/coloring-images/the_letter_v.png',
+  'the-letter-w': '/coloring-images/the_letter_w.png',
+  'the-letter-x': '/coloring-images/the_letter_x.png',
+  'the-letter-y': '/coloring-images/the_letter_y.png',
+  'the-letter-z': '/coloring-images/the_letter_z.png',
   
   // Numbers
   'zero': '/coloring-images/zero.png',
@@ -194,6 +248,9 @@ export const coloringImages: { [key: string]: string } = {
   'sun-flower': '/coloring-images/sun_flower.png',
   'tree': '/coloring-images/tree.png',
   'bonsai': '/coloring-images/bonsai.png',
+  'lake': '/coloring-images/lake.png',
+  'mountains': '/coloring-images/mountains.png',
+  'forest': '/coloring-images/forest.png',
   
   // Disney Characters (if you add them later)
   'stitch': '/coloring-images/stitch.png',
@@ -205,6 +262,20 @@ export const coloringImages: { [key: string]: string } = {
   'minnie-mouse': '/coloring-images/minnie-mouse.png',
   'spiderman': '/coloring-images/spiderman.png',
   'olaf-frozen': '/coloring-images/olaf.png',
+  
+  // Flowers
+  'rose': '/coloring-images/rose.webp',
+  'sunflower': '/coloring-images/sunflower.webp',
+  'lavender': '/coloring-images/lavender.webp',
+  'pansy': '/coloring-images/pansy.webp',
+  'calla-lily': '/coloring-images/calla_lily.webp',
+  'tulip': '/coloring-images/tulip.webp',
+  'iris': '/coloring-images/iris.webp',
+  'cherry-blossom': '/coloring-images/cherry_blossom.webp',
+  'snapdragon': '/coloring-images/snapdragon.webp',
+  'amaryllis': '/coloring-images/amaryllis.webp',
+  'daffodil': '/coloring-images/daffodil.webp',
+  'daisy': '/coloring-images/daisy.webp',
   
   // Default fallback
   'default': '/coloring-images/cat.png'

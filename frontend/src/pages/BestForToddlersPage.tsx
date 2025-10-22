@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import SEO from '../components/SEO'
 import Breadcrumbs from '../components/Breadcrumbs'
 
@@ -89,6 +90,8 @@ const CTAButton = styled(Link)`
 `
 
 function BestForToddlersPage() {
+  const { t } = useTranslation()
+  
   return (
     <>
       <SEO
@@ -104,7 +107,7 @@ function BestForToddlersPage() {
         ]} />
         
         <Hero>
-          <Title>👶 Best Coloring Pages for Toddlers</Title>
+          <Title>👶 {t('collections.toddlers.pageTitle')}</Title>
           <Subtitle>
             Perfect first coloring pages for ages 2-4 with simple, engaging designs!
           </Subtitle>

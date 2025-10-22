@@ -58,6 +58,7 @@ function extractPaintingsFromLocalData() {
 // Extract categories from paintings
 function extractCategories() {
   const categories = [
+    'ABC',
     'Animals',
     'Vehicles',
     'Characters',
@@ -352,7 +353,19 @@ function generateSitemaps() {
       { path: '/top-vehicle-coloring-pages', priority: '0.8', changefreq: 'monthly' },
       { path: '/best-coloring-pages-for-toddlers', priority: '0.8', changefreq: 'monthly' },
       { path: '/most-popular-coloring-pages', priority: '0.9', changefreq: 'weekly' },
-      { path: '/easy-coloring-pages', priority: '0.8', changefreq: 'monthly' }
+      { path: '/easy-coloring-pages', priority: '0.8', changefreq: 'monthly' },
+      // New SEO collection pages
+      { path: '/collections', priority: '0.8', changefreq: 'monthly' },
+      { path: '/collections/easy', priority: '0.8', changefreq: 'monthly' },
+      { path: '/collections/animals', priority: '0.8', changefreq: 'monthly' },
+      { path: '/collections/printable', priority: '0.8', changefreq: 'monthly' },
+      { path: '/collections/toddlers', priority: '0.8', changefreq: 'monthly' },
+      { path: '/collections/popular', priority: '0.9', changefreq: 'weekly' },
+      { path: '/collections/detailed', priority: '0.7', changefreq: 'monthly' },
+      { path: '/collections/characters', priority: '0.8', changefreq: 'monthly' },
+      { path: '/collections/vehicles', priority: '0.8', changefreq: 'monthly' },
+      { path: '/collections/educational', priority: '0.8', changefreq: 'monthly' },
+      { path: '/collections/seasonal', priority: '0.8', changefreq: 'monthly' }
     ];
     
     console.log('\n📄 Adding collection pages...');

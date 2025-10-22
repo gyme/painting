@@ -37,6 +37,109 @@ const Title = styled.h1`
   }
 `
 
+const TipsSection = styled.div`
+  max-width: 1200px;
+  margin: 3rem auto 2rem;
+  padding: 2.5rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  
+  @media (max-width: 768px) {
+    margin: 2rem 0 1rem;
+    padding: 1.5rem;
+    border-radius: 15px;
+  }
+`
+
+const TipsTitle = styled.h2`
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2d3436;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`
+
+const TipsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+`
+
+const TipsColumn = styled.div``
+
+const TipsSubtitle = styled.h3`
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2d3436;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+`
+
+const TipsList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`
+
+const TipItem = styled.li`
+  padding: 0.75rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  color: #555;
+  line-height: 1.6;
+  
+  &:before {
+    content: '🎨';
+    position: absolute;
+    left: 0;
+  }
+`
+
+const FactItem = styled.li`
+  padding: 0.75rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  color: #555;
+  line-height: 1.6;
+  
+  &:before {
+    content: '💡';
+    position: absolute;
+    left: 0;
+  }
+`
+
+const AgeRangeBadge = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+`
+
 const Description = styled.div`
   max-width: 1200px;
   margin: 3rem auto 2rem;
@@ -641,10 +744,27 @@ function CategoryPage() {
 
   const getCategoryEmoji = (cat: string) => {
     switch (cat?.toLowerCase()) {
+      case 'abc': return '🔤'
       case 'animals': return '🐶'
       case 'nature': return '🌳'
       case 'vehicles': return '🚗'
       case 'fantasy': return '🦄'
+      case 'characters': return '👦'
+      case 'food': return '🍕'
+      case 'sports': return '⚽'
+      case 'holidays': return '🎄'
+      case 'halloween': return '🎃'
+      case 'space': return '🚀'
+      case 'ocean': return '🌊'
+      case 'dinosaurs': return '🦕'
+      case 'fairy tales': return '📚'
+      case 'mandalas': return '🔯'
+      case 'occupations': return '👨‍💼'
+      case 'italian brainrot': return '🇮🇹'
+      case 'basketball players': return '🏀'
+      case 'k pop demon hunters': return '⚔️'
+      case 'numbers': return '🔢'
+      case 'flowers': return '🌸'
       default: return '🎨'
     }
   }
@@ -808,6 +928,36 @@ function CategoryPage() {
               Check back soon!
             </EmptyText>
           </EmptyState>
+        )}
+        
+        {/* Coloring Tips Section - Category Specific */}
+        {categoryName && t(`categoryTips.${categoryName}.tips`, { returnObjects: true }) && (
+          <TipsSection>
+            <TipsTitle>
+              ✨ {t('categoryTips.title')}
+            </TipsTitle>
+            <TipsGrid>
+              <TipsColumn>
+                <TipsSubtitle>🎨 {t('categoryTips.tipsTitle')}</TipsSubtitle>
+                <TipsList>
+                  {(t(`categoryTips.${categoryName}.tips`, { returnObjects: true }) as string[]).map((tip, index) => (
+                    <TipItem key={index}>{tip}</TipItem>
+                  ))}
+                </TipsList>
+              </TipsColumn>
+              <TipsColumn>
+                <TipsSubtitle>💡 {t('categoryTips.factsTitle')}</TipsSubtitle>
+                <TipsList>
+                  {(t(`categoryTips.${categoryName}.facts`, { returnObjects: true }) as string[]).map((fact, index) => (
+                    <FactItem key={index}>{fact}</FactItem>
+                  ))}
+                </TipsList>
+                <AgeRangeBadge>
+                  👶 {t('categoryTips.ageLabel')} {t(`categoryTips.${categoryName}.ageRange`)}
+                </AgeRangeBadge>
+              </TipsColumn>
+            </TipsGrid>
+          </TipsSection>
         )}
         
         {content && (

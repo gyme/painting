@@ -19,6 +19,13 @@ const Loading = styled.div`
   padding: 2rem;
 `
 
+const Title = styled.h1`
+  font-size: 2.5rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0;
+`
+
 const Spinner = styled.div`
   width: 60px;
   height: 60px;
@@ -79,7 +86,7 @@ function RandomPage() {
   return (
     <Loading>
       <Spinner />
-      <div>🎲 {t('random.finding')} ✨</div>
+      <Title>🎲 {t('random.finding')} ✨</Title>
     </Loading>
   )
 }

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import SEO from '../components/SEO'
 import Breadcrumbs from '../components/Breadcrumbs'
 
@@ -95,6 +96,8 @@ const CTAButton = styled(Link)`
 `
 
 function TopVehiclesPage() {
+  const { t } = useTranslation()
+  
   return (
     <>
       <SEO
@@ -110,7 +113,7 @@ function TopVehiclesPage() {
         ]} />
         
         <Hero>
-          <Title>🚗 Top 15 Vehicle Coloring Pages</Title>
+          <Title>🚗 {t('collections.vehicles.pageTitle')}</Title>
           <Subtitle>
             The most popular vehicle coloring pages - perfect for kids who love things that go!
           </Subtitle>

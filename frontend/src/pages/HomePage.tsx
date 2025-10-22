@@ -285,6 +285,7 @@ function HomePage() {
     'Basketball Players': '🏀',
     'K Pop Demon Hunters': '⚔️',
     'Numbers': '🔢',
+    'Flowers': '🌸',
   }
 
   const getCategoryIcon = (category: string): string => {
@@ -365,9 +366,9 @@ function HomePage() {
   return (
     <>
       <SEO
-        title="Free Coloring Pages for Kids"
-        description="Explore hundreds of free printable coloring pages for kids! Color amazing animals, vehicles, nature scenes, and popular characters. Perfect for children of all ages."
-        keywords="free coloring pages, kids coloring, printable coloring sheets, animal coloring pages, vehicle coloring pages, children activities, fun for kids"
+        title={t('seo.home.title')}
+        description={t('seo.home.description')}
+        keywords={t('seo.home.keywords')}
       />
       <Container>
         <Hero>

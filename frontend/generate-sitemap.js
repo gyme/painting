@@ -20,7 +20,7 @@ const http = require('http');
 
 // Configuration
 const SITE_URL = process.env.SITE_URL || 'https://www.mycolor.fun';
-const API_URL = process.env.VITE_API_BASE_URL || 'https://painting-backend.onrender.com/api';
+const API_URL = process.env.VITE_API_BASE_URL || 'https://docker-composeyaml-production.up.railway.app/api';
 const OUTPUT_PATH = path.join(__dirname, 'public', 'sitemap.xml');
 
 console.log('🗺️  Generating sitemap for:', SITE_URL);

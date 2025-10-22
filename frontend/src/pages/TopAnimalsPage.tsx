@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import SEO from '../components/SEO'
 import Breadcrumbs from '../components/Breadcrumbs'
 
@@ -119,6 +120,8 @@ const CTAButton = styled(Link)`
 `
 
 function TopAnimalsPage() {
+  const { t } = useTranslation()
+  
   return (
     <>
       <SEO
@@ -134,7 +137,7 @@ function TopAnimalsPage() {
         ]} />
         
         <Hero>
-          <Title>🐶 Top 20 Animal Coloring Pages</Title>
+          <Title>🐶 {t('collections.animals.pageTitle')}</Title>
           <Subtitle>
             The most popular animal coloring pages loved by kids worldwide!
           </Subtitle>

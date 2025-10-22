@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import SEO from '../components/SEO'
 import Breadcrumbs from '../components/Breadcrumbs'
 
@@ -89,6 +90,8 @@ const CTAButton = styled(Link)`
 `
 
 function MostPopularPage() {
+  const { t } = useTranslation()
+  
   return (
     <>
       <SEO
@@ -104,7 +107,7 @@ function MostPopularPage() {
         ]} />
         
         <Hero>
-          <Title>⭐ Most Popular Coloring Pages</Title>
+          <Title>⭐ {t('collections.popular.pageTitle')}</Title>
           <Subtitle>
             The highest-rated, most downloaded coloring pages loved by kids worldwide!
           </Subtitle>

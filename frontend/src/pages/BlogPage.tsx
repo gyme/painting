@@ -269,9 +269,9 @@ function BlogPage() {
   return (
     <>
       <SEO 
-        title="Coloring Pages Blog - Tips, Benefits & Educational Resources"
-        description="Discover the educational benefits of coloring, child development tips, and expert advice on using coloring pages for learning and creativity."
-        keywords="coloring benefits, child development, educational coloring, kids activities, parenting tips"
+        title={t('seo.blog.title')}
+        description={t('seo.blog.description')}
+        keywords={t('seo.blog.keywords')}
       />
       
       <Container>

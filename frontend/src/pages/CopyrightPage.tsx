@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import SEO from '../components/SEO'
 
 const Container = styled.div`
@@ -126,6 +127,8 @@ const Strong = styled.strong`
 `
 
 function CopyrightPage() {
+  const { t } = useTranslation()
+  
   return (
     <>
       <SEO
@@ -135,7 +138,7 @@ function CopyrightPage() {
       />
       <Container>
         <Card>
-          <Title>📋 Copyright Policy & DMCA Notice</Title>
+          <Title>📋 {t('copyright.title')}</Title>
           <Paragraph style={{ fontSize: '1.2rem', color: '#2d3436', marginBottom: '2rem' }}>
             Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
           </Paragraph>

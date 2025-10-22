@@ -30,6 +30,8 @@ const EasyColoringPage = lazy(() => import('./pages/EasyColoringPage'))
 const RandomPage = lazy(() => import('./pages/RandomPage'))
 const SitemapPage = lazy(() => import('./pages/SitemapPage'))
 const LetterSitemapPage = lazy(() => import('./pages/LetterSitemapPage'))
+const CollectionPage = lazy(() => import('./pages/CollectionPage'))
+const CollectionsIndexPage = lazy(() => import('./pages/CollectionsIndexPage'))
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -79,6 +81,10 @@ function App() {
               <Route path="/most-popular-coloring-pages" element={<MostPopularPage />} />
               <Route path="/easy-coloring-pages" element={<EasyColoringPage />} />
               
+              {/* SEO Collection Pages */}
+              <Route path="/collections" element={<CollectionsIndexPage />} />
+              <Route path="/collections/:collectionId" element={<CollectionPage />} />
+              
               {/* Static Pages */}
               <Route path="/sitemap" element={<SitemapPage />} />
               <Route path="/sitemap/:letter" element={<LetterSitemapPage />} />
@@ -102,6 +108,10 @@ function App() {
               <Route path="/es/best-coloring-pages-for-toddlers" element={<BestForToddlersPage />} />
               <Route path="/es/most-popular-coloring-pages" element={<MostPopularPage />} />
               <Route path="/es/easy-coloring-pages" element={<EasyColoringPage />} />
+              
+              {/* Spanish SEO Collection Pages */}
+              <Route path="/es/collections" element={<CollectionsIndexPage />} />
+              <Route path="/es/collections/:collectionId" element={<CollectionPage />} />
               
               {/* Spanish Static Pages */}
               <Route path="/es/sitemap" element={<SitemapPage />} />
