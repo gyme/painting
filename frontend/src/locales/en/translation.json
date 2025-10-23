@@ -1,0 +1,628 @@
+{
+  "common": {
+    "language": "Language",
+    "readMore": "Read More",
+    "backTo": "Back to",
+    "by": "By",
+    "more": "More",
+    "cancel": "Cancel"
+  },
+  "seo": {
+    "home": {
+      "title": "Free Coloring Pages for Kids",
+      "description": "Explore hundreds of free printable coloring pages for kids! Color amazing animals, vehicles, nature scenes, and popular characters. Perfect for children of all ages.",
+      "keywords": "free coloring pages, kids coloring, printable coloring sheets, animal coloring pages, vehicle coloring pages, children activities, fun for kids"
+    },
+    "categories": {
+      "title": "Browse All Categories",
+      "description": "Explore all coloring page categories. Find animals, vehicles, characters, nature, holidays, and more! Thousands of free coloring pages for kids.",
+      "keywords": "coloring categories, animal pages, vehicle pages, character coloring, kids activities"
+    },
+    "blog": {
+      "title": "Coloring Pages Blog",
+      "description": "Expert insights on how coloring pages benefit child development, education, and creativity",
+      "keywords": "coloring tips, child development, educational coloring, parenting advice"
+    }
+  },
+  "coloring": {
+    "paletteTitle": "🎨 Pick a Color",
+    "title": "Coloring Pages",
+    "loadingImage": "Loading your coloring page...",
+    "tools": {
+      "fill": "Fill",
+      "brush": "Brush",
+      "eraser": "Eraser",
+      "undo": "Undo",
+      "redo": "Redo",
+      "clear": "Clear",
+      "save": "Save",
+      "share": "Share",
+      "print": "Print",
+      "reset": "Reset",
+      "erase": "Erase"
+    },
+    "colors": {
+      "black": "Black",
+      "darkBrown": "Dark Brown",
+      "darkRed": "Dark Red",
+      "forestGreen": "Forest Green",
+      "navyBlue": "Navy Blue",
+      "deepPurple": "Deep Purple",
+      "charcoal": "Charcoal",
+      "brown": "Brown",
+      "maroon": "Maroon",
+      "burntOrange": "Burnt Orange",
+      "olive": "Olive",
+      "teal": "Teal",
+      "royalBlue": "Royal Blue",
+      "indigo": "Indigo",
+      "brightRed": "Bright Red",
+      "tangerine": "Tangerine",
+      "goldenYellow": "Golden Yellow",
+      "limeGreen": "Lime Green",
+      "emerald": "Emerald",
+      "turquoise": "Turquoise",
+      "brightBlue": "Bright Blue",
+      "hotPink": "Hot Pink",
+      "deepRose": "Deep Rose",
+      "neonOrange": "Neon Orange",
+      "brightYellow": "Bright Yellow",
+      "kellyGreen": "Kelly Green",
+      "aqua": "Aqua",
+      "steelBlue": "Steel Blue",
+      "babyPink": "Baby Pink",
+      "coral": "Coral",
+      "peach": "Peach",
+      "magenta": "Magenta",
+      "mint": "Mint",
+      "skyBlue": "Sky Blue",
+      "lavender": "Lavender",
+      "white": "White",
+      "salmon": "Salmon",
+      "cream": "Cream",
+      "sand": "Sand",
+      "lightGray": "Light Gray",
+      "mediumGray": "Medium Gray",
+      "steelGray": "Steel Gray"
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "random": "Random",
+    "blog": "Blog"
+  },
+  "header": {
+    "title": "Kids Coloring",
+    "menu": "Menu"
+  },
+  "footer": {
+    "home": "Home",
+    "contact": "Contact Us",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "copyright": "© {{year}} mycolor.fun. All rights reserved.",
+    "tagline": "Free coloring pages for kids - Print, Color, and Have Fun!"
+  },
+  "search": {
+    "placeholder": "Search...",
+    "searchPaintings": "Search paintings...",
+    "noResults": "No results found"
+  },
+  "filters": {
+    "sort": "Sort:",
+    "newest": "Newest",
+    "oldest": "Oldest",
+    "popular": "Popular",
+    "difficulty": "Difficulty:",
+    "clearAll": "Clear All",
+    "showing": "Showing",
+    "of": "of",
+    "coloringPages": "coloring pages",
+    "activeFilter": "active filter",
+    "activeFilters": "active filters",
+    "search": "Search",
+    "noMatchesFound": "No matches found",
+    "noMatchesSearch": "No coloring pages match \"{{query}}\" with your current filters.",
+    "noMatchesFilters": "No coloring pages match your current filters.",
+    "clearAllShowAll": "Clear All Filters & Show All"
+  },
+  "categories": {
+    "all": "All Categories",
+    "abc": "ABC",
+    "animals": "Animals",
+    "vehicles": "Vehicles",
+    "nature": "Nature",
+    "characters": "Characters",
+    "fantasy": "Fantasy",
+    "food": "Food",
+    "holidays": "Holidays",
+    "sports": "Sports",
+    "dinosaurs": "Dinosaurs",
+    "space": "Space",
+    "italian brainrot": "Italian Brainrot",
+    "ocean": "Ocean",
+    "fairy tales": "Fairy Tales",
+    "mandalas": "Mandalas",
+    "halloween": "Halloween",
+    "occupations": "Occupations",
+    "basketball players": "Basketball Players",
+    "k pop demon hunters": "K-Pop Demon Hunters",
+    "inspiring-people": "Inspiring People",
+    "numbers": "Numbers",
+    "flowers": "Flowers",
+    "browse": "Browse by Category",
+    "title": "All Categories",
+    "subtitle": "Choose a category and start coloring!",
+    "pageTitle": "Browse All Categories",
+    "pageDescription": "Explore all coloring page categories. Find animals, vehicles, characters, nature, holidays, and more! Thousands of free coloring pages for kids.",
+    "explore": "Explore"
+  },
+  "blog": {
+    "title": "Coloring Pages Blog",
+    "subtitle": "Expert insights on how coloring pages benefit child development, education, and creativity",
+    "readFullArticle": "Read full article",
+    "backToBlog": "Back to Blog",
+    "articleNotFound": "Article Not Found",
+    "articleNotFoundDesc": "Sorry, we couldn't find the article you're looking for.",
+    "startColoringToday": "Start Coloring Today",
+    "animalPages": "Animal Coloring Pages",
+    "animalPagesDesc": "Explore our collection of cute animals",
+    "vehiclePages": "Vehicle Coloring Pages",
+    "vehiclePagesDesc": "Cars, trucks, trains and more",
+    "allPages": "All Coloring Pages",
+    "allPagesDesc": "Browse our complete collection"
+  },
+  "home": {
+    "title": "Free Printable Coloring Pages",
+    "subtitle": "Print & Color • 100% Free",
+    "randomPage": "Random Page",
+    "browseByCategory": "Browse by Category",
+    "featuredPages": "Featured Pages",
+    "popularPages": "Popular Pages",
+    "pages": "Pages",
+    "loading": "Loading coloring pages...",
+    "error": "Oops! Something went wrong. Please try again later."
+  },
+  "page": {
+    "loading": "Loading...",
+    "loadingPainting": "Loading your painting...",
+    "error": "Something went wrong",
+    "notFound": "Page not found",
+    "paintingNotFound": "Painting Not Found",
+    "paintingNotFoundMessage": "Oops! We couldn't find a coloring page called \"{urlKey}\". Don't worry, we have plenty of other amazing pictures to color!",
+    "notFoundDesc": "The page you're looking for doesn't exist.",
+    "backToGallery": "Back to Gallery",
+    "tryTheseInstead": "Try These Instead!",
+    "views": "views",
+    "view": "view"
+  },
+  "sitemap": {
+    "title": "Site Map",
+    "browse": "Browse {{count}} pages organized alphabetically",
+    "summary": "{{paintings}} coloring pages + {{categories}} categories",
+    "loading": "Loading sitemap...",
+    "backToSitemap": "Back to Sitemap",
+    "pages": "pages",
+    "categories": "Categories",
+    "pagesSection": "Pages",
+    "noPages": "No pages found starting with {{letter}}"
+  },
+  "collections": {
+    "title": "Coloring Page Collections",
+    "subtitle": "Browse our curated collections organized by theme, difficulty, and age group. All pages are 100% free to print!",
+    "loading": "Loading collection...",
+    "available": "coloring pages available",
+    "easy": {
+      "title": "Easy Coloring Pages",
+      "pageTitle": "Easy Coloring Pages for Beginners",
+      "description": "Simple and easy coloring pages perfect for young children and beginners. Large shapes, thick lines, and fun designs that are easy to color!"
+    },
+    "animals": {
+      "title": "Animal Coloring Pages",
+      "pageTitle": "Top 20 Animal Coloring Pages",
+      "description": "Amazing collection of animal coloring pages! From cute pets to wild animals, farm animals to ocean creatures - explore the animal kingdom!"
+    },
+    "printable": {
+      "title": "Free Printable Coloring Pages",
+      "description": "All our coloring pages are 100% free to print! Just click, print, and start coloring. Perfect for home, school, or anywhere!"
+    },
+    "toddlers": {
+      "title": "Coloring Pages for Toddlers",
+      "pageTitle": "Best Coloring Pages for Toddlers",
+      "description": "Special coloring pages designed for toddlers ages 2-4. Extra simple designs with thick lines that are perfect for little hands learning to color!"
+    },
+    "popular": {
+      "title": "Most Popular Coloring Pages",
+      "pageTitle": "Most Popular Coloring Pages",
+      "description": "Our most popular and loved coloring pages! These are the favorites chosen by thousands of kids and parents."
+    },
+    "detailed": {
+      "title": "Detailed Coloring Pages for Older Kids",
+      "description": "Challenging and detailed coloring pages perfect for older kids, teens, and adults. Complex designs that provide hours of creative fun!"
+    },
+    "characters": {
+      "title": "Character Coloring Pages",
+      "description": "Fun character coloring pages including princesses, superheroes, fairy tales, and more! Bring your favorite characters to life with color!"
+    },
+    "vehicles": {
+      "title": "Vehicle Coloring Pages",
+      "pageTitle": "Top 15 Vehicle Coloring Pages",
+      "description": "Rev up your creativity with cars, trucks, airplanes, boats, and more! Perfect for kids who love all things that go!"
+    },
+    "educational": {
+      "title": "Educational Coloring Pages",
+      "description": "Learn while you color! Numbers, alphabet, shapes, and more. Perfect for preschool and kindergarten learning!"
+    },
+    "seasonal": {
+      "title": "Holiday & Seasonal Coloring Pages",
+      "description": "Celebrate every season and holiday with our festive coloring pages! Christmas, Halloween, Easter, and more!"
+    }
+  },
+  "random": {
+    "finding": "Finding a random coloring page for you...",
+    "error": "Oops! Something went wrong.",
+    "goHome": "Go back to home"
+  },
+  "errorBoundary": {
+    "title": "Oops! Something Went Wrong",
+    "message": "Don't worry! This happens sometimes. Let's get you back to coloring! 🎨",
+    "backToHome": "Back to Home"
+  },
+  "difficulty": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard"
+  },
+  "badge": {
+    "featured": "Featured!"
+  },
+  "category": {
+    "educationalBenefits": "Educational Benefits",
+    "ageRange": "Age Range:",
+    "learningValue": "Learning Value:"
+  },
+  "categoryTips": {
+    "title": "Coloring Tips & Fun Facts",
+    "tipsTitle": "Coloring Tips",
+    "factsTitle": "Did You Know?",
+    "ageLabel": "Great for ages",
+    "ABC": {
+      "tips": [
+        "Use bright primary colors to make letters stand out",
+        "Try rainbow colors for each letter - make it fun!",
+        "Practice writing the letter before coloring",
+        "Color objects that start with each letter"
+      ],
+      "facts": [
+        "Learning the alphabet is the foundation of reading and writing",
+        "There are 26 letters in the English alphabet",
+        "Each letter has both uppercase and lowercase forms",
+        "Coloring letters helps with letter recognition and memory"
+      ],
+      "ageRange": "2-6"
+    },
+    "Animals": {
+      "tips": [
+        "Use natural colors like browns, grays, and blacks for realistic animals",
+        "Try bright, fun colors like pink or purple for a magical twist!",
+        "Color the background with grass, trees, or water to create a scene",
+        "Use different shades of the same color to add depth"
+      ],
+      "facts": [
+        "Animals come in amazing colors and patterns in nature",
+        "Many animals use their colors for camouflage or to attract mates",
+        "Coloring animals helps children learn about wildlife and nature"
+      ],
+      "ageRange": "3-10"
+    },
+    "Vehicles": {
+      "tips": [
+        "Bright colors like red, yellow, and blue make vehicles stand out",
+        "Add metallic silver or gray for a realistic look",
+        "Don't forget to color the wheels black or dark gray",
+        "Color the background with roads, sky, or landscapes"
+      ],
+      "facts": [
+        "Vehicles help people travel and transport goods",
+        "Different vehicles are designed for different purposes",
+        "Coloring vehicles helps develop fine motor skills"
+      ],
+      "ageRange": "3-8"
+    },
+    "Mandalas": {
+      "tips": [
+        "Choose colors that make you feel calm and happy",
+        "Try using opposite colors on the color wheel for contrast",
+        "Work from the center outward or outside inward",
+        "Use colored pencils for detailed shading and blending"
+      ],
+      "facts": [
+        "Mandala coloring is proven to reduce stress and anxiety",
+        "Mandalas have been used in meditation for thousands of years",
+        "The symmetry in mandalas helps create a sense of balance"
+      ],
+      "ageRange": "8-Adult"
+    },
+    "Dinosaurs": {
+      "tips": [
+        "Use greens, browns, and grays for realistic dinosaurs",
+        "Try bright colors like orange, purple, or blue for fun",
+        "Add scales or patterns for extra detail",
+        "Color the prehistoric background with plants and rocks"
+      ],
+      "facts": [
+        "Dinosaurs lived millions of years ago",
+        "Scientists study fossils to learn about dinosaur colors",
+        "Different dinosaurs had different diets and sizes"
+      ],
+      "ageRange": "4-10"
+    },
+    "Occupations": {
+      "tips": [
+        "Use the traditional uniform colors for each profession",
+        "Firefighters: red, yellow, and black",
+        "Doctors: white coats with colorful scrubs",
+        "Chefs: white uniforms with colorful aprons"
+      ],
+      "facts": [
+        "Different jobs require different skills and training",
+        "Every job is important to our community",
+        "Learning about occupations helps children explore future careers"
+      ],
+      "ageRange": "4-10"
+    },
+    "Fairy Tales": {
+      "tips": [
+        "Use magical colors like gold, silver, and sparkly pastels",
+        "Princesses look beautiful in pink, purple, blue, or any color!",
+        "Add stars and sparkles in the background",
+        "Don't forget to color the castle and magical elements"
+      ],
+      "facts": [
+        "Fairy tales teach important life lessons",
+        "Many fairy tales come from different cultures around the world",
+        "Fairy tale characters inspire creativity and imagination"
+      ],
+      "ageRange": "3-10"
+    },
+    "Halloween": {
+      "tips": [
+        "Traditional Halloween colors are orange, black, and purple",
+        "Try green for monsters and witches",
+        "Use dark blues and grays for spooky night scenes",
+        "Add glitter or metallic colors for extra magic"
+      ],
+      "facts": [
+        "Halloween is celebrated on October 31st",
+        "Jack-o'-lanterns were originally made from turnips",
+        "Halloween traditions vary around the world"
+      ],
+      "ageRange": "4-12"
+    },
+    "Fantasy": {
+      "tips": [
+        "Let your imagination run wild with magical colors",
+        "Unicorns can be rainbow-colored or pastel shades",
+        "Add sparkles, stars, and magical effects",
+        "Blend colors together for a dreamy effect"
+      ],
+      "facts": [
+        "Fantasy creatures spark creativity and imagination",
+        "Many fantasy stories teach bravery and friendship",
+        "Fantasy art has been popular throughout history"
+      ],
+      "ageRange": "4-12"
+    },
+    "Nature": {
+      "tips": [
+        "Use greens and browns for trees and plants",
+        "Flowers can be any color you like",
+        "Add blue for sky and water",
+        "Try seasonal colors: autumn oranges, spring pastels"
+      ],
+      "facts": [
+        "Nature provides fresh air and beautiful scenery",
+        "Plants make oxygen that we breathe",
+        "Spending time in nature is good for mental health"
+      ],
+      "ageRange": "3-10"
+    },
+    "Food": {
+      "tips": [
+        "Use realistic food colors or go wild with imagination",
+        "Add highlights to make food look shiny and delicious",
+        "Color the background with plates, tables, or kitchen scenes",
+        "Try using warm colors like red, orange, and yellow"
+      ],
+      "facts": [
+        "Different foods give us different nutrients",
+        "Colorful fruits and vegetables are usually very healthy",
+        "Learning about food helps children make healthy choices"
+      ],
+      "ageRange": "3-8"
+    },
+    "Sports": {
+      "tips": [
+        "Use team colors for authentic sports equipment",
+        "Add motion lines for action scenes",
+        "Color the background with fields, courts, or arenas",
+        "Don't forget the details like logos and numbers"
+      ],
+      "facts": [
+        "Sports help build teamwork and physical fitness",
+        "Different sports require different skills",
+        "Playing sports is fun and keeps you healthy"
+      ],
+      "ageRange": "5-12"
+    },
+    "Basketball Players": {
+      "tips": [
+        "Use your favorite team colors for the uniform",
+        "Basketball jerseys are often bold and colorful",
+        "Add court markings in the background",
+        "Color the basketball orange with black lines"
+      ],
+      "facts": [
+        "Basketball was invented in 1891 by James Naismith",
+        "Professional basketball players train for many years",
+        "Basketball helps develop coordination and teamwork"
+      ],
+      "ageRange": "6-14"
+    },
+    "Characters": {
+      "tips": [
+        "Use bright, cheerful colors for happy characters",
+        "Add details like hair color, clothing, and accessories",
+        "Color the background to match the character's personality",
+        "Try different skin tones for diverse characters"
+      ],
+      "facts": [
+        "Coloring characters helps develop storytelling skills",
+        "Characters can represent different emotions and traits",
+        "Creating characters sparks imagination and creativity"
+      ],
+      "ageRange": "3-10"
+    },
+    "Holidays": {
+      "tips": [
+        "Christmas: Use red, green, gold, and silver",
+        "Easter: Bright pastels like pink, yellow, and purple",
+        "Use traditional holiday colors or create your own",
+        "Add festive decorations and backgrounds"
+      ],
+      "facts": [
+        "Different cultures celebrate different holidays",
+        "Holidays bring families and communities together",
+        "Holiday traditions are passed down through generations"
+      ],
+      "ageRange": "3-12"
+    },
+    "Numbers": {
+      "tips": [
+        "Use different colors for each number",
+        "Rainbow colors make numbers more fun",
+        "Add patterns or designs inside the numbers",
+        "Create a colorful background"
+      ],
+      "facts": [
+        "Learning numbers is an important math skill",
+        "Coloring numbers helps with number recognition",
+        "Numbers are used in everyday life for counting"
+      ],
+      "ageRange": "3-6"
+    },
+    "K Pop Demon Hunters": {
+      "tips": [
+        "Use bold, dramatic colors",
+        "Try metallics like silver and gold for weapons",
+        "Purple and blue work great for mysterious atmospheres",
+        "Add action effects with bright colors"
+      ],
+      "facts": [
+        "K-Pop inspired characters combine music and fantasy",
+        "Demon hunter stories teach bravery and teamwork",
+        "These characters inspire confidence and creativity"
+      ],
+      "ageRange": "8-16"
+    },
+    "Italian Brainrot": {
+      "tips": [
+        "Use traditional Italian colors: red, white, and green",
+        "Gold and cream colors add elegance",
+        "Try warm Mediterranean tones",
+        "Add decorative details and patterns"
+      ],
+      "facts": [
+        "Italy is famous for art, food, and culture",
+        "Italian Renaissance art influenced the world",
+        "Italian style combines elegance with creativity"
+      ],
+      "ageRange": "8-Adult"
+    },
+    "Flowers": {
+      "tips": [
+        "Use bright, vibrant colors for petals",
+        "Try realistic colors or create rainbow flowers",
+        "Add green for stems and leaves",
+        "Use yellow or orange for flower centers"
+      ],
+      "facts": [
+        "Flowers come in thousands of different colors and shapes",
+        "Many flowers have wonderful scents that attract bees",
+        "Coloring flowers helps learn about nature and botany"
+      ],
+      "ageRange": "3-12"
+    }
+  },
+  "menu": {
+    "navigation": "Navigation",
+    "information": "Information",
+    "freePages": "Free coloring pages for kids!",
+    "printAndFun": "Print, Color, and Have Fun!"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We'd love to hear from you!",
+    "getInTouch": "Get in Touch",
+    "getInTouchText": "Have a question, suggestion, or just want to say hi? We're here to help! Feel free to reach out to us using any of the methods below.",
+    "email": "Email",
+    "responseTime": "Response Time",
+    "responseTimeText": "We typically respond within 24-48 hours",
+    "whatToHearAbout": "What We'd Love to Hear About",
+    "suggestions": "Suggestions for new coloring pages",
+    "technicalIssues": "Technical issues or bugs",
+    "feedback": "Feedback on existing pages",
+    "partnerships": "Partnership or collaboration inquiries",
+    "generalQuestions": "General questions or comments",
+    "requestPage": "Request a Coloring Page",
+    "requestPageText": "Do you have a specific coloring page in mind that you'd like to see on our website? Let us know! We're always adding new designs and would love to hear your ideas.",
+    "followUs": "Follow Us",
+    "followUsText": "Stay updated with new coloring pages and announcements! (Add your social media links here when ready)",
+    "backToGallery": "Back to Gallery"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last Updated",
+    "intro": "Your privacy is important to us. This Privacy Policy explains how mycolor.fun collects, uses, and protects your information.",
+    "infoWeCollect": "Information We Collect",
+    "infoWeCollectText": "We collect minimal information to provide you with the best coloring experience",
+    "usageData": "Usage Data",
+    "usageDataText": "We may collect information about how you access and use our website, including your browser type, pages visited, and time spent on pages.",
+    "cookies": "Cookies",
+    "cookiesText": "We use cookies to enhance your browsing experience and analyze website traffic.",
+    "howWeUse": "How We Use Your Information",
+    "howWeUseList": "To provide and maintain our service, To improve and personalize your experience, To analyze website usage and trends, To communicate with you (if you contact us)",
+    "dataProtection": "Data Protection",
+    "dataProtectionText": "We implement appropriate security measures to protect your information.",
+    "thirdParty": "Third-Party Services",
+    "thirdPartyText": "We may use third-party services (like analytics) that have their own privacy policies.",
+    "childrenPrivacy": "Children's Privacy",
+    "childrenPrivacyText": "Our website is designed for children. We do not knowingly collect personal information from children. If you are a parent and believe your child has provided us with personal information, please contact us.",
+    "changes": "Changes to This Policy",
+    "changesText": "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page.",
+    "contactUs": "Contact Us",
+    "contactUsText": "If you have questions about this Privacy Policy, please contact us"
+  },
+  "copyright": {
+    "title": "Copyright Policy & DMCA Notice"
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last Updated",
+    "intro": "Welcome to mycolor.fun! By accessing our website, you agree to these Terms of Service.",
+    "useOfService": "Use of Service",
+    "useOfServiceText": "Our coloring pages are provided free for personal, educational, and non-commercial use.",
+    "allowed": "What You Can Do",
+    "allowedList": "Print coloring pages for personal use, Use pages for educational purposes in classrooms, Share completed colored pages on social media, Use pages for non-commercial activities",
+    "notAllowed": "What You Cannot Do",
+    "notAllowedList": "Sell or redistribute our coloring pages, Use pages for commercial purposes without permission, Remove watermarks or copyright notices, Claim ownership of our designs",
+    "intellectual": "Intellectual Property",
+    "intellectualText": "All content on mycolor.fun, including coloring pages, images, and text, is protected by copyright and other intellectual property rights.",
+    "disclaimer": "Disclaimer",
+    "disclaimerText": "Our coloring pages are provided 'as is' without warranties of any kind. We are not liable for any damages arising from the use of our website.",
+    "changes": "Changes to Terms",
+    "changesText": "We reserve the right to modify these terms at any time. Continued use of the website constitutes acceptance of updated terms.",
+    "contactUs": "Contact Us",
+    "contactUsText": "If you have questions about these Terms, please contact us"
+  }
+}

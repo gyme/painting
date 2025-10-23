@@ -1,0 +1,628 @@
+{
+  "common": {
+    "language": "Idioma",
+    "readMore": "Leer Más",
+    "backTo": "Volver a",
+    "by": "Por",
+    "more": "Más",
+    "cancel": "Cancelar"
+  },
+  "seo": {
+    "home": {
+      "title": "Páginas para Colorear Gratis para Niños",
+      "description": "¡Explora cientos de páginas para colorear imprimibles gratis para niños! Colorea animales increíbles, vehículos, escenas de naturaleza y personajes populares. Perfecto para niños de todas las edades.",
+      "keywords": "páginas para colorear gratis, colorear niños, hojas para colorear imprimibles, páginas de animales para colorear, páginas de vehículos para colorear, actividades para niños, diversión para niños"
+    },
+    "categories": {
+      "title": "Explorar Todas las Categorías",
+      "description": "Explora todas las categorías de páginas para colorear. ¡Encuentra animales, vehículos, personajes, naturaleza, días festivos y más! Miles de páginas para colorear gratis para niños.",
+      "keywords": "categorías de colorear, páginas de animales, páginas de vehículos, colorear personajes, actividades para niños"
+    },
+    "blog": {
+      "title": "Blog de Páginas para Colorear",
+      "description": "Conocimientos expertos sobre cómo las páginas para colorear benefician el desarrollo infantil, la educación y la creatividad",
+      "keywords": "consejos para colorear, desarrollo infantil, colorear educativo, consejos para padres"
+    }
+  },
+  "coloring": {
+    "paletteTitle": "🎨 Elige un Color",
+    "title": "Páginas para Colorear",
+    "loadingImage": "Cargando tu página para colorear...",
+    "tools": {
+      "fill": "Rellenar",
+      "brush": "Pincel",
+      "eraser": "Borrador",
+      "undo": "Deshacer",
+      "redo": "Rehacer",
+      "clear": "Limpiar",
+      "save": "Guardar",
+      "share": "Compartir",
+      "print": "Imprimir",
+      "reset": "Restablecer",
+      "erase": "Borrar"
+    },
+    "colors": {
+      "black": "Negro",
+      "darkBrown": "Marrón Oscuro",
+      "darkRed": "Rojo Oscuro",
+      "forestGreen": "Verde Bosque",
+      "navyBlue": "Azul Marino",
+      "deepPurple": "Púrpura Profundo",
+      "charcoal": "Carbón",
+      "brown": "Marrón",
+      "maroon": "Granate",
+      "burntOrange": "Naranja Quemado",
+      "olive": "Oliva",
+      "teal": "Verde Azulado",
+      "royalBlue": "Azul Real",
+      "indigo": "Índigo",
+      "brightRed": "Rojo Brillante",
+      "tangerine": "Mandarina",
+      "goldenYellow": "Amarillo Dorado",
+      "limeGreen": "Verde Lima",
+      "emerald": "Esmeralda",
+      "turquoise": "Turquesa",
+      "brightBlue": "Azul Brillante",
+      "hotPink": "Rosa Intenso",
+      "deepRose": "Rosa Profundo",
+      "neonOrange": "Naranja Neón",
+      "brightYellow": "Amarillo Brillante",
+      "kellyGreen": "Verde Kelly",
+      "aqua": "Aguamarina",
+      "steelBlue": "Azul Acero",
+      "babyPink": "Rosa Bebé",
+      "coral": "Coral",
+      "peach": "Durazno",
+      "magenta": "Magenta",
+      "mint": "Menta",
+      "skyBlue": "Azul Cielo",
+      "lavender": "Lavanda",
+      "white": "Blanco",
+      "salmon": "Salmón",
+      "cream": "Crema",
+      "sand": "Arena",
+      "lightGray": "Gris Claro",
+      "mediumGray": "Gris Medio",
+      "steelGray": "Gris Acero"
+    }
+  },
+  "nav": {
+    "home": "Inicio",
+    "random": "Aleatorio",
+    "blog": "Blog"
+  },
+  "header": {
+    "title": "Colorear para Niños",
+    "menu": "Menú"
+  },
+  "footer": {
+    "home": "Inicio",
+    "contact": "Contáctenos",
+    "terms": "Términos de Servicio",
+    "privacy": "Política de Privacidad",
+    "copyright": "© {{year}} mycolor.fun. Todos los derechos reservados.",
+    "tagline": "Páginas para colorear gratis para niños - ¡Imprimir, Colorear y Divertirse!"
+  },
+  "search": {
+    "placeholder": "Buscar...",
+    "searchPaintings": "Buscar pinturas...",
+    "noResults": "No se encontraron resultados"
+  },
+  "filters": {
+    "sort": "Ordenar:",
+    "newest": "Más reciente",
+    "oldest": "Más antiguo",
+    "popular": "Popular",
+    "difficulty": "Dificultad:",
+    "clearAll": "Limpiar Todo",
+    "showing": "Mostrando",
+    "of": "de",
+    "coloringPages": "páginas para colorear",
+    "activeFilter": "filtro activo",
+    "activeFilters": "filtros activos",
+    "search": "Buscar",
+    "noMatchesFound": "No se encontraron coincidencias",
+    "noMatchesSearch": "Ninguna página para colorear coincide con \"{{query}}\" con tus filtros actuales.",
+    "noMatchesFilters": "Ninguna página para colorear coincide con tus filtros actuales.",
+    "clearAllShowAll": "Limpiar Todos los Filtros y Mostrar Todo"
+  },
+  "categories": {
+    "all": "Todas las Categorías",
+    "abc": "ABC",
+    "animals": "Animales",
+    "vehicles": "Vehículos",
+    "nature": "Naturaleza",
+    "characters": "Personajes",
+    "fantasy": "Fantasía",
+    "food": "Comida",
+    "holidays": "Festividades",
+    "sports": "Deportes",
+    "dinosaurs": "Dinosaurios",
+    "space": "Espacio",
+    "italian brainrot": "Brainrot Italiano",
+    "ocean": "Océano",
+    "fairy tales": "Cuentos de Hadas",
+    "mandalas": "Mandalas",
+    "halloween": "Halloween",
+    "occupations": "Ocupaciones",
+    "basketball players": "Jugadores de Baloncesto",
+    "k pop demon hunters": "Cazadores de Demonios K-Pop",
+    "inspiring-people": "Personas Inspiradoras",
+    "numbers": "Números",
+    "flowers": "Flores",
+    "browse": "Explorar por Categoría",
+    "title": "Todas las Categorías",
+    "subtitle": "¡Elige una categoría y empieza a colorear!",
+    "pageTitle": "Explorar Todas las Categorías",
+    "pageDescription": "Explora todas las categorías de páginas para colorear. ¡Encuentra animales, vehículos, personajes, naturaleza, festividades y más! Miles de páginas para colorear gratis para niños.",
+    "explore": "Explorar"
+  },
+  "blog": {
+    "title": "Blog de Páginas para Colorear",
+    "subtitle": "Consejos expertos sobre cómo las páginas para colorear benefician el desarrollo infantil, la educación y la creatividad",
+    "readFullArticle": "Leer artículo completo",
+    "backToBlog": "Volver al Blog",
+    "articleNotFound": "Artículo No Encontrado",
+    "articleNotFoundDesc": "Lo sentimos, no pudimos encontrar el artículo que buscas.",
+    "startColoringToday": "Comienza a Colorear Hoy",
+    "animalPages": "Páginas para Colorear de Animales",
+    "animalPagesDesc": "Explora nuestra colección de animales lindos",
+    "vehiclePages": "Páginas para Colorear de Vehículos",
+    "vehiclePagesDesc": "Autos, camiones, trenes y más",
+    "allPages": "Todas las Páginas para Colorear",
+    "allPagesDesc": "Explora nuestra colección completa"
+  },
+  "home": {
+    "title": "Páginas para Colorear Imprimibles Gratis",
+    "subtitle": "Imprimir y Colorear • 100% Gratis",
+    "randomPage": "Página Aleatoria",
+    "browseByCategory": "Explorar por Categoría",
+    "featuredPages": "Páginas Destacadas",
+    "popularPages": "Páginas Populares",
+    "pages": "Páginas",
+    "loading": "Cargando páginas para colorear...",
+    "error": "¡Ups! Algo salió mal. Por favor, inténtalo de nuevo más tarde."
+  },
+  "page": {
+    "loading": "Cargando...",
+    "loadingPainting": "Cargando tu pintura...",
+    "error": "Algo salió mal",
+    "notFound": "Página no encontrada",
+    "paintingNotFound": "Pintura No Encontrada",
+    "paintingNotFoundMessage": "¡Ups! No pudimos encontrar una página para colorear llamada \"{urlKey}\". ¡No te preocupes, tenemos muchas otras imágenes increíbles para colorear!",
+    "notFoundDesc": "La página que buscas no existe.",
+    "backToGallery": "Volver a la Galería",
+    "tryTheseInstead": "¡Prueba Estos En Su Lugar!",
+    "views": "vistas",
+    "view": "vista"
+  },
+  "sitemap": {
+    "title": "Mapa del Sitio",
+    "browse": "Explora {{count}} páginas organizadas alfabéticamente",
+    "summary": "{{paintings}} páginas para colorear + {{categories}} categorías",
+    "loading": "Cargando mapa del sitio...",
+    "backToSitemap": "Volver al Mapa del Sitio",
+    "pages": "páginas",
+    "categories": "Categorías",
+    "pagesSection": "Páginas",
+    "noPages": "No se encontraron páginas que comiencen con {{letter}}"
+  },
+  "collections": {
+    "title": "Colecciones de Páginas para Colorear",
+    "subtitle": "Explora nuestras colecciones seleccionadas organizadas por tema, dificultad y grupo de edad. ¡Todas las páginas son 100% gratis para imprimir!",
+    "loading": "Cargando colección...",
+    "available": "páginas para colorear disponibles",
+    "easy": {
+      "title": "Páginas para Colorear Fáciles",
+      "pageTitle": "Páginas para Colorear Fáciles para Principiantes",
+      "description": "Páginas para colorear simples y fáciles perfectas para niños pequeños y principiantes. ¡Formas grandes, líneas gruesas y diseños divertidos que son fáciles de colorear!"
+    },
+    "animals": {
+      "title": "Páginas para Colorear de Animales",
+      "pageTitle": "Top 20 Páginas para Colorear de Animales",
+      "description": "¡Increíble colección de páginas para colorear de animales! Desde mascotas lindas hasta animales salvajes, animales de granja y criaturas marinas - ¡explora el reino animal!"
+    },
+    "printable": {
+      "title": "Páginas para Colorear Gratis para Imprimir",
+      "description": "¡Todas nuestras páginas para colorear son 100% gratis para imprimir! Solo haz clic, imprime y comienza a colorear. ¡Perfecto para casa, escuela o donde sea!"
+    },
+    "toddlers": {
+      "title": "Páginas para Colorear para Niños Pequeños",
+      "pageTitle": "Mejores Páginas para Colorear para Niños Pequeños",
+      "description": "Páginas para colorear especiales diseñadas para niños de 2 a 4 años. ¡Diseños extra simples con líneas gruesas que son perfectos para las manitas que están aprendiendo a colorear!"
+    },
+    "popular": {
+      "title": "Páginas para Colorear Más Populares",
+      "pageTitle": "Páginas para Colorear Más Populares",
+      "description": "¡Nuestras páginas para colorear más populares y queridas! Estos son los favoritos elegidos por miles de niños y padres."
+    },
+    "detailed": {
+      "title": "Páginas para Colorear Detalladas para Niños Mayores",
+      "description": "Páginas para colorear desafiantes y detalladas perfectas para niños mayores, adolescentes y adultos. ¡Diseños complejos que brindan horas de diversión creativa!"
+    },
+    "characters": {
+      "title": "Páginas para Colorear de Personajes",
+      "description": "¡Páginas para colorear de personajes divertidos que incluyen princesas, superhéroes, cuentos de hadas y más! ¡Dale vida a tus personajes favoritos con color!"
+    },
+    "vehicles": {
+      "title": "Páginas para Colorear de Vehículos",
+      "pageTitle": "Top 15 Páginas para Colorear de Vehículos",
+      "description": "¡Acelera tu creatividad con autos, camiones, aviones, barcos y más! ¡Perfecto para niños que aman todo lo que se mueve!"
+    },
+    "educational": {
+      "title": "Páginas para Colorear Educativas",
+      "description": "¡Aprende mientras coloreas! Números, alfabeto, formas y más. ¡Perfecto para el aprendizaje preescolar y de jardín de infantes!"
+    },
+    "seasonal": {
+      "title": "Páginas para Colorear de Fiestas y Temporadas",
+      "description": "¡Celebra cada temporada y fiesta con nuestras páginas para colorear festivas! ¡Navidad, Halloween, Pascua y más!"
+    }
+  },
+  "random": {
+    "finding": "Buscando una página para colorear aleatoria para ti...",
+    "error": "¡Ups! Algo salió mal.",
+    "goHome": "Volver al inicio"
+  },
+  "errorBoundary": {
+    "title": "¡Ups! Algo Salió Mal",
+    "message": "¡No te preocupes! Esto sucede a veces. ¡Volvamos a colorear! 🎨",
+    "backToHome": "Volver al Inicio"
+  },
+  "difficulty": {
+    "easy": "Fácil",
+    "medium": "Medio",
+    "hard": "Difícil"
+  },
+  "badge": {
+    "featured": "¡Destacado!"
+  },
+  "category": {
+    "educationalBenefits": "Beneficios Educativos",
+    "ageRange": "Rango de Edad:",
+    "learningValue": "Valor de Aprendizaje:"
+  },
+  "categoryTips": {
+    "title": "Consejos para Colorear y Datos Curiosos",
+    "tipsTitle": "Consejos para Colorear",
+    "factsTitle": "¿Sabías Qué?",
+    "ageLabel": "Ideal para edades",
+    "ABC": {
+      "tips": [
+        "Usa colores primarios brillantes para que las letras destaquen",
+        "¡Prueba colores del arcoíris para cada letra - hazlo divertido!",
+        "Practica escribir la letra antes de colorear",
+        "Colorea objetos que comiencen con cada letra"
+      ],
+      "facts": [
+        "Aprender el alfabeto es la base de la lectura y escritura",
+        "Hay 26 letras en el alfabeto inglés y 27 en español (con la ñ)",
+        "Cada letra tiene forma mayúscula y minúscula",
+        "Colorear letras ayuda con el reconocimiento y la memoria de letras"
+      ],
+      "ageRange": "2-6"
+    },
+    "Animals": {
+      "tips": [
+        "Usa colores naturales como marrones, grises y negros para animales realistas",
+        "¡Prueba colores brillantes y divertidos como rosa o morado para un toque mágico!",
+        "Colorea el fondo con pasto, árboles o agua para crear una escena",
+        "Usa diferentes tonos del mismo color para agregar profundidad"
+      ],
+      "facts": [
+        "Los animales tienen colores y patrones increíbles en la naturaleza",
+        "Muchos animales usan sus colores para camuflarse o atraer parejas",
+        "Colorear animales ayuda a los niños a aprender sobre la vida silvestre y la naturaleza"
+      ],
+      "ageRange": "3-10"
+    },
+    "Vehicles": {
+      "tips": [
+        "Los colores brillantes como rojo, amarillo y azul hacen que los vehículos destaquen",
+        "Agrega plateado o gris metálico para un aspecto realista",
+        "No olvides colorear las ruedas de negro o gris oscuro",
+        "Colorea el fondo con carreteras, cielo o paisajes"
+      ],
+      "facts": [
+        "Los vehículos ayudan a las personas a viajar y transportar bienes",
+        "Diferentes vehículos están diseñados para diferentes propósitos",
+        "Colorear vehículos ayuda a desarrollar habilidades motoras finas"
+      ],
+      "ageRange": "3-8"
+    },
+    "Mandalas": {
+      "tips": [
+        "Elige colores que te hagan sentir tranquilo y feliz",
+        "Prueba usar colores opuestos en la rueda cromática para contraste",
+        "Trabaja desde el centro hacia afuera o de afuera hacia adentro",
+        "Usa lápices de colores para sombreado y mezcla detallados"
+      ],
+      "facts": [
+        "Se ha comprobado que colorear mandalas reduce el estrés y la ansiedad",
+        "Los mandalas se han usado en meditación durante miles de años",
+        "La simetría en los mandalas ayuda a crear una sensación de equilibrio"
+      ],
+      "ageRange": "8-Adultos"
+    },
+    "Dinosaurs": {
+      "tips": [
+        "Usa verdes, marrones y grises para dinosaurios realistas",
+        "Prueba colores brillantes como naranja, morado o azul para diversión",
+        "Agrega escamas o patrones para detalles adicionales",
+        "Colorea el fondo prehistórico con plantas y rocas"
+      ],
+      "facts": [
+        "Los dinosaurios vivieron hace millones de años",
+        "Los científicos estudian fósiles para aprender sobre los colores de los dinosaurios",
+        "Diferentes dinosaurios tenían diferentes dietas y tamaños"
+      ],
+      "ageRange": "4-10"
+    },
+    "Occupations": {
+      "tips": [
+        "Usa los colores tradicionales de uniforme para cada profesión",
+        "Bomberos: rojo, amarillo y negro",
+        "Doctores: batas blancas con uniformes médicos coloridos",
+        "Chefs: uniformes blancos con delantales coloridos"
+      ],
+      "facts": [
+        "Diferentes trabajos requieren diferentes habilidades y capacitación",
+        "Cada trabajo es importante para nuestra comunidad",
+        "Aprender sobre ocupaciones ayuda a los niños a explorar carreras futuras"
+      ],
+      "ageRange": "4-10"
+    },
+    "Fairy Tales": {
+      "tips": [
+        "Usa colores mágicos como dorado, plateado y pasteles brillantes",
+        "¡Las princesas se ven hermosas en rosa, morado, azul o cualquier color!",
+        "Agrega estrellas y destellos en el fondo",
+        "No olvides colorear el castillo y elementos mágicos"
+      ],
+      "facts": [
+        "Los cuentos de hadas enseñan importantes lecciones de vida",
+        "Muchos cuentos de hadas provienen de diferentes culturas del mundo",
+        "Los personajes de cuentos de hadas inspiran creatividad e imaginación"
+      ],
+      "ageRange": "3-10"
+    },
+    "Halloween": {
+      "tips": [
+        "Los colores tradicionales de Halloween son naranja, negro y morado",
+        "Prueba verde para monstruos y brujas",
+        "Usa azules oscuros y grises para escenas nocturnas espeluznantes",
+        "Agrega brillantina o colores metálicos para magia extra"
+      ],
+      "facts": [
+        "Halloween se celebra el 31 de octubre",
+        "Las calabazas talladas originalmente se hacían de nabos",
+        "Las tradiciones de Halloween varían alrededor del mundo"
+      ],
+      "ageRange": "4-12"
+    },
+    "Fantasy": {
+      "tips": [
+        "Deja volar tu imaginación con colores mágicos",
+        "Los unicornios pueden ser de colores arcoíris o tonos pasteles",
+        "Agrega destellos, estrellas y efectos mágicos",
+        "Mezcla colores para un efecto de ensueño"
+      ],
+      "facts": [
+        "Las criaturas fantásticas despiertan creatividad e imaginación",
+        "Muchas historias de fantasía enseñan valentía y amistad",
+        "El arte fantástico ha sido popular a lo largo de la historia"
+      ],
+      "ageRange": "4-12"
+    },
+    "Nature": {
+      "tips": [
+        "Usa verdes y marrones para árboles y plantas",
+        "Las flores pueden ser de cualquier color que te guste",
+        "Agrega azul para el cielo y el agua",
+        "Prueba colores estacionales: naranjas de otoño, pasteles de primavera"
+      ],
+      "facts": [
+        "La naturaleza proporciona aire fresco y hermosos paisajes",
+        "Las plantas producen el oxígeno que respiramos",
+        "Pasar tiempo en la naturaleza es bueno para la salud mental"
+      ],
+      "ageRange": "3-10"
+    },
+    "Food": {
+      "tips": [
+        "Usa colores realistas de comida o deja volar tu imaginación",
+        "Agrega brillos para hacer que la comida se vea brillante y deliciosa",
+        "Colorea el fondo con platos, mesas o escenas de cocina",
+        "Prueba usar colores cálidos como rojo, naranja y amarillo"
+      ],
+      "facts": [
+        "Diferentes alimentos nos dan diferentes nutrientes",
+        "Las frutas y verduras coloridas suelen ser muy saludables",
+        "Aprender sobre alimentos ayuda a los niños a tomar decisiones saludables"
+      ],
+      "ageRange": "3-8"
+    },
+    "Sports": {
+      "tips": [
+        "Usa colores de equipo para equipo deportivo auténtico",
+        "Agrega líneas de movimiento para escenas de acción",
+        "Colorea el fondo con campos, canchas o arenas",
+        "No olvides los detalles como logotipos y números"
+      ],
+      "facts": [
+        "Los deportes ayudan a desarrollar trabajo en equipo y condición física",
+        "Diferentes deportes requieren diferentes habilidades",
+        "Practicar deportes es divertido y te mantiene saludable"
+      ],
+      "ageRange": "5-12"
+    },
+    "Basketball Players": {
+      "tips": [
+        "Usa los colores de tu equipo favorito para el uniforme",
+        "Las camisetas de baloncesto suelen ser audaces y coloridas",
+        "Agrega marcas de la cancha en el fondo",
+        "Colorea el baloncesto de naranja con líneas negras"
+      ],
+      "facts": [
+        "El baloncesto fue inventado en 1891 por James Naismith",
+        "Los jugadores profesionales de baloncesto entrenan durante muchos años",
+        "El baloncesto ayuda a desarrollar coordinación y trabajo en equipo"
+      ],
+      "ageRange": "6-14"
+    },
+    "Characters": {
+      "tips": [
+        "Usa colores brillantes y alegres para personajes felices",
+        "Agrega detalles como color de cabello, ropa y accesorios",
+        "Colorea el fondo para que coincida con la personalidad del personaje",
+        "Prueba diferentes tonos de piel para personajes diversos"
+      ],
+      "facts": [
+        "Colorear personajes ayuda a desarrollar habilidades de narración",
+        "Los personajes pueden representar diferentes emociones y rasgos",
+        "Crear personajes despierta imaginación y creatividad"
+      ],
+      "ageRange": "3-10"
+    },
+    "Holidays": {
+      "tips": [
+        "Navidad: Usa rojo, verde, dorado y plateado",
+        "Pascua: Pasteles brillantes como rosa, amarillo y morado",
+        "Usa colores tradicionales de vacaciones o crea los tuyos",
+        "Agrega decoraciones festivas y fondos"
+      ],
+      "facts": [
+        "Diferentes culturas celebran diferentes días festivos",
+        "Los días festivos unen a familias y comunidades",
+        "Las tradiciones festivas se transmiten de generación en generación"
+      ],
+      "ageRange": "3-12"
+    },
+    "Numbers": {
+      "tips": [
+        "Usa diferentes colores para cada número",
+        "Los colores del arcoíris hacen que los números sean más divertidos",
+        "Agrega patrones o diseños dentro de los números",
+        "Crea un fondo colorido"
+      ],
+      "facts": [
+        "Aprender números es una habilidad matemática importante",
+        "Colorear números ayuda con el reconocimiento de números",
+        "Los números se usan en la vida cotidiana para contar"
+      ],
+      "ageRange": "3-6"
+    },
+    "K Pop Demon Hunters": {
+      "tips": [
+        "Usa colores audaces y dramáticos",
+        "Prueba metálicos como plateado y dorado para armas",
+        "El morado y azul funcionan genial para atmósferas misteriosas",
+        "Agrega efectos de acción con colores brillantes"
+      ],
+      "facts": [
+        "Los personajes inspirados en K-Pop combinan música y fantasía",
+        "Las historias de cazadores de demonios enseñan valentía y trabajo en equipo",
+        "Estos personajes inspiran confianza y creatividad"
+      ],
+      "ageRange": "8-16"
+    },
+    "Italian Brainrot": {
+      "tips": [
+        "Usa colores tradicionales italianos: rojo, blanco y verde",
+        "Los colores dorado y crema agregan elegancia",
+        "Prueba tonos mediterráneos cálidos",
+        "Agrega detalles decorativos y patrones"
+      ],
+      "facts": [
+        "Italia es famosa por su arte, comida y cultura",
+        "El arte renacentista italiano influyó en el mundo",
+        "El estilo italiano combina elegancia con creatividad"
+      ],
+      "ageRange": "8-Adultos"
+    },
+    "Flowers": {
+      "tips": [
+        "Usa colores brillantes y vibrantes para los pétalos",
+        "Prueba colores realistas o crea flores arcoíris",
+        "Agrega verde para tallos y hojas",
+        "Usa amarillo o naranja para los centros de las flores"
+      ],
+      "facts": [
+        "Las flores vienen en miles de colores y formas diferentes",
+        "Muchas flores tienen aromas maravillosos que atraen a las abejas",
+        "Colorear flores ayuda a aprender sobre la naturaleza y la botánica"
+      ],
+      "ageRange": "3-12"
+    }
+  },
+  "menu": {
+    "navigation": "Navegación",
+    "information": "Información",
+    "freePages": "¡Páginas para colorear gratis para niños!",
+    "printAndFun": "¡Imprime, Colorea y Diviértete!"
+  },
+  "contact": {
+    "title": "Contáctenos",
+    "subtitle": "¡Nos encantaría saber de ti!",
+    "getInTouch": "Ponte en Contacto",
+    "getInTouchText": "¿Tienes una pregunta, sugerencia o simplemente quieres saludar? ¡Estamos aquí para ayudarte! No dudes en contactarnos utilizando cualquiera de los métodos a continuación.",
+    "email": "Correo Electrónico",
+    "responseTime": "Tiempo de Respuesta",
+    "responseTimeText": "Normalmente respondemos en 24-48 horas",
+    "whatToHearAbout": "Lo Que Nos Encantaría Escuchar",
+    "suggestions": "Sugerencias para nuevas páginas para colorear",
+    "technicalIssues": "Problemas técnicos o errores",
+    "feedback": "Comentarios sobre páginas existentes",
+    "partnerships": "Consultas sobre asociaciones o colaboraciones",
+    "generalQuestions": "Preguntas o comentarios generales",
+    "requestPage": "Solicitar una Página para Colorear",
+    "requestPageText": "¿Tienes en mente una página para colorear específica que te gustaría ver en nuestro sitio web? ¡Háznoslo saber! Siempre estamos agregando nuevos diseños y nos encantaría escuchar tus ideas.",
+    "followUs": "Síguenos",
+    "followUsText": "¡Mantente actualizado con nuevas páginas para colorear y anuncios! (Agrega tus enlaces de redes sociales aquí cuando estés listo)",
+    "backToGallery": "Volver a la Galería"
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "lastUpdated": "Última Actualización",
+    "intro": "Tu privacidad es importante para nosotros. Esta Política de Privacidad explica cómo mycolor.fun recopila, usa y protege tu información.",
+    "infoWeCollect": "Información que Recopilamos",
+    "infoWeCollectText": "Recopilamos información mínima para brindarte la mejor experiencia de colorear",
+    "usageData": "Datos de Uso",
+    "usageDataText": "Podemos recopilar información sobre cómo accedes y utilizas nuestro sitio web, incluido el tipo de navegador, las páginas visitadas y el tiempo dedicado a las páginas.",
+    "cookies": "Cookies",
+    "cookiesText": "Utilizamos cookies para mejorar tu experiencia de navegación y analizar el tráfico del sitio web.",
+    "howWeUse": "Cómo Usamos Tu Información",
+    "howWeUseList": "Para proporcionar y mantener nuestro servicio, Para mejorar y personalizar tu experiencia, Para analizar el uso y las tendencias del sitio web, Para comunicarnos contigo (si te contactas con nosotros)",
+    "dataProtection": "Protección de Datos",
+    "dataProtectionText": "Implementamos medidas de seguridad apropiadas para proteger tu información.",
+    "thirdParty": "Servicios de Terceros",
+    "thirdPartyText": "Podemos utilizar servicios de terceros (como análisis) que tienen sus propias políticas de privacidad.",
+    "childrenPrivacy": "Privacidad de los Niños",
+    "childrenPrivacyText": "Nuestro sitio web está diseñado para niños. No recopilamos intencionalmente información personal de niños. Si eres padre o madre y crees que tu hijo nos ha proporcionado información personal, contáctanos.",
+    "changes": "Cambios a Esta Política",
+    "changesText": "Podemos actualizar esta Política de Privacidad de vez en cuando. Te notificaremos de cualquier cambio publicando la nueva política en esta página.",
+    "contactUs": "Contáctenos",
+    "contactUsText": "Si tienes preguntas sobre esta Política de Privacidad, por favor contáctanos"
+  },
+  "copyright": {
+    "title": "Política de Derechos de Autor y Aviso DMCA"
+  },
+  "terms": {
+    "title": "Términos de Servicio",
+    "lastUpdated": "Última Actualización",
+    "intro": "¡Bienvenido a mycolor.fun! Al acceder a nuestro sitio web, aceptas estos Términos de Servicio.",
+    "useOfService": "Uso del Servicio",
+    "useOfServiceText": "Nuestras páginas para colorear se proporcionan de forma gratuita para uso personal, educativo y no comercial.",
+    "allowed": "Lo Que Puedes Hacer",
+    "allowedList": "Imprimir páginas para colorear para uso personal, Usar páginas con fines educativos en aulas, Compartir páginas coloreadas completadas en redes sociales, Usar páginas para actividades no comerciales",
+    "notAllowed": "Lo Que No Puedes Hacer",
+    "notAllowedList": "Vender o redistribuir nuestras páginas para colorear, Usar páginas con fines comerciales sin permiso, Eliminar marcas de agua o avisos de derechos de autor, Reclamar la propiedad de nuestros diseños",
+    "intellectual": "Propiedad Intelectual",
+    "intellectualText": "Todo el contenido en mycolor.fun, incluidas las páginas para colorear, imágenes y texto, está protegido por derechos de autor y otros derechos de propiedad intelectual.",
+    "disclaimer": "Descargo de Responsabilidad",
+    "disclaimerText": "Nuestras páginas para colorear se proporcionan 'tal cual' sin garantías de ningún tipo. No somos responsables de ningún daño que surja del uso de nuestro sitio web.",
+    "changes": "Cambios a los Términos",
+    "changesText": "Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado del sitio web constituye la aceptación de los términos actualizados.",
+    "contactUs": "Contáctenos",
+    "contactUsText": "Si tienes preguntas sobre estos Términos, por favor contáctanos"
+  }
+}
