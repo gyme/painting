@@ -286,6 +286,7 @@ function HomePage() {
     'K Pop Demon Hunters': '⚔️',
     'Numbers': '🔢',
     'Flowers': '🌸',
+    'inspiring people': '⭐',
   }
 
   const getCategoryIcon = (category: string): string => {
