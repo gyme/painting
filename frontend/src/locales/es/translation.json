@@ -552,6 +552,21 @@
         "Colorear flores ayuda a aprender sobre la naturaleza y la botánica"
       ],
       "ageRange": "3-12"
+    },
+    "inspiring-people": {
+      "tips": [
+        "Usa tonos de piel realistas y colores de ropa apropiados",
+        "Presta atención a los detalles históricos en su vestimenta",
+        "Colorea los fondos para mostrar sus logros",
+        "Tómate tu tiempo para crear un tributo respetuoso"
+      ],
+      "facts": [
+        "Estos héroes cambiaron el mundo con coraje y determinación",
+        "Muchos enfrentaron grandes desafíos pero nunca renunciaron a sus sueños",
+        "Sus logros nos inspiran a ser mejores personas",
+        "Aprender sobre historia nos ayuda a formar un futuro mejor"
+      ],
+      "ageRange": "6-Adultos"
     }
   },
   "menu": {

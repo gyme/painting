@@ -552,6 +552,21 @@
         "Coloring flowers helps learn about nature and botany"
       ],
       "ageRange": "3-12"
+    },
+    "inspiring-people": {
+      "tips": [
+        "Use realistic skin tones and clothing colors",
+        "Pay attention to historical details in their outfits",
+        "Color backgrounds to show their achievements",
+        "Take your time to create a respectful tribute"
+      ],
+      "facts": [
+        "These heroes changed the world through courage and determination",
+        "Many faced great challenges but never gave up their dreams",
+        "Their achievements inspire us to be better people",
+        "Learning about history helps us shape a better future"
+      ],
+      "ageRange": "6-Adult"
     }
   },
   "menu": {
