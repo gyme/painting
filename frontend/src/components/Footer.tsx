@@ -29,10 +29,25 @@ const FooterContent = styled.div`
 `
 
 const Logo = styled.div`
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #667eea;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const LogoImage = styled.img`
+  height: 100px;
+  width: auto;
+  display: block;
+  border-radius: 50%;
+  background: white;
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 3px solid rgba(102, 126, 234, 0.3);
+  
+  @media (max-width: 768px) {
+    height: 80px;
+    padding: 3px;
+  }
 `
 
 const Links = styled.div`
@@ -40,6 +55,7 @@ const Links = styled.div`
   gap: 2rem;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   
   @media (max-width: 768px) {
     gap: 1rem;
@@ -60,6 +76,34 @@ const FooterLink = styled(LocalizedLink)`
   }
 `
 
+const SocialLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+  
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  &:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.5);
+  }
+  
+  &:active {
+    transform: translateY(-1px);
+  }
+`
+
 const Copyright = styled.div`
   text-align: center;
   color: #636e72;
@@ -76,7 +120,9 @@ function Footer() {
   return (
     <FooterContainer $isColoringPage={isColoringPage}>
       <FooterContent>
-        <Logo>🎨 mycolor.fun</Logo>
+        <Logo>
+          <LogoImage src="/logo.png" alt="MyColorFun - Free Online Coloring Pages" />
+        </Logo>
         
         <Links>
           <FooterLink to="/">{t('footer.home')}</FooterLink>
@@ -84,6 +130,16 @@ function Footer() {
           <FooterLink to="/contact">{t('footer.contact')}</FooterLink>
           <FooterLink to="/terms">{t('footer.terms')}</FooterLink>
           <FooterLink to="/privacy">{t('footer.privacy')}</FooterLink>
+          <SocialLink 
+            href="https://www.facebook.com/profile.php?id=61582773927213" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            aria-label="Follow us on Facebook"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </SocialLink>
         </Links>
         
         <Copyright>

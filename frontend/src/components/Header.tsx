@@ -85,9 +85,6 @@ const MobileSearchWrapper = styled.div`
 `
 
 const Logo = styled(LocalizedLink)`
-  font-size: 2rem;
-  font-weight: 700;
-  color: white;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -98,9 +95,26 @@ const Logo = styled(LocalizedLink)`
     transform: scale(1.05);
     animation: bounce 0.5s ease;
   }
+`
+
+const LogoImage = styled.img`
+  height: 80px;
+  width: auto;
+  display: block;
+  border-radius: 50%;
+  background: white;
+  padding: 3px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border: 3px solid rgba(255, 255, 255, 0.8);
 
   @media (max-width: 768px) {
-    font-size: 1.2rem;
+    height: 60px;
+    padding: 2px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+  }
+
+  @media (max-width: 480px) {
+    height: 50px;
   }
 `
 
@@ -162,7 +176,7 @@ function Header() {
         <TopRow>
           <LeftSection>
             <Logo to="/">
-              🎨 mycolor.fun
+              <LogoImage src="/logo.png" alt="MyColorFun - Online Coloring Pages" />
             </Logo>
           </LeftSection>
           
