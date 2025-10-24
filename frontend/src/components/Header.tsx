@@ -97,9 +97,13 @@ const Logo = styled(LocalizedLink)`
   }
 `
 
-const LogoImage = styled.img`
+const LogoImage = styled.img.attrs({
+  width: '80',
+  height: '80',
+  loading: 'eager', // Load logo immediately (above the fold)
+})`
   height: 80px;
-  width: auto;
+  width: 80px;
   display: block;
   border-radius: 50%;
   background: white;
@@ -109,12 +113,14 @@ const LogoImage = styled.img`
 
   @media (max-width: 768px) {
     height: 60px;
+    width: 60px;
     padding: 2px;
     border: 2px solid rgba(255, 255, 255, 0.8);
   }
 
   @media (max-width: 480px) {
     height: 50px;
+    width: 50px;
   }
 `
 
@@ -176,7 +182,7 @@ function Header() {
         <TopRow>
           <LeftSection>
             <Logo to="/">
-              <LogoImage src="/logo.png" alt="MyColorFun - Online Coloring Pages" />
+              <LogoImage src="/logo-80.webp" alt="MyColorFun - Online Coloring Pages" />
             </Logo>
           </LeftSection>
           

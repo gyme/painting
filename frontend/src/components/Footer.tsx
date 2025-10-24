@@ -34,9 +34,13 @@ const Logo = styled.div`
   align-items: center;
 `
 
-const LogoImage = styled.img`
+const LogoImage = styled.img.attrs({
+  width: '100',
+  height: '100',
+  loading: 'lazy', // Footer logo can load lazily
+})`
   height: 100px;
-  width: auto;
+  width: 100px;
   display: block;
   border-radius: 50%;
   background: white;
@@ -46,6 +50,7 @@ const LogoImage = styled.img`
   
   @media (max-width: 768px) {
     height: 80px;
+    width: 80px;
     padding: 3px;
   }
 `
@@ -121,7 +126,7 @@ function Footer() {
     <FooterContainer $isColoringPage={isColoringPage}>
       <FooterContent>
         <Logo>
-          <LogoImage src="/logo.png" alt="MyColorFun - Free Online Coloring Pages" />
+          <LogoImage src="/logo-100.webp" alt="MyColorFun - Free Online Coloring Pages" />
         </Logo>
         
         <Links>
