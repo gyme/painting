@@ -506,7 +506,6 @@ function HomePage() {
           />
           
           <HeroContent>
-            <DecorativeIcon>🎨</DecorativeIcon>
             <Title>{t('home.title')}</Title>
             <Subtitle>🖨️ {t('home.subtitle')}</Subtitle>
             <CTAContainer>
