@@ -7,7 +7,7 @@ import requests
 import json
 
 # API endpoint
-API_URL = "http://localhost:8080/api"
+API_URL = "https://docker-composeyaml-production.up.railway.app/api"
 
 # Celebrity data with Spanish translations
 celebrities = [
