@@ -1,0 +1,111 @@
+========================================
+10 CELEBRITY-THEMED COLORING PAGE PROMPTS
+For use with ChatGPT Plus (DALL-E 3)
+========================================
+
+📋 INSTRUCTIONS:
+1. Copy each prompt below
+2. Paste into ChatGPT
+3. Download the generated image
+4. Repeat for all 10 prompts
+5. Save images to: tools/raw_images/
+
+========================================
+
+PROMPT 1: Pop Star Performer
+---
+A coloring page illustration for children featuring a famous pop star singing on stage with a microphone. Black and white line art only, thick bold outlines, no shading or gray tones, clean white background, simple and fun design suitable for kids ages 4-10 to color with crayons. Generic person without recognizable features.
+---
+Filename: famous-pop-star-singing.png
+
+========================================
+
+PROMPT 2: Movie Star Red Carpet
+---
+A coloring page illustration for children featuring a movie star walking on the red carpet in an elegant outfit. Black and white line art only, thick bold outlines, no shading or gray tones, clean white background, simple and fun design suitable for kids ages 4-10 to color with crayons. Generic person without recognizable features.
+---
+Filename: movie-star-on-red-carpet.png
+
+========================================
+
+PROMPT 3: Champion Athlete
+---
+A coloring page illustration for children featuring a famous athlete holding a trophy with a proud expression. Black and white line art only, thick bold outlines, no shading or gray tones, clean white background, simple and fun design suitable for kids ages 4-10 to color with crayons. Generic person without recognizable features.
+---
+Filename: famous-athlete-with-trophy.png
+
+========================================
+
+PROMPT 4: Rock Star Guitarist
+---
+A coloring page illustration for children featuring a cool rock star playing an electric guitar on stage. Black and white line art only, thick bold outlines, no shading or gray tones, clean white background, simple and fun design suitable for kids ages 4-10 to color with crayons. Generic person without recognizable features.
+---
+Filename: rock-star-playing-guitar.png
+
+========================================
+
+PROMPT 5: Professional Dancer
+---
+A coloring page illustration for children featuring a professional dancer performing in a graceful ballet pose. Black and white line art only, thick bold outlines, no shading or gray tones, clean white background, simple and fun design suitable for kids ages 4-10 to color with crayons. Generic person without recognizable features.
+---
+Filename: famous-dancer-performing.png
+
+========================================
+
+PROMPT 6: TV Show Host
+---
+A coloring page illustration for children featuring a friendly TV show host holding a microphone with a big smile. Black and white line art only, thick bold outlines, no shading or gray tones, clean white background, simple and fun design suitable for kids ages 4-10 to color with crayons. Generic person without recognizable features.
+---
+Filename: tv-show-host-with-microphone.png
+
+========================================
+
+PROMPT 7: Celebrity Chef
+---
+A coloring page illustration for children featuring a celebrity chef cooking with a chef's hat and apron. Black and white line art only, thick bold outlines, no shading or gray tones, clean white background, simple and fun design suitable for kids ages 4-10 to color with crayons. Generic person without recognizable features.
+---
+Filename: famous-chef-cooking.png
+
+========================================
+
+PROMPT 8: Fashion Model
+---
+A coloring page illustration for children featuring a fashionable model walking on a runway in stylish clothing. Black and white line art only, thick bold outlines, no shading or gray tones, clean white background, simple and fun design suitable for kids ages 4-10 to color with crayons. Generic person without recognizable features.
+---
+Filename: fashion-model-on-runway.png
+
+========================================
+
+PROMPT 9: Pianist Musician
+---
+A coloring page illustration for children featuring a talented musician playing a grand piano on stage. Black and white line art only, thick bold outlines, no shading or gray tones, clean white background, simple and fun design suitable for kids ages 4-10 to color with crayons. Generic person without recognizable features.
+---
+Filename: famous-musician-with-piano.png
+
+========================================
+
+PROMPT 10: Superhero Character
+---
+A coloring page illustration for children featuring a superhero character in a heroic pose with a cape. Black and white line art only, thick bold outlines, no shading or gray tones, clean white background, simple and fun design suitable for kids ages 4-10 to color with crayons. Generic person without recognizable features.
+---
+Filename: superhero-movie-star.png
+
+========================================
+
+✅ AFTER GENERATION:
+1. Save all images to: tools/raw_images/
+2. Run: cd /Users/guym/Documents/d/paiting/tools
+3. Run: python3 image_postprocessing.py
+4. Run: cp processed_images/* ../frontend/public/coloring-images/
+5. Run: python3 database_import.py --csv celebrity_coloring_prompts.csv
+
+========================================
+
+💡 TIPS:
+- ChatGPT Plus includes DALL-E 3 for free!
+- You can generate 2-3 images per prompt if you want variations
+- If ChatGPT adds color, ask it to "make it pure black and white line art"
+- Download in highest quality available
+
+========================================
+

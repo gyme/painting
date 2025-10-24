@@ -1,0 +1,56 @@
+═══════════════════════════════════════════════════════════════
+  🔔 IndexNow Quick Reference
+═══════════════════════════════════════════════════════════════
+
+✅ SETUP COMPLETE!
+
+Your IndexNow key is deployed and working.
+Key file: https://painting-sand.vercel.app/bab9e73ed6fabc4a3ecdd32e9282a615bde47290f24070a8a9cecdbe74e86ddf.txt
+
+═══════════════════════════════════════════════════════════════
+
+📤 QUICK COMMANDS
+
+Submit a single URL:
+  node submit-to-indexnow.js https://painting-sand.vercel.app/painting/unicorn
+
+Submit a new painting (both languages):
+  ./submit-new-painting-indexnow.sh unicorn
+
+Submit all URLs (paintings + categories + pages):
+  node submit-bulk-to-indexnow.js
+
+Submit only paintings:
+  node submit-bulk-to-indexnow.js paintings
+
+Submit only categories:
+  node submit-bulk-to-indexnow.js categories
+
+═══════════════════════════════════════════════════════════════
+
+🎯 WHEN TO USE
+
+✅ After adding new paintings → ./submit-new-painting-indexnow.sh <url-key>
+✅ After updating content → node submit-to-indexnow.js <url>
+✅ After major deployment → node submit-bulk-to-indexnow.js
+✅ Weekly refresh → node submit-bulk-to-indexnow.js
+
+═══════════════════════════════════════════════════════════════
+
+📚 FULL DOCUMENTATION
+
+See: INDEXNOW_SETUP_GUIDE.md
+
+═══════════════════════════════════════════════════════════════
+
+🌐 PARTICIPATING SEARCH ENGINES
+
+✅ Bing (Microsoft)
+✅ Yandex
+✅ Seznam
+✅ Others...
+
+Note: Google does NOT support IndexNow. Use Google Search Console.
+
+═══════════════════════════════════════════════════════════════
+

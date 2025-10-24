@@ -1,0 +1,537 @@
+#!/usr/bin/env node
+
+/**
+ * Add all food paintings via API with Spanish translations
+ */
+
+const http = require('http');
+
+const API_BASE_URL = 'http://localhost:8080/api/paintings';
+
+// All food paintings with English data
+const foodPaintings = [
+  {
+    urlKey: 'apple',
+    title: 'Apple',
+    description: 'A delicious apple coloring page! Perfect for learning about healthy fruits and nutrition.',
+    category: 'Food',
+    tags: 'apple,fruit,healthy,food,snack,nutrition',
+    imageUrl: '/coloring-images/apple.png',
+    thumbnailUrl: '/coloring-images/apple.png',
+    thumbnailUrl: '/coloring-images/apple.png',
+    difficulty: 1,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'apple',
+    title: 'Manzana',
+    description: '¡Una deliciosa página para colorear de manzana! Perfecta para aprender sobre frutas saludables y nutrición.',
+    category: 'Food',
+    tags: 'apple,fruit,healthy,food,snack,nutrition',
+    imageUrl: '/coloring-images/apple.png',
+    thumbnailUrl: '/coloring-images/apple.png',
+    difficulty: 1,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'banana',
+    title: 'Banana',
+    description: 'A fun banana coloring page! Kids can learn about this popular yellow fruit.',
+    category: 'Food',
+    tags: 'banana,fruit,yellow,healthy,food,snack',
+    imageUrl: '/coloring-images/banana.png',
+    thumbnailUrl: '/coloring-images/banana.png',
+    difficulty: 1,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'banana',
+    title: 'Plátano',
+    description: '¡Una divertida página para colorear de plátano! Los niños pueden aprender sobre esta popular fruta amarilla.',
+    category: 'Food',
+    tags: 'banana,fruit,yellow,healthy,food,snack',
+    imageUrl: '/coloring-images/banana.png',
+    thumbnailUrl: '/coloring-images/banana.png',
+    difficulty: 1,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'bread',
+    title: 'Bread',
+    description: 'A delicious loaf of bread coloring page! Learn about baking and this staple food.',
+    category: 'Food',
+    tags: 'bread,baking,food,bakery,loaf,wheat',
+    imageUrl: '/coloring-images/bread.png',
+    thumbnailUrl: '/coloring-images/bread.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'bread',
+    title: 'Pan',
+    description: '¡Una deliciosa página para colorear de pan! Aprende sobre hornear y este alimento básico.',
+    category: 'Food',
+    tags: 'bread,baking,food,bakery,loaf,wheat',
+    imageUrl: '/coloring-images/bread.png',
+    thumbnailUrl: '/coloring-images/bread.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'broccoli',
+    title: 'Broccoli',
+    description: 'Healthy broccoli coloring page! A fun way to learn about green vegetables.',
+    category: 'Food',
+    tags: 'broccoli,vegetable,healthy,green,food,nutrition',
+    imageUrl: '/coloring-images/broccoli.png',
+    thumbnailUrl: '/coloring-images/broccoli.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'broccoli',
+    title: 'Brócoli',
+    description: '¡Página para colorear de brócoli saludable! Una forma divertida de aprender sobre verduras verdes.',
+    category: 'Food',
+    tags: 'broccoli,vegetable,healthy,green,food,nutrition',
+    imageUrl: '/coloring-images/broccoli.png',
+    thumbnailUrl: '/coloring-images/broccoli.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'carrot',
+    title: 'Carrot',
+    description: 'A crunchy carrot coloring page! Perfect for learning about orange vegetables.',
+    category: 'Food',
+    tags: 'carrot,vegetable,healthy,orange,food,crunchy',
+    imageUrl: '/coloring-images/carrot.png',
+    thumbnailUrl: '/coloring-images/carrot.png',
+    difficulty: 1,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'carrot',
+    title: 'Zanahoria',
+    description: '¡Una página para colorear de zanahoria crujiente! Perfecta para aprender sobre verduras naranjas.',
+    category: 'Food',
+    tags: 'carrot,vegetable,healthy,orange,food,crunchy',
+    imageUrl: '/coloring-images/carrot.png',
+    thumbnailUrl: '/coloring-images/carrot.png',
+    difficulty: 1,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'cheese',
+    title: 'Cheese',
+    description: 'Delicious cheese coloring page! Kids can color this tasty dairy product.',
+    category: 'Food',
+    tags: 'cheese,dairy,food,snack,yellow',
+    imageUrl: '/coloring-images/cheese.png',
+    thumbnailUrl: '/coloring-images/cheese.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'cheese',
+    title: 'Queso',
+    description: '¡Deliciosa página para colorear de queso! Los niños pueden colorear este sabroso producto lácteo.',
+    category: 'Food',
+    tags: 'cheese,dairy,food,snack,yellow',
+    imageUrl: '/coloring-images/cheese.png',
+    thumbnailUrl: '/coloring-images/cheese.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'corn',
+    title: 'Corn',
+    description: 'Sweet corn on the cob coloring page! A fun vegetable that kids love to eat and color.',
+    category: 'Food',
+    tags: 'corn,vegetable,yellow,food,cob,sweet',
+    imageUrl: '/coloring-images/corn.png',
+    thumbnailUrl: '/coloring-images/corn.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'corn',
+    title: 'Maíz',
+    description: '¡Página para colorear de mazorca de maíz dulce! Una verdura divertida que a los niños les encanta comer y colorear.',
+    category: 'Food',
+    tags: 'corn,vegetable,yellow,food,cob,sweet',
+    imageUrl: '/coloring-images/corn.png',
+    thumbnailUrl: '/coloring-images/corn.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'cupcake',
+    title: 'Cupcake',
+    description: 'A sweet cupcake coloring page! Perfect for birthday parties and celebrations.',
+    category: 'Food',
+    tags: 'cupcake,dessert,sweet,cake,birthday,treat',
+    imageUrl: '/coloring-images/cupcake.png',
+    thumbnailUrl: '/coloring-images/cupcake.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'cupcake',
+    title: 'Cupcake',
+    description: '¡Una dulce página para colorear de cupcake! Perfecta para fiestas de cumpleaños y celebraciones.',
+    category: 'Food',
+    tags: 'cupcake,dessert,sweet,cake,birthday,treat',
+    imageUrl: '/coloring-images/cupcake.png',
+    thumbnailUrl: '/coloring-images/cupcake.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'donuts',
+    title: 'Donuts',
+    description: 'Yummy donuts coloring page! Sweet treats with frosting and sprinkles to color.',
+    category: 'Food',
+    tags: 'donuts,dessert,sweet,treats,frosting,sprinkles',
+    imageUrl: '/coloring-images/donuts.png',
+    thumbnailUrl: '/coloring-images/donuts.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'donuts',
+    title: 'Donas',
+    description: '¡Página para colorear de donas deliciosas! Dulces con glaseado y chispas para colorear.',
+    category: 'Food',
+    tags: 'donuts,dessert,sweet,treats,frosting,sprinkles',
+    imageUrl: '/coloring-images/donuts.png',
+    thumbnailUrl: '/coloring-images/donuts.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'fries',
+    title: 'French Fries',
+    description: 'Crispy french fries coloring page! A popular fast food favorite.',
+    category: 'Food',
+    tags: 'fries,french fries,fast food,potatoes,snack',
+    imageUrl: '/coloring-images/fries.png',
+    thumbnailUrl: '/coloring-images/fries.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'fries',
+    title: 'Papas Fritas',
+    description: '¡Página para colorear de papas fritas crujientes! Un favorito popular de comida rápida.',
+    category: 'Food',
+    tags: 'fries,french fries,fast food,potatoes,snack',
+    imageUrl: '/coloring-images/fries.png',
+    thumbnailUrl: '/coloring-images/fries.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'grapes',
+    title: 'Grapes',
+    description: 'A bunch of delicious grapes coloring page! Learn about this healthy fruit.',
+    category: 'Food',
+    tags: 'grapes,fruit,healthy,purple,bunch,snack',
+    imageUrl: '/coloring-images/grapes.png',
+    thumbnailUrl: '/coloring-images/grapes.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'grapes',
+    title: 'Uvas',
+    description: '¡Una página para colorear de un racimo de uvas deliciosas! Aprende sobre esta fruta saludable.',
+    category: 'Food',
+    tags: 'grapes,fruit,healthy,purple,bunch,snack',
+    imageUrl: '/coloring-images/grapes.png',
+    thumbnailUrl: '/coloring-images/grapes.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'hamburger',
+    title: 'Hamburger',
+    description: 'A juicy hamburger coloring page! Color the bun, patty, lettuce, and toppings.',
+    category: 'Food',
+    tags: 'hamburger,burger,fast food,lunch,sandwich',
+    imageUrl: '/coloring-images/humburger.png',
+    thumbnailUrl: '/coloring-images/humburger.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'hamburger',
+    title: 'Hamburguesa',
+    description: '¡Una página para colorear de hamburguesa jugosa! Colorea el pan, la carne, la lechuga y los ingredientes.',
+    category: 'Food',
+    tags: 'hamburger,burger,fast food,lunch,sandwich',
+    imageUrl: '/coloring-images/humburger.png',
+    thumbnailUrl: '/coloring-images/humburger.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'hotdog',
+    title: 'Hot Dog',
+    description: 'A tasty hot dog coloring page! Perfect for picnics and barbecues.',
+    category: 'Food',
+    tags: 'hotdog,hot dog,fast food,picnic,bbq,sandwich',
+    imageUrl: '/coloring-images/hotdog.png',
+    thumbnailUrl: '/coloring-images/hotdog.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'hotdog',
+    title: 'Perrito Caliente',
+    description: '¡Una página para colorear de perrito caliente sabroso! Perfecta para picnics y barbacoas.',
+    category: 'Food',
+    tags: 'hotdog,hot dog,fast food,picnic,bbq,sandwich',
+    imageUrl: '/coloring-images/hotdog.png',
+    thumbnailUrl: '/coloring-images/hotdog.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'ice-cream',
+    title: 'Ice Cream',
+    description: 'Delicious ice cream cone coloring page! A sweet summer treat to color.',
+    category: 'Food',
+    tags: 'ice cream,dessert,sweet,cone,summer,treat',
+    imageUrl: '/coloring-images/ice_cream.png',
+    thumbnailUrl: '/coloring-images/ice_cream.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'ice-cream',
+    title: 'Helado',
+    description: '¡Deliciosa página para colorear de cono de helado! Un dulce regalo de verano para colorear.',
+    category: 'Food',
+    tags: 'ice cream,dessert,sweet,cone,summer,treat',
+    imageUrl: '/coloring-images/ice_cream.png',
+    thumbnailUrl: '/coloring-images/ice_cream.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'pineapple',
+    title: 'Pineapple',
+    description: 'A tropical pineapple coloring page! Learn about this sweet and tangy fruit.',
+    category: 'Food',
+    tags: 'pineapple,fruit,tropical,yellow,sweet,healthy',
+    imageUrl: '/coloring-images/pineapple.png',
+    thumbnailUrl: '/coloring-images/pineapple.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'pineapple',
+    title: 'Piña',
+    description: '¡Una página para colorear de piña tropical! Aprende sobre esta fruta dulce y ácida.',
+    category: 'Food',
+    tags: 'pineapple,fruit,tropical,yellow,sweet,healthy',
+    imageUrl: '/coloring-images/pineapple.png',
+    thumbnailUrl: '/coloring-images/pineapple.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'pizza',
+    title: 'Pizza',
+    description: 'A delicious pizza slice coloring page! Color the cheese, sauce, and toppings.',
+    category: 'Food',
+    tags: 'pizza,italian,food,cheese,slice,dinner',
+    imageUrl: '/coloring-images/pizza.png',
+    thumbnailUrl: '/coloring-images/pizza.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'pizza',
+    title: 'Pizza',
+    description: '¡Una deliciosa página para colorear de rebanada de pizza! Colorea el queso, la salsa y los ingredientes.',
+    category: 'Food',
+    tags: 'pizza,italian,food,cheese,slice,dinner',
+    imageUrl: '/coloring-images/pizza.png',
+    thumbnailUrl: '/coloring-images/pizza.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'sushi',
+    title: 'Sushi',
+    description: 'Traditional Japanese sushi coloring page! Learn about this healthy and delicious food.',
+    category: 'Food',
+    tags: 'sushi,japanese,food,rice,fish,healthy,asian',
+    imageUrl: '/coloring-images/sushi.png',
+    thumbnailUrl: '/coloring-images/sushi.png',
+    difficulty: 3,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'sushi',
+    title: 'Sushi',
+    description: '¡Página para colorear de sushi japonés tradicional! Aprende sobre esta comida saludable y deliciosa.',
+    category: 'Food',
+    tags: 'sushi,japanese,food,rice,fish,healthy,asian',
+    imageUrl: '/coloring-images/sushi.png',
+    thumbnailUrl: '/coloring-images/sushi.png',
+    difficulty: 3,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'tortilla',
+    title: 'Tortilla',
+    description: 'A stack of tortillas coloring page! Learn about this important Mexican food.',
+    category: 'Food',
+    tags: 'tortilla,mexican,food,flatbread,corn,flour',
+    imageUrl: '/coloring-images/tortilla.png',
+    thumbnailUrl: '/coloring-images/tortilla.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'tortilla',
+    title: 'Tortilla',
+    description: '¡Una página para colorear de pila de tortillas! Aprende sobre esta importante comida mexicana.',
+    category: 'Food',
+    tags: 'tortilla,mexican,food,flatbread,corn,flour',
+    imageUrl: '/coloring-images/tortilla.png',
+    thumbnailUrl: '/coloring-images/tortilla.png',
+    difficulty: 2,
+    languageCode: 'es'
+  },
+  {
+    urlKey: 'watermelon',
+    title: 'Watermelon',
+    description: 'A juicy watermelon slice coloring page! Perfect summer fruit to color.',
+    category: 'Food',
+    tags: 'watermelon,fruit,summer,juicy,red,healthy',
+    imageUrl: '/coloring-images/watermelon.png',
+    thumbnailUrl: '/coloring-images/watermelon.png',
+    difficulty: 2,
+    languageCode: 'en'
+  },
+  {
+    urlKey: 'watermelon',
+    title: 'Sandía',
+    description: '¡Una página para colorear de rebanada de sandía jugosa! Fruta de verano perfecta para colorear.',
+    category: 'Food',
+    tags: 'watermelon,fruit,summer,juicy,red,healthy',
+    imageUrl: '/coloring-images/watermelon.png',
+    thumbnailUrl: '/coloring-images/watermelon.png',
+    difficulty: 2,
+    languageCode: 'es'
+  }
+];
+
+function postPainting(painting) {
+  return new Promise((resolve, reject) => {
+    const data = JSON.stringify(painting);
+
+    const options = {
+      hostname: 'localhost',
+      port: 8080,
+      path: '/api/paintings',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+      }
+    };
+
+    const req = http.request(options, (res) => {
+      let responseData = '';
+
+      res.on('data', (chunk) => {
+        responseData += chunk;
+      });
+
+      res.on('end', () => {
+        if (res.statusCode === 200 || res.statusCode === 201) {
+          resolve({ success: true, status: res.statusCode, painting: painting.title });
+        } else {
+          resolve({ success: false, status: res.statusCode, painting: painting.title, error: responseData });
+        }
+      });
+    });
+
+    req.on('error', (error) => {
+      reject({ painting: painting.title, error: error.message });
+    });
+
+    req.write(data);
+    req.end();
+  });
+}
+
+async function addAllPaintings() {
+  console.log('🍎 Adding Food Paintings to Database');
+  console.log('='.repeat(70));
+  console.log();
+  console.log(`Total paintings to add: ${foodPaintings.length / 2} (with Spanish translations)`);
+  console.log(`Total API calls: ${foodPaintings.length}`);
+  console.log();
+
+  let successCount = 0;
+  let failureCount = 0;
+  const failures = [];
+
+  for (let i = 0; i < foodPaintings.length; i++) {
+    const painting = foodPaintings[i];
+    const lang = painting.languageCode === 'en' ? '🇺🇸' : '🇪🇸';
+    
+    try {
+      process.stdout.write(`${lang} ${painting.title}... `);
+      const result = await postPainting(painting);
+      
+      if (result.success) {
+        console.log('✅');
+        successCount++;
+      } else {
+        console.log(`❌ (${result.status})`);
+        failureCount++;
+        failures.push(result);
+      }
+      
+      // Small delay to avoid overwhelming the server
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+    } catch (error) {
+      console.log(`❌ ${error.error}`);
+      failureCount++;
+      failures.push(error);
+    }
+  }
+
+  console.log();
+  console.log('='.repeat(70));
+  console.log('📊 Summary:');
+  console.log(`   ✅ Success: ${successCount}/${foodPaintings.length}`);
+  console.log(`   ❌ Failed: ${failureCount}/${foodPaintings.length}`);
+  
+  if (failures.length > 0) {
+    console.log();
+    console.log('❌ Failures:');
+    failures.forEach(f => {
+      console.log(`   - ${f.painting}: ${f.error || 'Unknown error'}`);
+    });
+  }
+  
+  console.log();
+  console.log('✨ Done! Refresh your browser to see the new food paintings!');
+  console.log(`   Visit: http://localhost:3000/category/food`);
+}
+
+// Run the script
+addAllPaintings().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
+
