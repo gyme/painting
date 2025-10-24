@@ -12,13 +12,13 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     
     <!-- Defer Google Analytics to not block rendering -->
-    <script defer src="https://www.googletagmanager.com/gtag/js?id=G-6YS3HBNYQE"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-6YS3HBNYQE');
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6YS3HBNYQE"></script>
     
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="256x256" href="/favicon-256x256.png" />
@@ -72,6 +72,18 @@
       /* Prevent CLS for loading state */
       #root {
         min-height: 100vh;
+      }
+      
+      /* Reserve space for footer to prevent layout shift */
+      footer {
+        min-height: 350px;
+        contain: layout;
+      }
+      
+      @media (max-width: 768px) {
+        footer {
+          min-height: 300px;
+        }
       }
       
       /* Optimize image loading */
