@@ -266,6 +266,7 @@ function HomePage() {
 
   // Category icons mapping
   const categoryIcons: Record<string, string> = {
+    'ABC': '🔤',
     'Animals': '🐶',
     'Nature': '🌳',
     'Vehicles': '🚗',
