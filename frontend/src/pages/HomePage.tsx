@@ -28,61 +28,6 @@ const Hero = styled.div`
   }
 `
 
-const BackgroundImage = styled.img`
-  position: absolute;
-  width: 150px;
-  height: auto;
-  opacity: 0.15;
-  border-radius: 15px;
-  transform: rotate(-10deg);
-  pointer-events: none;
-
-  &.top-left {
-    top: 20px;
-    left: 20px;
-    width: 120px;
-  }
-
-  &.top-right {
-    top: 30px;
-    right: 30px;
-    width: 130px;
-    transform: rotate(10deg);
-  }
-
-  &.bottom-left {
-    bottom: 20px;
-    left: 40px;
-    width: 140px;
-    transform: rotate(15deg);
-  }
-
-  &.bottom-right {
-    bottom: 30px;
-    right: 20px;
-    width: 120px;
-    transform: rotate(-15deg);
-  }
-
-  &.palette {
-    top: 50%;
-    left: 5%;
-    transform: translateY(-50%) rotate(-20deg);
-    width: 100px;
-    opacity: 0.2;
-  }
-
-  @media (max-width: 768px) {
-    &.top-left, &.top-right, &.bottom-left, &.bottom-right {
-      width: 80px;
-    }
-    
-    &.palette {
-      width: 60px;
-    }
-  }
-`
-
 const Title = styled.h1`
   font-size: 3rem;
   font-weight: 900;
@@ -469,32 +414,6 @@ function HomePage() {
       />
       <Container>
         <Hero>
-          {/* Background decorative images */}
-          <BackgroundImage 
-            src="/coloring-images/rainbow_unicorn.webp" 
-            alt="" 
-            className="top-left"
-            loading="lazy"
-          />
-          <BackgroundImage 
-            src="/coloring-images/cute_little_cat.webp" 
-            alt="" 
-            className="top-right"
-            loading="lazy"
-          />
-          <BackgroundImage 
-            src="/coloring-images/t_rex.webp" 
-            alt="" 
-            className="bottom-left"
-            loading="lazy"
-          />
-          <BackgroundImage 
-            src="/coloring-images/sport_car.webp" 
-            alt="" 
-            className="bottom-right"
-            loading="lazy"
-          />
-          
           <HeroContent>
             <Title>{t('home.title')}</Title>
             <Subtitle>🖨️ {t('home.subtitle')}</Subtitle>
