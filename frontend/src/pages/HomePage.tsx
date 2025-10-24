@@ -16,38 +16,115 @@ const Container = styled.div`
 const Hero = styled.div`
   text-align: center;
   margin-bottom: 3rem;
-  padding: 4rem 2rem;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 50%, #a6c1ee 100%);
   border-radius: 30px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+
+  /* Decorative elements */
+  &::before {
+    content: '⭐';
+    position: absolute;
+    top: 20px;
+    left: 5%;
+    font-size: 2rem;
+    opacity: 0.3;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  &::after {
+    content: '✨';
+    position: absolute;
+    bottom: 30px;
+    right: 8%;
+    font-size: 2.5rem;
+    opacity: 0.3;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
 
   @media (max-width: 768px) {
-    padding: 2rem 1rem;
+    padding: 3rem 1.5rem;
+    
+    &::before, &::after {
+      font-size: 1.5rem;
+    }
   }
 `
 
 const Title = styled.h1`
-  font-size: 3.5rem;
-  font-weight: 700;
+  font-size: 4.5rem;
+  font-weight: 900;
   color: white;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  animation: bounce 1s ease;
+  text-shadow: 
+    4px 4px 0px #000,
+    -2px -2px 0px #000,
+    2px -2px 0px #000,
+    -2px 2px 0px #000,
+    0px 4px 8px rgba(0, 0, 0, 0.5);
+  letter-spacing: 2px;
+  line-height: 1.2;
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 768px) {
     font-size: 2.5rem;
+    text-shadow: 
+      3px 3px 0px #000,
+      -1px -1px 0px #000,
+      1px -1px 0px #000,
+      -1px 1px 0px #000,
+      0px 3px 6px rgba(0, 0, 0, 0.5);
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
   }
 `
 
 const Subtitle = styled.p`
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: white;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 2rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 768px) {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+  }
+`
+
+const HeroContent = styled.div`
+  position: relative;
+  z-index: 1;
+`
+
+const DecorativeIcon = styled.div`
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+  animation: bounce 2s ease-in-out infinite;
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 3.5rem;
   }
 `
 
@@ -70,24 +147,32 @@ const CTAButton = styled(LocalizedLink)`
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   text-decoration: none;
-  border-radius: 30px;
+  border-radius: 50px;
   font-size: 1.2rem;
   font-weight: 700;
   transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8rem;
+  position: relative;
+  z-index: 1;
+  border: 3px solid rgba(255, 255, 255, 0.3);
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(46, 204, 113, 0.5);
   }
 
   &.primary {
     background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-    font-size: 1.3rem;
-    padding: 1.5rem 3rem;
+    font-size: 1.5rem;
+    padding: 1.5rem 3.5rem;
+    box-shadow: 0 10px 30px rgba(39, 174, 96, 0.4);
+    
+    &:hover {
+      box-shadow: 0 15px 40px rgba(39, 174, 96, 0.6);
+    }
   }
 
   @media (max-width: 768px) {
@@ -96,8 +181,8 @@ const CTAButton = styled(LocalizedLink)`
     justify-content: center;
     
     &.primary {
-      font-size: 1.2rem;
-      padding: 1.3rem 2rem;
+      font-size: 1.3rem;
+      padding: 1.3rem 2.5rem;
     }
   }
 `
@@ -375,13 +460,16 @@ function HomePage() {
       />
       <Container>
         <Hero>
-          <Title>🎨 {t('home.title')}</Title>
-          <Subtitle>{t('home.subtitle')}</Subtitle>
-          <CTAContainer>
-            <CTAButton to="/random" className="primary">
-              🎲 {t('home.randomPage')}
-            </CTAButton>
-          </CTAContainer>
+          <HeroContent>
+            <DecorativeIcon>🎨</DecorativeIcon>
+            <Title>{t('home.title')}</Title>
+            <Subtitle>🖨️ {t('home.subtitle')}</Subtitle>
+            <CTAContainer>
+              <CTAButton to="/random" className="primary">
+                🎲 {t('home.randomPage')}
+              </CTAButton>
+            </CTAContainer>
+          </HeroContent>
         </Hero>
 
         {/* Categories Section */}
