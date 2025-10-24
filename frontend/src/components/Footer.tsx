@@ -9,7 +9,8 @@ const FooterContainer = styled.footer<{ $isColoringPage: boolean }>`
   padding: 2rem;
   margin-top: 4rem;
   border-top: 2px solid rgba(102, 126, 234, 0.2);
-  min-height: 350px; /* Reserve space to prevent layout shift */
+  min-height: 400px; /* Reserve space to prevent layout shift */
+  contain: layout; /* Prevent layout reflows */
   
   @media (max-width: 768px) {
     padding: ${props => props.$isColoringPage 
@@ -17,7 +18,7 @@ const FooterContainer = styled.footer<{ $isColoringPage: boolean }>`
       : '1.5rem 1rem'
     };
     margin-top: 1rem;
-    min-height: ${props => props.$isColoringPage ? '500px' : '300px'};
+    min-height: ${props => props.$isColoringPage ? '550px' : '350px'};
   }
 `
 

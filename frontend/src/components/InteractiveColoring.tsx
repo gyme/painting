@@ -127,6 +127,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
     display: block;
     width: 100%;
     height: auto;
+    min-height: 400px; /* Reserve space to prevent layout shift */
     max-height: calc(100vh - 8rem); /* Maximum height for desktop */
     max-width: 100%;
     object-fit: contain;
@@ -154,6 +155,7 @@ const CanvasWrapper = styled.div<{ $cursorType: string; $scale?: number; $transl
       width: 100% !important;
       max-width: 100% !important;
       height: auto !important;
+      min-height: 350px !important; /* Reserve space to prevent layout shift on mobile */
       max-height: none !important; /* No max height - show full image */
       margin: 0 auto 0 auto !important; /* No margin - spacing handled by spacer */
       padding: 0 !important;
