@@ -148,6 +148,7 @@
     "basketball players": "Basketball Players",
     "k pop demon hunters": "K-Pop Demon Hunters",
     "inspiring-people": "Inspiring People",
+    "celebrities": "Celebrities",
     "numbers": "Numbers",
     "flowers": "Flowers",
     "browse": "Browse by Category",
@@ -565,6 +566,21 @@
         "Many faced great challenges but never gave up their dreams",
         "Their achievements inspire us to be better people",
         "Learning about history helps us shape a better future"
+      ],
+      "ageRange": "6-Adult"
+    },
+    "celebrities": {
+      "tips": [
+        "Use realistic colors to capture their iconic looks",
+        "Pay attention to their famous hairstyles and outfits",
+        "Try matching colors to their most memorable roles",
+        "Have fun adding sparkle and glamour!"
+      ],
+      "facts": [
+        "These stars entertain and inspire millions around the world",
+        "Many celebrities use their fame to help important causes",
+        "Actors and singers work very hard to perfect their craft",
+        "Behind every celebrity is a story of dedication and dreams"
       ],
       "ageRange": "6-Adult"
     }

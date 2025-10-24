@@ -183,6 +183,7 @@ function CategoriesPage() {
     'Numbers': '🔢',
     'Flowers': '🌸',
     'inspiring people': '⭐',
+    'celebrities': '🌟',
   }
 
   const getCategoryIcon = (category: string): string => {

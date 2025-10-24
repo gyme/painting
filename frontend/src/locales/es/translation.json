@@ -148,6 +148,7 @@
     "basketball players": "Jugadores de Baloncesto",
     "k pop demon hunters": "Cazadores de Demonios K-Pop",
     "inspiring-people": "Personas Inspiradoras",
+    "celebrities": "Celebridades",
     "numbers": "Números",
     "flowers": "Flores",
     "browse": "Explorar por Categoría",
@@ -565,6 +566,21 @@
         "Muchos enfrentaron grandes desafíos pero nunca renunciaron a sus sueños",
         "Sus logros nos inspiran a ser mejores personas",
         "Aprender sobre historia nos ayuda a formar un futuro mejor"
+      ],
+      "ageRange": "6-Adultos"
+    },
+    "celebrities": {
+      "tips": [
+        "Usa colores realistas para capturar sus looks icónicos",
+        "Presta atención a sus famosos peinados y vestuarios",
+        "Intenta combinar colores con sus roles más memorables",
+        "¡Diviértete añadiendo brillo y glamour!"
+      ],
+      "facts": [
+        "Estas estrellas entretienen e inspiran a millones en todo el mundo",
+        "Muchas celebridades usan su fama para ayudar a causas importantes",
+        "Actores y cantantes trabajan muy duro para perfeccionar su arte",
+        "Detrás de cada celebridad hay una historia de dedicación y sueños"
       ],
       "ageRange": "6-Adultos"
     }

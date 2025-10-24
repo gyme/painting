@@ -288,6 +288,7 @@ function HomePage() {
     'Numbers': '🔢',
     'Flowers': '🌸',
     'inspiring people': '⭐',
+    'celebrities': '🌟',
   }
 
   const getCategoryIcon = (category: string): string => {
