@@ -137,16 +137,6 @@ const HeroContent = styled.div`
   z-index: 1;
 `
 
-const DecorativeIcon = styled.div`
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
-
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
-`
-
 const CTAContainer = styled.div`
   display: flex;
   gap: 1.5rem;
