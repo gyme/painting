@@ -16,94 +16,119 @@ const Container = styled.div`
 const Hero = styled.div`
   text-align: center;
   margin-bottom: 3rem;
-  padding: 5rem 2rem;
+  padding: 3rem 2rem;
   background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 50%, #a6c1ee 100%);
   border-radius: 30px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
 
-  /* Decorative elements */
-  &::before {
-    content: '⭐';
-    position: absolute;
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+  }
+`
+
+const BackgroundImage = styled.img`
+  position: absolute;
+  width: 150px;
+  height: auto;
+  opacity: 0.15;
+  border-radius: 15px;
+  transform: rotate(-10deg);
+  pointer-events: none;
+
+  &.top-left {
     top: 20px;
-    left: 5%;
-    font-size: 2rem;
-    opacity: 0.3;
-    animation: float 3s ease-in-out infinite;
+    left: 20px;
+    width: 120px;
   }
 
-  &::after {
-    content: '✨';
-    position: absolute;
+  &.top-right {
+    top: 30px;
+    right: 30px;
+    width: 130px;
+    transform: rotate(10deg);
+  }
+
+  &.bottom-left {
+    bottom: 20px;
+    left: 40px;
+    width: 140px;
+    transform: rotate(15deg);
+  }
+
+  &.bottom-right {
     bottom: 30px;
-    right: 8%;
-    font-size: 2.5rem;
-    opacity: 0.3;
-    animation: float 4s ease-in-out infinite;
+    right: 20px;
+    width: 120px;
+    transform: rotate(-15deg);
   }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+  &.palette {
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%) rotate(-20deg);
+    width: 100px;
+    opacity: 0.2;
   }
 
   @media (max-width: 768px) {
-    padding: 3rem 1.5rem;
+    &.top-left, &.top-right, &.bottom-left, &.bottom-right {
+      width: 80px;
+    }
     
-    &::before, &::after {
-      font-size: 1.5rem;
+    &.palette {
+      width: 60px;
     }
   }
 `
 
 const Title = styled.h1`
-  font-size: 4.5rem;
+  font-size: 3rem;
   font-weight: 900;
   color: white;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-shadow: 
-    4px 4px 0px #000,
-    -2px -2px 0px #000,
-    2px -2px 0px #000,
-    -2px 2px 0px #000,
-    0px 4px 8px rgba(0, 0, 0, 0.5);
-  letter-spacing: 2px;
+    3px 3px 0px #000,
+    -1px -1px 0px #000,
+    1px -1px 0px #000,
+    -1px 1px 0px #000,
+    0px 3px 6px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
   line-height: 1.2;
   position: relative;
   z-index: 1;
 
   @media (max-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-shadow: 
-      3px 3px 0px #000,
+      2px 2px 0px #000,
       -1px -1px 0px #000,
       1px -1px 0px #000,
       -1px 1px 0px #000,
-      0px 3px 6px rgba(0, 0, 0, 0.5);
+      0px 2px 4px rgba(0, 0, 0, 0.5);
   }
 
   @media (max-width: 480px) {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 `
 
 const Subtitle = styled.p`
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   font-weight: 600;
   position: relative;
   z-index: 1;
 
   @media (max-width: 768px) {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 
   @media (max-width: 480px) {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 `
 
@@ -113,18 +138,12 @@ const HeroContent = styled.div`
 `
 
 const DecorativeIcon = styled.div`
-  font-size: 5rem;
-  margin-bottom: 1rem;
-  filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
-  animation: bounce 2s ease-in-out infinite;
-
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-  }
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 
   @media (max-width: 768px) {
-    font-size: 3.5rem;
+    font-size: 2rem;
   }
 `
 
@@ -166,8 +185,8 @@ const CTAButton = styled(LocalizedLink)`
 
   &.primary {
     background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-    font-size: 1.5rem;
-    padding: 1.5rem 3.5rem;
+    font-size: 1.2rem;
+    padding: 1rem 2.5rem;
     box-shadow: 0 10px 30px rgba(39, 174, 96, 0.4);
     
     &:hover {
@@ -460,6 +479,32 @@ function HomePage() {
       />
       <Container>
         <Hero>
+          {/* Background decorative images */}
+          <BackgroundImage 
+            src="/coloring-images/rainbow_unicorn.webp" 
+            alt="" 
+            className="top-left"
+            loading="lazy"
+          />
+          <BackgroundImage 
+            src="/coloring-images/cute_little_cat.webp" 
+            alt="" 
+            className="top-right"
+            loading="lazy"
+          />
+          <BackgroundImage 
+            src="/coloring-images/t_rex.webp" 
+            alt="" 
+            className="bottom-left"
+            loading="lazy"
+          />
+          <BackgroundImage 
+            src="/coloring-images/sport_car.webp" 
+            alt="" 
+            className="bottom-right"
+            loading="lazy"
+          />
+          
           <HeroContent>
             <DecorativeIcon>🎨</DecorativeIcon>
             <Title>{t('home.title')}</Title>
