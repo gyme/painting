@@ -517,14 +517,14 @@ function HomePage() {
           </HeroContent>
         </Hero>
 
-        {/* Top Categories Section - Show only first 8 */}
+        {/* Top Categories Section - Show only first 6 */}
         {categories && categories.length > 0 && (
           <Section id="categories">
             <SectionTitleLink to="/categories">
               📂 {t('home.browseByCategory')} →
             </SectionTitleLink>
             <CategoriesGrid>
-              {categories.slice(0, 8).map((category) => (
+              {categories.slice(0, 6).map((category) => (
                 <CategoryCard key={category} to={`/category/${category.replace(/ /g, '_')}`}>
                   <CategoryIcon>{getCategoryIcon(category)}</CategoryIcon>
                   <CategoryName>{t(getCategoryTranslationKey(category))}</CategoryName>
