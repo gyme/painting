@@ -167,7 +167,7 @@ function CategoriesPage() {
     'Vehicles': '🚗',
     'Characters': '👦',
     'Food': '🍕',
-    'Sports': '⚽',
+    'Sports': '🏅',
     'Holidays': '🎄',
     'Halloween': '🎃',
     'Space': '🚀',
@@ -184,6 +184,7 @@ function CategoriesPage() {
     'Flowers': '🌸',
     'inspiring people': '⭐',
     'celebrities': '🌟',
+    'Soccer Players': '⚽',
   }
 
   const getCategoryIcon = (category: string): string => {

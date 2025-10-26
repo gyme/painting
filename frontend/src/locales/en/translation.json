@@ -151,6 +151,7 @@
     "celebrities": "Celebrities",
     "numbers": "Numbers",
     "flowers": "Flowers",
+    "soccer players": "Soccer Players",
     "browse": "Browse by Category",
     "title": "All Categories",
     "subtitle": "Choose a category and start coloring!",
@@ -469,6 +470,20 @@
         "Basketball helps develop coordination and teamwork"
       ],
       "ageRange": "6-14"
+    },
+    "Soccer Players": {
+      "tips": [
+        "Use your favorite team colors for the jersey and shorts",
+        "Soccer uniforms can be any color - get creative!",
+        "Color the soccer ball white with black pentagons",
+        "Add grass and stadium details in the background"
+      ],
+      "facts": [
+        "Soccer (football) is the world's most popular sport",
+        "A soccer match has 90 minutes of play time",
+        "Soccer helps develop teamwork, fitness, and coordination"
+      ],
+      "ageRange": "5-14"
     },
     "Characters": {
       "tips": [

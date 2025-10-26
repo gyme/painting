@@ -751,7 +751,7 @@ function CategoryPage() {
       case 'fantasy': return '🦄'
       case 'characters': return '👦'
       case 'food': return '🍕'
-      case 'sports': return '⚽'
+      case 'sports': return '🏅'
       case 'holidays': return '🎄'
       case 'halloween': return '🎃'
       case 'space': return '🚀'
@@ -765,6 +765,7 @@ function CategoryPage() {
       case 'k pop demon hunters': return '⚔️'
       case 'numbers': return '🔢'
       case 'flowers': return '🌸'
+      case 'soccer players': return '⚽'
       default: return '🎨'
     }
   }

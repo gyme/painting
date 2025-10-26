@@ -311,7 +311,7 @@ function HomePage() {
     'Vehicles': '🚗',
     'Characters': '👦',
     'Food': '🍕',
-    'Sports': '⚽',
+    'Sports': '🏅',
     'Holidays': '🎄',
     'Halloween': '🎃',
     'Space': '🚀',
@@ -328,6 +328,7 @@ function HomePage() {
     'Flowers': '🌸',
     'inspiring people': '⭐',
     'celebrities': '🌟',
+    'Soccer Players': '⚽',
   }
 
   const getCategoryIcon = (category: string): string => {
