@@ -152,6 +152,7 @@
     "numbers": "Números",
     "flowers": "Flores",
     "soccer players": "Jugadores de Fútbol",
+    "famous places": "Lugares Famosos",
     "browse": "Explorar por Categoría",
     "title": "Todas las Categorías",
     "subtitle": "¡Elige una categoría y empieza a colorear!",
@@ -484,6 +485,20 @@
         "El fútbol ayuda a desarrollar trabajo en equipo, estado físico y coordinación"
       ],
       "ageRange": "5-14"
+    },
+    "Famous Places": {
+      "tips": [
+        "Usa colores realistas para monumentos famosos",
+        "Agrega cielos azules y nubes blancas en el fondo",
+        "Prueba amarillos dorados para monumentos antiguos como pirámides",
+        "¡Usa tu imaginación - los monumentos pueden ser de cualquier color que quieras!"
+      ],
+      "facts": [
+        "Estos monumentos son visitados por millones de personas cada año",
+        "Muchos lugares famosos son Patrimonio de la Humanidad de la UNESCO",
+        "Algunos monumentos han estado en pie durante miles de años"
+      ],
+      "ageRange": "5-12"
     },
     "Characters": {
       "tips": [

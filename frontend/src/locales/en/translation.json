@@ -152,6 +152,7 @@
     "numbers": "Numbers",
     "flowers": "Flowers",
     "soccer players": "Soccer Players",
+    "famous places": "Famous Places",
     "browse": "Browse by Category",
     "title": "All Categories",
     "subtitle": "Choose a category and start coloring!",
@@ -484,6 +485,20 @@
         "Soccer helps develop teamwork, fitness, and coordination"
       ],
       "ageRange": "5-14"
+    },
+    "Famous Places": {
+      "tips": [
+        "Use realistic colors for famous landmarks",
+        "Add blue skies and white clouds in the background",
+        "Try golden yellows for ancient monuments like pyramids",
+        "Use your imagination - monuments can be any color you like!"
+      ],
+      "facts": [
+        "These landmarks are visited by millions of people each year",
+        "Many famous places are UNESCO World Heritage Sites",
+        "Some monuments have stood for thousands of years"
+      ],
+      "ageRange": "5-12"
     },
     "Characters": {
       "tips": [

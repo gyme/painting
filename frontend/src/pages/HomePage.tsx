@@ -329,6 +329,7 @@ function HomePage() {
     'inspiring people': '⭐',
     'celebrities': '🌟',
     'Soccer Players': '⚽',
+    'Famous Places': '🏛️',
   }
 
   const getCategoryIcon = (category: string): string => {

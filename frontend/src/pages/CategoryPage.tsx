@@ -766,6 +766,7 @@ function CategoryPage() {
       case 'numbers': return '🔢'
       case 'flowers': return '🌸'
       case 'soccer players': return '⚽'
+      case 'famous places': return '🏛️'
       default: return '🎨'
     }
   }
