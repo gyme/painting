@@ -139,11 +139,11 @@ famous_places = [
         "imagePath": "/coloring-images/hollywood_sign.png"
     },
     {
-        "urlKey": "golden-bridge",
-        "name": "Golden Bridge",
-        "nameSpanish": "Puente Dorado",
-        "description": "Color the Golden Bridge in Vietnam! A stunning bridge held by giant stone hands.",
-        "descriptionSpanish": "¡Colorea el Puente Dorado en Vietnam! Un impresionante puente sostenido por manos de piedra gigantes.",
+        "urlKey": "golden-gate-bridge",
+        "name": "Golden Gate Bridge",
+        "nameSpanish": "Puente Golden Gate",
+        "description": "Color the Golden Gate Bridge in San Francisco! An iconic red suspension bridge over the bay.",
+        "descriptionSpanish": "¡Colorea el Puente Golden Gate en San Francisco! Un icónico puente colgante rojo sobre la bahía.",
         "category": "Famous Places",
         "imagePath": "/coloring-images/the_golden_bridge.png"
     }
