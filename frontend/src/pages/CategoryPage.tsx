@@ -765,6 +765,9 @@ function CategoryPage() {
       case 'k pop demon hunters': return '⚔️'
       case 'numbers': return '🔢'
       case 'flowers': return '🌸'
+      case 'celebrities': return '🎭'
+      case 'inspiring-people': return '💫'
+      case 'soccer players': return '⚽'
       default: return '🎨'
     }
   }

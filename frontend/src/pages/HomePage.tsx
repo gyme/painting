@@ -286,6 +286,9 @@ function HomePage() {
     'K Pop Demon Hunters': '⚔️',
     'Numbers': '🔢',
     'Flowers': '🌸',
+    'Celebrities': '🎭',
+    'Inspiring People': '💫',
+    'Soccer Players': '⚽',
   }
 
   const getCategoryIcon = (category: string): string => {
@@ -388,7 +391,7 @@ function HomePage() {
               📂 {t('home.browseByCategory')} →
             </SectionTitleLink>
             <CategoriesGrid>
-              {categories.map((category) => (
+              {categories.slice(0, 6).map((category) => (
                 <CategoryCard key={category} to={`/category/${category.replace(/ /g, '_')}`}>
                   <CategoryIcon>{getCategoryIcon(category)}</CategoryIcon>
                   <CategoryName>{t(getCategoryTranslationKey(category))}</CategoryName>

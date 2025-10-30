@@ -183,6 +183,9 @@ function CategoriesPage() {
     'Numbers': '🔢',
     'Flowers': '🌸',
     'Mothers Day': '💐',
+    'Celebrities': '🎭',
+    'Inspiring People': '💫',
+    'Soccer Players': '⚽',
   }
 
   const getCategoryIcon = (category: string): string => {
