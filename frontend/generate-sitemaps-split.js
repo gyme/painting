@@ -67,6 +67,7 @@ function extractCategories() {
     'Mandalas',
     'Sports',
     'Holidays',
+    'Mothers Day',
     'Dinosaurs',
     'Fairy Tales',
     'Food',

@@ -16,70 +16,39 @@ const Container = styled.div`
 const Hero = styled.div`
   text-align: center;
   margin-bottom: 3rem;
-  padding: 3rem 2rem;
-  background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 50%, #a6c1ee 100%);
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
   border-radius: 30px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  position: relative;
-  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 
   @media (max-width: 768px) {
-    padding: 2rem 1.5rem;
+    padding: 2rem 1rem;
   }
 `
 
 const Title = styled.h1`
-  font-size: 3rem;
-  font-weight: 900;
+  font-size: 3.5rem;
+  font-weight: 700;
   color: white;
-  margin-bottom: 0.5rem;
-  text-shadow: 
-    3px 3px 0px #000,
-    -1px -1px 0px #000,
-    1px -1px 0px #000,
-    -1px 1px 0px #000,
-    0px 3px 6px rgba(0, 0, 0, 0.5);
-  letter-spacing: 1px;
-  line-height: 1.2;
-  position: relative;
-  z-index: 1;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  animation: bounce 1s ease;
 
   @media (max-width: 768px) {
-    font-size: 2rem;
-    text-shadow: 
-      2px 2px 0px #000,
-      -1px -1px 0px #000,
-      1px -1px 0px #000,
-      -1px 1px 0px #000,
-      0px 2px 4px rgba(0, 0, 0, 0.5);
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
   }
 `
 
 const Subtitle = styled.p`
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   margin-bottom: 1.5rem;
-  font-weight: 600;
-  position: relative;
-  z-index: 1;
 
   @media (max-width: 768px) {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
-
-  @media (max-width: 480px) {
-    font-size: 1rem;
-  }
-`
-
-const HeroContent = styled.div`
-  position: relative;
-  z-index: 1;
 `
 
 const CTAContainer = styled.div`
@@ -101,32 +70,24 @@ const CTAButton = styled(LocalizedLink)`
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   text-decoration: none;
-  border-radius: 50px;
+  border-radius: 30px;
   font-size: 1.2rem;
   font-weight: 700;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
-  position: relative;
-  z-index: 1;
-  border: 3px solid rgba(255, 255, 255, 0.3);
+  gap: 0.5rem;
 
   &:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 12px 35px rgba(46, 204, 113, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
   }
 
   &.primary {
     background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-    font-size: 1.2rem;
-    padding: 1rem 2.5rem;
-    box-shadow: 0 10px 30px rgba(39, 174, 96, 0.4);
-    
-    &:hover {
-      box-shadow: 0 15px 40px rgba(39, 174, 96, 0.6);
-    }
+    font-size: 1.3rem;
+    padding: 1.5rem 3rem;
   }
 
   @media (max-width: 768px) {
@@ -135,8 +96,8 @@ const CTAButton = styled(LocalizedLink)`
     justify-content: center;
     
     &.primary {
-      font-size: 1.3rem;
-      padding: 1.3rem 2.5rem;
+      font-size: 1.2rem;
+      padding: 1.3rem 2rem;
     }
   }
 `
@@ -305,13 +266,12 @@ function HomePage() {
 
   // Category icons mapping
   const categoryIcons: Record<string, string> = {
-    'ABC': '🔤',
     'Animals': '🐶',
     'Nature': '🌳',
     'Vehicles': '🚗',
     'Characters': '👦',
     'Food': '🍕',
-    'Sports': '🏅',
+    'Sports': '⚽',
     'Holidays': '🎄',
     'Halloween': '🎃',
     'Space': '🚀',
@@ -326,10 +286,6 @@ function HomePage() {
     'K Pop Demon Hunters': '⚔️',
     'Numbers': '🔢',
     'Flowers': '🌸',
-    'inspiring people': '⭐',
-    'celebrities': '🌟',
-    'Soccer Players': '⚽',
-    'Famous Places': '🏛️',
   }
 
   const getCategoryIcon = (category: string): string => {
@@ -416,25 +372,23 @@ function HomePage() {
       />
       <Container>
         <Hero>
-          <HeroContent>
-            <Title>{t('home.title')}</Title>
-            <Subtitle>🖨️ {t('home.subtitle')}</Subtitle>
-            <CTAContainer>
-              <CTAButton to="/random" className="primary">
-                🎲 {t('home.randomPage')}
-              </CTAButton>
-            </CTAContainer>
-          </HeroContent>
+          <Title>🎨 {t('home.title')}</Title>
+          <Subtitle>{t('home.subtitle')}</Subtitle>
+          <CTAContainer>
+            <CTAButton to="/random" className="primary">
+              🎲 {t('home.randomPage')}
+            </CTAButton>
+          </CTAContainer>
         </Hero>
 
-        {/* Top Categories Section - Show only first 6 */}
+        {/* Categories Section */}
         {categories && categories.length > 0 && (
           <Section id="categories">
             <SectionTitleLink to="/categories">
               📂 {t('home.browseByCategory')} →
             </SectionTitleLink>
             <CategoriesGrid>
-              {categories.slice(0, 6).map((category) => (
+              {categories.map((category) => (
                 <CategoryCard key={category} to={`/category/${category.replace(/ /g, '_')}`}>
                   <CategoryIcon>{getCategoryIcon(category)}</CategoryIcon>
                   <CategoryName>{t(getCategoryTranslationKey(category))}</CategoryName>

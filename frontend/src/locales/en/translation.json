@@ -147,12 +147,9 @@
     "occupations": "Occupations",
     "basketball players": "Basketball Players",
     "k pop demon hunters": "K-Pop Demon Hunters",
-    "inspiring-people": "Inspiring People",
-    "celebrities": "Celebrities",
     "numbers": "Numbers",
     "flowers": "Flowers",
-    "soccer players": "Soccer Players",
-    "famous places": "Famous Places",
+    "mothers day": "Mothers Day",
     "browse": "Browse by Category",
     "title": "All Categories",
     "subtitle": "Choose a category and start coloring!",
@@ -472,34 +469,6 @@
       ],
       "ageRange": "6-14"
     },
-    "Soccer Players": {
-      "tips": [
-        "Use your favorite team colors for the jersey and shorts",
-        "Soccer uniforms can be any color - get creative!",
-        "Color the soccer ball white with black pentagons",
-        "Add grass and stadium details in the background"
-      ],
-      "facts": [
-        "Soccer (football) is the world's most popular sport",
-        "A soccer match has 90 minutes of play time",
-        "Soccer helps develop teamwork, fitness, and coordination"
-      ],
-      "ageRange": "5-14"
-    },
-    "Famous Places": {
-      "tips": [
-        "Use realistic colors for famous landmarks",
-        "Add blue skies and white clouds in the background",
-        "Try golden yellows for ancient monuments like pyramids",
-        "Use your imagination - monuments can be any color you like!"
-      ],
-      "facts": [
-        "These landmarks are visited by millions of people each year",
-        "Many famous places are UNESCO World Heritage Sites",
-        "Some monuments have stood for thousands of years"
-      ],
-      "ageRange": "5-12"
-    },
     "Characters": {
       "tips": [
         "Use bright, cheerful colors for happy characters",
@@ -583,36 +552,6 @@
         "Coloring flowers helps learn about nature and botany"
       ],
       "ageRange": "3-12"
-    },
-    "inspiring-people": {
-      "tips": [
-        "Use realistic skin tones and clothing colors",
-        "Pay attention to historical details in their outfits",
-        "Color backgrounds to show their achievements",
-        "Take your time to create a respectful tribute"
-      ],
-      "facts": [
-        "These heroes changed the world through courage and determination",
-        "Many faced great challenges but never gave up their dreams",
-        "Their achievements inspire us to be better people",
-        "Learning about history helps us shape a better future"
-      ],
-      "ageRange": "6-Adult"
-    },
-    "celebrities": {
-      "tips": [
-        "Use realistic colors to capture their iconic looks",
-        "Pay attention to their famous hairstyles and outfits",
-        "Try matching colors to their most memorable roles",
-        "Have fun adding sparkle and glamour!"
-      ],
-      "facts": [
-        "These stars entertain and inspire millions around the world",
-        "Many celebrities use their fame to help important causes",
-        "Actors and singers work very hard to perfect their craft",
-        "Behind every celebrity is a story of dedication and dreams"
-      ],
-      "ageRange": "6-Adult"
     }
   },
   "menu": {

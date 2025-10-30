@@ -196,3 +196,4 @@ node submit-to-indexnow.js https://www.mycolor.fun/contact
 Now check your Bing Webmaster Tools - you should see the IndexNow submissions! 🚀
 
 
+

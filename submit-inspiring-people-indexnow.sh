@@ -49,3 +49,4 @@ echo ""
 echo "✨ All inspiring people submitted to IndexNow!"
 echo "📊 Total URLs submitted: $((${#PEOPLE[@]} * 2 + 2))"
 
+

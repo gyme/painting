@@ -76,3 +76,4 @@ echo ""
 echo "✨ Your colorful logo is now the favicon!"
 
 
+

@@ -167,7 +167,7 @@ function CategoriesPage() {
     'Vehicles': '🚗',
     'Characters': '👦',
     'Food': '🍕',
-    'Sports': '🏅',
+    'Sports': '⚽',
     'Holidays': '🎄',
     'Halloween': '🎃',
     'Space': '🚀',
@@ -182,10 +182,7 @@ function CategoriesPage() {
     'K Pop Demon Hunters': '⚔️',
     'Numbers': '🔢',
     'Flowers': '🌸',
-    'inspiring people': '⭐',
-    'celebrities': '🌟',
-    'Soccer Players': '⚽',
-    'Famous Places': '🏛️',
+    'Mothers Day': '💐',
   }
 
   const getCategoryIcon = (category: string): string => {

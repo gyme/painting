@@ -642,8 +642,8 @@ function CategoryPage() {
   const { category } = useParams<{ category: string }>()
   const [searchParams, setSearchParams] = useSearchParams()
 
-  // Convert underscores back to spaces for API call
-  const categoryName = category?.replace(/_/g, ' ')
+  // Normalize category from URL: decode URI, convert underscores to spaces
+  const categoryName = decodeURIComponent(category || '').replace(/_/g, ' ')
 
   // Initialize state from URL parameters
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '')
@@ -751,7 +751,7 @@ function CategoryPage() {
       case 'fantasy': return '🦄'
       case 'characters': return '👦'
       case 'food': return '🍕'
-      case 'sports': return '🏅'
+      case 'sports': return '⚽'
       case 'holidays': return '🎄'
       case 'halloween': return '🎃'
       case 'space': return '🚀'
@@ -765,8 +765,6 @@ function CategoryPage() {
       case 'k pop demon hunters': return '⚔️'
       case 'numbers': return '🔢'
       case 'flowers': return '🌸'
-      case 'soccer players': return '⚽'
-      case 'famous places': return '🏛️'
       default: return '🎨'
     }
   }
@@ -783,6 +781,13 @@ function CategoryPage() {
   }
   
   const content = getCategoryContent(category, i18n.language)
+
+  // Safely read category tips/facts translations (may not exist for new categories)
+  const rawTips = t(`categoryTips.${categoryName}.tips`, { returnObjects: true }) as unknown
+  const rawFacts = t(`categoryTips.${categoryName}.facts`, { returnObjects: true }) as unknown
+  const tipsArray: string[] = Array.isArray(rawTips) ? (rawTips as string[]) : []
+  const factsArray: string[] = Array.isArray(rawFacts) ? (rawFacts as string[]) : []
+  const ageRangeText = t(`categoryTips.${categoryName}.ageRange`, { defaultValue: '' }) as string
 
   return (
     <>
@@ -933,7 +938,7 @@ function CategoryPage() {
         )}
         
         {/* Coloring Tips Section - Category Specific */}
-        {categoryName && t(`categoryTips.${categoryName}.tips`, { returnObjects: true }) && (
+        {(tipsArray.length > 0 || factsArray.length > 0) && (
           <TipsSection>
             <TipsTitle>
               ✨ {t('categoryTips.title')}
@@ -942,7 +947,7 @@ function CategoryPage() {
               <TipsColumn>
                 <TipsSubtitle>🎨 {t('categoryTips.tipsTitle')}</TipsSubtitle>
                 <TipsList>
-                  {(t(`categoryTips.${categoryName}.tips`, { returnObjects: true }) as string[]).map((tip, index) => (
+                  {tipsArray.map((tip, index) => (
                     <TipItem key={index}>{tip}</TipItem>
                   ))}
                 </TipsList>
@@ -950,13 +955,15 @@ function CategoryPage() {
               <TipsColumn>
                 <TipsSubtitle>💡 {t('categoryTips.factsTitle')}</TipsSubtitle>
                 <TipsList>
-                  {(t(`categoryTips.${categoryName}.facts`, { returnObjects: true }) as string[]).map((fact, index) => (
+                  {factsArray.map((fact, index) => (
                     <FactItem key={index}>{fact}</FactItem>
                   ))}
                 </TipsList>
-                <AgeRangeBadge>
-                  👶 {t('categoryTips.ageLabel')} {t(`categoryTips.${categoryName}.ageRange`)}
-                </AgeRangeBadge>
+                {ageRangeText && (
+                  <AgeRangeBadge>
+                    👶 {t('categoryTips.ageLabel')} {ageRangeText}
+                  </AgeRangeBadge>
+                )}
               </TipsColumn>
             </TipsGrid>
           </TipsSection>

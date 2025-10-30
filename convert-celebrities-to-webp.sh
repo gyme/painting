@@ -55,3 +55,5 @@ echo "=========================================="
 echo "✅ Converted $count celebrity images to WebP"
 echo "💾 Total savings: WebP images are typically 25-35% smaller!"
 
+
+

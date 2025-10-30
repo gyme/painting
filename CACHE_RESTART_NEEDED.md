@@ -56,3 +56,5 @@ Should show: `"imageUrl":"/coloring-images/leonardo_de_vinci.png"`
 
 **Status:** Ready to restart backend and make all images load! 🚀
 
+
+

@@ -72,7 +72,8 @@ export const paintingsApi = {
     page = 0,
     size = 20
   ): Promise<PaginatedResponse<Painting>> => {
-    const response = await api.get(`/paintings/category/${category}`, {
+    const encoded = encodeURIComponent(category)
+    const response = await api.get(`/paintings/category/${encoded}`, {
       params: { page, size },
     })
     return response.data

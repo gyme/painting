@@ -19,3 +19,4 @@ echo "✅ Logo saved successfully to frontend/public/logo.png"
 echo "🚀 You can now test the website with: cd frontend && npm run dev"
 
 
+
