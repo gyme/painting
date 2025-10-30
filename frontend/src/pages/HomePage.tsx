@@ -264,35 +264,39 @@ function HomePage() {
     }
   )
 
-  // Category icons mapping
+  // Category icons mapping (normalized to lowercase keys)
   const categoryIcons: Record<string, string> = {
-    'Animals': '🐶',
-    'Nature': '🌳',
-    'Vehicles': '🚗',
-    'Characters': '👦',
-    'Food': '🍕',
-    'Sports': '⚽',
-    'Holidays': '🎄',
-    'Halloween': '🎃',
-    'Space': '🚀',
-    'Ocean': '🌊',
-    'Fantasy': '🦄',
-    'Dinosaurs': '🦕',
-    'Fairy Tales': '📚',
-    'Mandalas': '🔯',
-    'Occupations': '👨‍💼',
-    'Italian Brainrot': '🇮🇹',
-    'Basketball Players': '🏀',
-    'K Pop Demon Hunters': '⚔️',
-    'Numbers': '🔢',
-    'Flowers': '🌸',
-    'Celebrities': '🎭',
-    'Inspiring People': '💫',
-    'Soccer Players': '⚽',
+    'abc': '🔤',
+    'animals': '🐶',
+    'nature': '🌳',
+    'vehicles': '🚗',
+    'characters': '👦',
+    'food': '🍕',
+    'sports': '⚽',
+    'holidays': '🎄',
+    'halloween': '🎃',
+    'space': '🚀',
+    'ocean': '🌊',
+    'fantasy': '🦄',
+    'dinosaurs': '🦕',
+    'fairy tales': '📚',
+    'mandalas': '🔯',
+    'occupations': '👨‍💼',
+    'italian brainrot': '🇮🇹',
+    'basketball players': '🏀',
+    'k pop demon hunters': '⚔️',
+    'numbers': '🔢',
+    'flowers': '🌸',
+    'mothers day': '💐',
+    'celebrities': '🎭',
+    'inspiring people': '💫',
+    'soccer players': '⚽',
   }
 
+  const normalizeCategory = (category: string): string => category.trim().toLowerCase()
+
   const getCategoryIcon = (category: string): string => {
-    return categoryIcons[category] || '🎨'
+    return categoryIcons[normalizeCategory(category)] || '🎨'
   }
   
   const getCategoryTranslationKey = (category: string): string => {
